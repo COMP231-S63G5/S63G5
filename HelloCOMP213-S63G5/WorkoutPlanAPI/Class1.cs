@@ -8,5 +8,8 @@ namespace WorkoutPlanAPI
 {
     public class Class1
     {
+        void dummy_function()
+        {
+        }
     }
 }
