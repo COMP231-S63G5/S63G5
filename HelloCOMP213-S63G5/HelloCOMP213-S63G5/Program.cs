@@ -14,5 +14,9 @@ namespace HelloCOMP213_S63G5
             Console.WriteLine("hiren patel");
             Console.WriteLine("kevin");
         }
+        static void functin1()
+        {
+            Console.WriteLine("call in func1");
+        }
     }
 }
