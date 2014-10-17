@@ -154,3 +154,5 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/HelloCOMP213-S63G5/packages/EntityFramework.5.0.0
+/HelloCOMP213-S63G5/packages/repositories.config
