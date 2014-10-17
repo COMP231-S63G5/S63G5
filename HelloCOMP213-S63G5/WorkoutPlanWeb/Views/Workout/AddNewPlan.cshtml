@@ -2,10 +2,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Add New WorkoutPlan";
 }
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add New Workout Plan</title>
+    <!-- Bootstrap -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/customCss.css" type="text/css" rel="stylesheet">  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
 
 <h1>Workout Plan</h1>
 <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
 <h4 id="planDateTag"></h4>
+
+<!--
+    WORKOUT PLAN FORM
+-->
+<form id="addworkoutplanform" class="content-wrapper">
+    <br>
+    <div  class="workoutsetGroup">
+    <div class="row" id="workoutset">
+
+
+
+        <select class="col-md-2">
+            <option>Warm UP</option>
+            <option>Main</option>
+            <option>Kick</option>
+        </select>
+
+        <input class="col-lg-2" id="txt_repeats" type="text" placeholder="Repeats" />
+        <input class="col-lg-2" id="txt_number_of_times" type="text" placeholder="No. Of Times" />
+        <input class="col-lg-2" id="txt_style" type="text" placeholder="Style" />
+    </div>
+  
+        <input type="button" id="addNewWorkoutSet" class="btn sm" onclick="addWorkOutsetRow();" value="+" /> 
+        
+    </div>
+</form>
+
 
 <script type="text/javascript">
     
@@ -56,6 +99,21 @@
 
     // set planDateTag onLoad
     window.onload = setPlanDate();
+
+
+    function addWorkOutsetRow() {
+        var data = "<div class='col-lg-offset-3 row' >";
+ 
+        var data = data + " <input class=col-lg-2 id=txt_repeats type=text placeholder=Repeats />";
+        var data =data+"<input class=col-lg-2 id=txt_number_of_times type=text placeholder=NoOfTimes />";
+        var data = data + "<input class=col-lg-2 id=txt_style type=text placeholder=Style /></div>";
+
+       
+        
+        $("#addNewWorkoutSet").before(data);
+        
+    }
+
 
 </script>
 
