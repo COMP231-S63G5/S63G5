@@ -12,12 +12,17 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("Swim Workout Planner", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
+
+                    <!-- Azim - Commenting out the Login portion for now. (2014/10/16)
+
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
+                    -->
+
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -37,7 +42,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.Year - Swim Workout Planner</p>
                 </div>
             </div>
         </footer>
