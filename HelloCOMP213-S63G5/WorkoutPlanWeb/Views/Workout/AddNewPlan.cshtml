@@ -88,8 +88,12 @@
 
 
     function deleteRow(r) {
-        var i = document.getElementById(r).rowIndex;
-        document.getElementById("workoutTable").deleteRow(i);
+      //  var i = document.getElementById(r).rowIndex;
+        //  document.getElementById("workoutTable").deleteRow(i);
+
+
+        $('#'+r).remove();
+
     }
 
 
