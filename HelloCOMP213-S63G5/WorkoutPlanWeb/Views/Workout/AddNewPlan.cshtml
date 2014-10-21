@@ -62,7 +62,7 @@
             seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
         }
 
-        var totalDays = Math.ceil(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
+        var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
         var totalWeeks = (totalDays - (totalDays % 7)) / 7;
 
         var weekNumber = totalWeeks + 1;
