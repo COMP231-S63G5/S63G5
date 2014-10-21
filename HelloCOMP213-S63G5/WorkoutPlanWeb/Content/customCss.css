@@ -8,7 +8,26 @@ float:left;
 height:32px;
 }
 
+.workoutTable {
+    width:100%;
+}
 
+.workoutTable td {
+    vertical-align:middle;
+}
+.workoutTable td input, td select{
+    width:75%;
+    margin-top:auto;
+    margin-bottom:auto;
+    display:inline-block;
+    
+}
+
+.workoutTable td.label{
+    vertical-align:middle;
+    display:normal;
+    width:2%;
+}
 
 select {
     border-radius:10px;
