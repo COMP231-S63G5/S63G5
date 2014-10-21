@@ -58,4 +58,13 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="tbl_workout.sql" />
+    <Build Include="tbl_set.sql" />
+    <Build Include="tbl_workout_plan.sql" />
+    <Build Include="tbl_workoutplan_member.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DBWorkout.refactorlog" />
+  </ItemGroup>
 </Project>
