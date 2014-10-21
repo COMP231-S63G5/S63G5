@@ -14,7 +14,7 @@ namespace WorkoutPlanWeb.Controllers
         }
 
         public ActionResult AddNewPlan()
-        {
+        {            
             return View();
         }
 
