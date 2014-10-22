@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WorkoutPlanAPI;
 
 namespace WorkoutPlanWeb.Controllers
 {
@@ -14,7 +15,9 @@ namespace WorkoutPlanWeb.Controllers
         }
 
         public ActionResult AddNewPlan()
-        {            
+        {
+            Strokes_BLL strokes = new Strokes_BLL();
+            ViewBag.strokes = strokes.getStrokeNames();
             return View();
         }
 
