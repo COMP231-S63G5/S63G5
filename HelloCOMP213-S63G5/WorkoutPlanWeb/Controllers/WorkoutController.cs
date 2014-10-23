@@ -21,5 +21,10 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
+        public ActionResult ViewWorkoutPlan()
+        {
+            return View();
+        }
+
     }
 }
