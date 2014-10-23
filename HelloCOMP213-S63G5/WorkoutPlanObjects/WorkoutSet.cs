@@ -6,24 +6,43 @@ using System.Threading.Tasks;
 
 namespace WorkoutPlanObjects
 {
-    class WorkoutSet : IWorkoutSet
+    public class WorkoutSet : IWorkoutSet
     {
-        private int _breakTime;
 
-        public int BreakTime
+        private int _restPeriod;
+        private int _paceTime;
+        private string _effortLevel;
+
+        public string EffortLevel 
         {
-            get { return _breakTime; }
-            set { _breakTime = value; }
+            get { return _effortLevel;}
+            set { _effortLevel = value;}
+        }
+
+        public int PaceTime 
+        { 
+            get { return _paceTime;} 
+            set { _paceTime = value;} 
+        }
+
+        public int RestPeriod
+        {
+            get { return _restPeriod; }
+            set { _restPeriod = value; }
         }
 
 
-        public WorkoutSet(int repeats, int workoutsetdistance, string workoutsetdetails, int duration, int breaktime = 0)
+        public WorkoutSet(int repeats, int workoutsetdistance, int duration, int pacetime = 0, int restperiod = 0)
         {
             Repeats = repeats;
-            WorkoutSetDistance = workoutsetdistance;
-            WorkoutSetDetails = workoutsetdetails;
+            WorkoutSetDistance = workoutsetdistance;           
             SingleDuration = duration;
-            BreakTime = breaktime;
+            RestPeriod = restperiod;
+        }
+
+        public WorkoutSet()
+        {
+
         }
     }
 }
