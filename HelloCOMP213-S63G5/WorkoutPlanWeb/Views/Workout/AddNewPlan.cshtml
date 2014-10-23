@@ -1,8 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Add New WorkoutPlan";
+    
 }
-
+@model WorkoutPlanObjects.WorkoutPlan
 
 
 <h1>Workout Plan</h1>
@@ -12,20 +13,24 @@
 <!--
     WORKOUT PLAN FORM
 -->
-<form id="addworkoutplanform" class="content-wrapper">
+@using (Html.BeginForm("AddNewPlan", "Workout", FormMethod.Post, new { @class="content-wrapper", @id = "addworkoutplanform" }))
+{
     <br>
-    <div  class="workoutsetGroup">
-        
-        <table class="workoutTable">
+    <div class="workoutsetGroup">
+
+        <table class="workoutTable" >
             <tr id="lastRow">
                 <td>
+
                     <input type="button" id="addNewWorkoutSetBtn" class="btn sm" onclick="addWorkOutsetRow();" value="Add Set..." />
                 </td>
             </tr>
+
         </table>
-  
+
     </div>
-</form>
+    <input type="submit" id="submit" value="submit" />
+}
 
 
 <script type="text/javascript">
@@ -104,13 +109,15 @@
     //  OnClick function for adding new set
     function addWorkOutsetRow() {
 
-        numberOfSets++;
-
-        var data = "<tr id='set_"+ numberOfSets +"' >";
-
-        var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' /></td>";
+        
+        var data = "<tr id='set_" + numberOfSets + "' >";
+        var data = data + "<td> <input type='hidden' name='WorkoutSet.Index' value='repeat' /></td>"
+        //var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet["+numberOfSets+"].Repeats'  data-val='true' data-val-number='The field test must be a number.' data-val-required='The test field is required.'/></td>"
+        var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat].Repeats'/></td>";
         var data = data + "<td align='center' class='label'>&nbsp;<h4>X</h4>&nbsp;</td>";
-        var data = data + "<td align='left'><input type=text placeholder=Distance id='set_distance_" + numberOfSets + "' />m</td>";
+
+        var data = data + "<td> <input type='hidden' name='WorkoutSet.Index' value='distance' /></td>"
+        var data = data + "<td align='left'><input type=text placeholder=Distance id='set_distance_" + numberOfSets + "' name = 'WorkoutSet[distance].WorkoutSetDistance'  />m</td>";
 
         var data = data + "<td><select id='set_detail_" + numberOfSets + "'> " 
             @{
@@ -118,20 +125,22 @@
                 {
                     @Html.Raw("+ \"<option>"+stroke+"</option>\"");
                 }
-            }
-                   + "</select></td>";
-
+             }
+            + "</select></td>";
+    
         var data = data + "<td>(<input type=text placeholder=Description id='set_description_" + numberOfSets + "' />)</td>";
         var data = data + "<td class='label'>&nbsp;<h4>on</h4>&nbsp;</td>";
-        var data = data + "<td><input type=text placeholder=Duration id='set_duration_" + numberOfSets + "' /></td>";
-        var data = data + "<td><input type='button' value='x' onclick='deleteRow(\"set_"+ numberOfSets +"\");' /></td>";
+
+        var data = data + "<td> <input type='hidden' name='WorkoutSet.Index' value='duration' /></td>"
+        var data = data + "<td><input type=text placeholder=Duration id='set_duration_" + numberOfSets + "' name = WorkoutSet[duration].SingleDuration /></td>";
+        var data = data + "<td><input type='button' value='x' onclick='deleteRow(\"set_" + numberOfSets + "\");' /></td>";
 
         var data = data + "</tr>";
-              
-        
+
+        numberOfSets++;
         $("#lastRow").before(data);
-        
     }
+
 
 </script>
 
