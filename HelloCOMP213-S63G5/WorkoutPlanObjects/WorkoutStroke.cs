@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkoutPlanObjects
 {
-    class WorkoutStroke
+    public class WorkoutStroke
     {
         private int _id;
         private string _name;

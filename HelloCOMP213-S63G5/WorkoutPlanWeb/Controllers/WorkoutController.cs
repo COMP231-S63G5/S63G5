@@ -29,7 +29,9 @@ namespace WorkoutPlanWeb.Controllers
         [HttpPost]
         public ActionResult AddNewPlan(WorkoutPlan workoutPlan)
         {
-            return View();
+            //TO-DO: Need to save the workoutplan to db.
+
+            return RedirectToAction("Index","Home"); //TO-DO: Need to redirect to view workout plan page. Currently redirecting to the Home page after submit.
         }
 
 
