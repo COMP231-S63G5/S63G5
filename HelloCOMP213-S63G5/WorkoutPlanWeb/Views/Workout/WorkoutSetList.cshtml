@@ -28,7 +28,6 @@
         <form class="workoutSetForm">
             @Html.HiddenFor(model => item.ID)
             <div>
-                @Html.DisplayFor(modelItem => item.OrderNum)
                 @Html.HiddenFor(model => item.OrderNum)
             </div>
             <div class="workoutRepeats workoutSetCell">
@@ -45,9 +44,6 @@
             </div>
             <div class="workoutSetCell blankspace">
                 &nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="workoutSetCell">
-                @Html.EditorFor(modelItem => item.StrokeId)
             </div>
             <div class="workoutSetCell">
                 <h4>[</h4>
