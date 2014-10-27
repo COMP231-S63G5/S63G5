@@ -11,12 +11,12 @@ namespace WorkoutPlanObjects
 
         private int _restPeriod;
         private int _paceTime;
-        private string _effortLevel;
+        private string _description;
 
-        public string EffortLevel 
+        public string Description 
         {
-            get { return _effortLevel;}
-            set { _effortLevel = value;}
+            get { return _description; }
+            set { _description = value; }
         }
 
         public int PaceTime 
@@ -32,14 +32,19 @@ namespace WorkoutPlanObjects
         }
 
 
-        public WorkoutSet(int repeats, int workoutsetdistance, int duration, int pacetime = 0, int restperiod = 0)
+        public WorkoutSet(int repeats, int workoutsetdistance, int duration,  int orderNum, int pacetime = 0, int restperiod = 0)
         {
             Repeats = repeats;
             WorkoutSetDistance = workoutsetdistance;           
             SingleDuration = duration;
             RestPeriod = restperiod;
+            OrderNum = orderNum;
         }
 
+        public WorkoutSet(int orderNum)
+        {
+            OrderNum = orderNum;
+        }
         public WorkoutSet()
         {
 

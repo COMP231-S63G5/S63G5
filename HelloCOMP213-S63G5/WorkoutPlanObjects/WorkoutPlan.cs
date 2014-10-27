@@ -9,19 +9,22 @@ namespace WorkoutPlanObjects
     public class WorkoutPlan
     {
         private List<WorkoutSet> _workoutSet;
+        private String _date;
 
         public List<WorkoutSet> WorkoutSet
         {
             get { return _workoutSet; }
             set { _workoutSet = value; }
         }
-        public int test { get; set; }
+        public String Date {
+            get { return _date; }
+            set { _date = value; }
+        }
 
         public WorkoutPlan()
         {
             _workoutSet = new List<WorkoutSet>();
         }
-
 
     }
 }

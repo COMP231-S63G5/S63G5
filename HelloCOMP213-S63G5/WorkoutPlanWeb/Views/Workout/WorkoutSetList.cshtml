@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSet>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('a.EditSet').click(function (event) {
+            var rowId = event.target.id;
+            console.log("You clicked on:", rowId);
+
+            var form = $(this).closest('form');
+
+            console.log(form.serialize());
+            $.ajax({
+                url: '@Url.Action("editSet")',
+                data: form.serialize(),
+                type: 'POST',
+            });
+            
+            return false;
+        });
+
+    });
+</script>
+
+@foreach (var item in Model) {
+        
+        <form class="workoutSetForm">
+            @Html.HiddenFor(model => item.ID)
+            <div>
+                @Html.DisplayFor(modelItem => item.OrderNum)
+                @Html.HiddenFor(model => item.OrderNum)
+            </div>
+            <div class="workoutRepeats workoutSetCell">
+                @Html.EditorFor(modelItem => item.Repeats)
+            </div>
+            <div class="workoutSetCell">
+                X
+            </div>
+            <div class="workoutSetCell">
+                @Html.EditorFor(modelItem => item.WorkoutSetDistance)
+            </div>
+            <div class="workoutSetCell">
+                m
+            </div>
+            <div class="workoutSetCell blankspace">
+                &nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="workoutSetCell">
+                @Html.EditorFor(modelItem => item.StrokeId)
+            </div>
+            <div class="workoutSetCell">
+                <h4>[</h4>
+            </div>
+            <div class="workoutSetCell">
+                @Html.TextBoxFor(modelItem => item.Description, new { placeholder="Description" })
+            </div>
+            <div class="workoutSetCell">
+                <h4>]</h4>
+            </div>
+            <div class="workoutSetCell">
+                @Html.EditorFor(modelItem => item.PaceTime)
+            </div>
+            <div class="workoutSetCell">
+                @Html.EditorFor(modelItem => item.SingleDuration)
+            </div>
+            <div class="workoutSetCell">
+                @Html.ActionLink(
+                    "Save",
+                    "editSet",
+                    "Workout",
+                    new { url = Request.RawUrl },
+                    new { @class = "EditSet", id = item.OrderNum }
+                )
+            </div>
+        </form>
+}
+

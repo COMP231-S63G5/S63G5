@@ -111,9 +111,9 @@
 
         
         var data = "<tr id='set_" + numberOfSets + "' >";
-        var data = data + "<td> <input type='hidden' name='WorkoutSet.Index' value='repeat' /></td>"
+        //var data = data + "<td class='hidden-td'> <input type='hidden' name='WorkoutSet.Index' value='repeat' /></td>"
         //var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet["+numberOfSets+"].Repeats'  data-val='true' data-val-number='The field test must be a number.' data-val-required='The test field is required.'/></td>"
-        var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat].Repeats'/></td>";
+        var data = data + "<td align='right'><input type='hidden' name='WorkoutSet.Index' value='repeat' /><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat].Repeats'/></td>";
         var data = data + "<td align='center' class='label'>&nbsp;<h4>X</h4>&nbsp;</td>";
 
         var data = data + "<td> <input type='hidden' name='WorkoutSet.Index' value='distance' /></td>"

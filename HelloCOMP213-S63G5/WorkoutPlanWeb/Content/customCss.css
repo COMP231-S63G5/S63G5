@@ -8,15 +8,39 @@ float:left;
 height:32px;
 }
 
-.workoutTable {
+.workoutSetForm {
     width:100%;
 }
 
-.workoutTable td {
+.workoutSetCell {
     vertical-align:middle;
+    display:inline;
 }
+
+.workoutSetCell h4{
+    display:inline;
+}
+
+.blankspace {
+    min-width: 4%;
+}
+
+.workoutSetCell input[type="number"]{
+    width: 5%;
+    min-width: 25px;
+}
+
+.workoutSetCell input[type="text"]{
+    width: 15%;
+    min-width: 25px;
+}
+
+.workoutTable hidden-td{
+    display: none;
+}
+
 .workoutTable td input, td select{
-    width:75%;
+    width:80%;
     margin-top:auto;
     margin-bottom:auto;
     display:inline-block;

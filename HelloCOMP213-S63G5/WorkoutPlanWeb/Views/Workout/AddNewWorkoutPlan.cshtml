@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "AddNewWorkoutPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    var numberOfSets;
+
+    // Function will run on page load
+    function onPageLoad() {
+
+        numberOfSets = 0;   //set number of sets to 0
+        setPlanDate();      //set initial plan date with current date
+
+    }
+
+
+    // Function will dynamically update planDateTag header tags with week and day number
+    function setPlanDate() {
+        /*
+        * ASSUMPTIONS:
+        *
+        *   1. Week begins on the Monday and ends Sunday. Ie Mon = Day1, Sun = Day7
+        *   2. Season begins 1st Monday of September
+        *
+        */
+
+        var tempDate = new Date(document.getElementById("date").value);
+        tempDate.setDate(tempDate.getDate() + 1);
+
+        var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+        var seasonStartDate = getSeasonStartDate(workoutDate);
+
+        if (workoutDate < seasonStartDate)
+        {
+            seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
+        }
+
+        var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
+        var totalWeeks = (totalDays - (totalDays % 7)) / 7;
+
+        var weekNumber = totalWeeks + 1;
+        var dayNumber = (totalDays % 7 ) + 1;
+
+        document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
+
+        document.getElementsByName("Date")[0].value = tempDate.toDateString();
+    }
+
+    //Helper function, gets the date of the first Monday of September
+    function getSeasonStartDate(workoutDate) {
+
+        // Getting any date in the first week of september with a Monday
+        var septDay = new Date(workoutDate.getFullYear(), 08, 01);
+
+        if (septDay.getDay() > 1)
+        {
+            septDay.setDate(septDay.getDate() + 7);
+        }
+
+        return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
+
+    }
+</script>
+
+
+<h1>Workout Plan</h1>
+<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+<h4 id="planDateTag"></h4>
+
+@Html.Hidden("dateField");
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Ajax.ActionLink("Create New Set", 
+                         "createSet",
+                         new {id = 1}, 
+                         new AjaxOptions() {
+                             HttpMethod = "GET", 
+                             InsertionMode = InsertionMode.Replace, 
+                             UpdateTargetId = "setsDiv" 
+                         },
+                         new { id = "createSetLink" }
+                         );
+        
+        <div id="setsDiv">
+            @Html.Partial("WorkoutSetList", Session["WorkoutSetList"]);
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -14,6 +14,7 @@ namespace WorkoutPlanObjects
         private int _repeats;
         private int _workoutSetDistance; //The distance for each workout set
         private int _duration; //time to complete of each workout set
+        private int _orderNum; // The order the object shows on the plan
 
 
         public int ID
@@ -40,6 +41,12 @@ namespace WorkoutPlanObjects
              get { return _workoutSetDistance; }
              set { _workoutSetDistance = value; }
          }
+
+        public int OrderNum
+        {
+            get { return _orderNum; }
+            set { _orderNum = value; }
+        }
 
         //Method is virtual because single duration calculations is different when calculating single duration for one workout set vs single duration for one workout group.
         virtual public int SingleDuration
