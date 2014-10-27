@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WorkoutPlanAPI;
+using WorkoutPlanObjects;
 
 namespace WorkoutPlanWeb.Controllers
 {
@@ -12,6 +14,10 @@ namespace WorkoutPlanWeb.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
+            
+            Strokes_BLL StrokesBllObj = new Strokes_BLL();
+            ViewBag.listOfWorkOutPlanIDs = StrokesBllObj.getWorkOutPlanIDsList();
+       
             return View();
         }
 
