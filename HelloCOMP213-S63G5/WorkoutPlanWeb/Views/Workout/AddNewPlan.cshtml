@@ -116,8 +116,7 @@
         var data = data + "<td align='right'> <input type='hidden' name='WorkoutSet.Index' value='repeat_" + numberOfSets + "' /><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat_" + numberOfSets + "].Repeats'/></td>";
         var data = data + "<td align='center' class='label'>&nbsp;<h4>X</h4>&nbsp;</td>";
         var data = data + "<td align='left'><input type=text placeholder=Distance id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat_" + numberOfSets + "].WorkoutSetDistance'  />m</td>";
-
-        var data = data + "<td><select id='set_detail_" + numberOfSets + "'> " 
+        var data = data + "<td><select id='set_detail_" + numberOfSets + " name= 'WorkoutSet[repeat_"+numberOfSets+"].Stroke.ID'> " 
           {
                 @foreach(string stroke in ViewBag.strokes)
                 {
