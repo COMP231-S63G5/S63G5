@@ -66,6 +66,7 @@
     <Build Include="tbl_workoutplan_member.sql" />
     <Build Include="SwimDBStoredProc.sql" />
     <Build Include="getWorkoutPlan.sql" />
+    <Build Include="getWorkOutPlanIDs.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DBWorkout.refactorlog" />
