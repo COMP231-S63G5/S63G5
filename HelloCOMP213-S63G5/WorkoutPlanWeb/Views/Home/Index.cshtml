@@ -15,5 +15,9 @@
 <!-- TODO - Populate with list of workouts that were created. -->
 
 <ul>
-    <li>Coming soon...</li>
+    @foreach (int item in ViewBag.listOfWorkOutPlanIDs)
+    {
+        
+        @Html.Raw("<li>"+@Html.ActionLink(item.ToString(),"","")+"</li>");
+    }
 </ul>

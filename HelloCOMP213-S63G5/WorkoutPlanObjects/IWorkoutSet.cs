@@ -10,7 +10,7 @@ namespace WorkoutPlanObjects
     public abstract class IWorkoutSet
     {
         private int _id;
-        private int _strokeId;
+        private WorkoutStroke _stroke;
         private int _repeats;
         private int _workoutSetDistance; //The distance for each workout set
         private int _duration; //time to complete of each workout set
@@ -23,10 +23,10 @@ namespace WorkoutPlanObjects
             set { _id = value; }
         }
 
-        public int StrokeId
+        public WorkoutStroke Stroke
         {
-            get { return _strokeId; }
-            set { _strokeId = value; }
+            get { return _stroke; }
+            set { _stroke = value; }
         }
 
 
