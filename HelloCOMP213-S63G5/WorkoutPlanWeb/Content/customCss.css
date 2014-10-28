@@ -38,6 +38,16 @@ a.saveLink
      text-indent: -9999px; /* hides the link text */
 }
 
+a.deleteLink
+{
+    background: url("../Images/Delete-icon.png") no-repeat top left;
+     display: inline-block;
+     width: 20px;
+     height: 20px;
+     text-indent: -9999px; /* hides the link text */
+}
+
+
 a.disabled
 {
     opacity: 0.4;
