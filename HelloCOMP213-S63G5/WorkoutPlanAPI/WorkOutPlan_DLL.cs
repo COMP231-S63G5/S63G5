@@ -7,7 +7,7 @@ using WorkoutDBObject;
 
 namespace WorkoutPlanAPI
 {
-    class WorkOutPlan_DLL
+    public class WorkOutPlan_DLL
     {
         //This method Would call ListOfWorkOutPlanIDs method to get list of 
         //existing workoutPlan ids from Business Layer.
