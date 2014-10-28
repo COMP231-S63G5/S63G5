@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
 
+using WorkoutPlanObjects;
+
 
 namespace WorkoutDBObject
 {
@@ -24,9 +26,9 @@ namespace WorkoutDBObject
         }
 
         // Gets list of strokes
-        public List<string> getStrokes()
+        public List<WorkoutStroke> getStrokes()
         {
-            List<string> strokes = new List<string>();
+            List<WorkoutStroke> strokes = new List<WorkoutStroke>();
 
             try
             {
@@ -42,14 +44,15 @@ namespace WorkoutDBObject
                 
                 while(reader.Read())
                 {
-                    strokes.Add(reader["Name"].ToString());
+                    strokes.Add(new WorkoutStroke(int.Parse(reader["id"].ToString()), 
+                                                    reader["Name"].ToString(), 
+                                                    reader["Description"].ToString()));
                 }
 
                 conn.Close();
             }
             catch (Exception e)
             {
-                strokes.Add(e.Message);
             }
             finally
             {
@@ -59,7 +62,43 @@ namespace WorkoutDBObject
             return strokes;
         }
 
+        // Return Stroke Object of specific ID
+        public WorkoutStroke getStrokes(int strokeId)
+        {
+            WorkoutStroke stroke;
 
+            try
+            {
+                string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "getStroke";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", strokeId);
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    stroke = new WorkoutStroke(int.Parse(reader["id"].ToString()), reader["Name"].ToString(), reader["Description"].ToString());
+                }
+                else
+                {
+                    throw new DataException("multiple rows returned from query");
+                }
+
+                conn.Close();
+
+                return stroke;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+        }
         //This method returns List Of Existing WorkOut Plan Ids From Database
         public List<int> getWorkOutPlanIds() {
 

@@ -28,7 +28,6 @@
         <form class="workoutSetForm">
             @Html.HiddenFor(model => item.ID)
             <div>
-                @Html.DisplayFor(modelItem => item.OrderNum)
                 @Html.HiddenFor(model => item.OrderNum)
             </div>
             <div class="workoutRepeats workoutSetCell">
@@ -46,8 +45,23 @@
             <div class="workoutSetCell blankspace">
                 &nbsp;&nbsp;&nbsp;
             </div>
-            <div class="workoutSetCell">
-                @Html.EditorFor(modelItem => item.StrokeId)
+            <div class="workoutSetCell">               
+                 @Html.HiddenFor(model => item.Stroke.ID)
+                <select id="strokeSelect" name="strokeSelect">
+
+                    @foreach (WorkoutPlanObjects.WorkoutStroke stroke in ViewBag.strokes)
+                    {
+                        <option value="@stroke.ID" 
+                                
+                                @if(item.Stroke.ID == stroke.ID)
+                                {
+                                    @Html.Raw("selected")
+                                        
+                                }
+
+                                > @stroke.Name </option>
+                    }
+                </select>
             </div>
             <div class="workoutSetCell">
                 <h4>[</h4>
@@ -72,6 +86,19 @@
                     new { url = Request.RawUrl },
                     new { @class = "EditSet", id = item.OrderNum }
                 )
+            </div>
+            <div class="workoutSetCell">
+                @Ajax.ActionLink("Delete",
+                         "deleteSet",
+                         new { index = item.OrderNum  },
+                         new AjaxOptions()
+                         {
+                             HttpMethod = "POST",
+                             InsertionMode = InsertionMode.Replace,
+                             UpdateTargetId = "setsDiv"
+                         },
+                         new { id = "deleteSetLink" }
+                         );
             </div>
         </form>
 }

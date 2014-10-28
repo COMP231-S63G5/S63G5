@@ -32,18 +32,20 @@ namespace WorkoutPlanObjects
         }
 
 
-        public WorkoutSet(int repeats, int workoutsetdistance, int duration,  int orderNum, int pacetime = 0, int restperiod = 0)
+        public WorkoutSet(int repeats, int workoutsetdistance, int duration,  int orderNum, WorkoutStroke stroke, int pacetime = 0, int restperiod = 0)
         {
             Repeats = repeats;
             WorkoutSetDistance = workoutsetdistance;           
             SingleDuration = duration;
             RestPeriod = restperiod;
             OrderNum = orderNum;
+            Stroke = stroke;
         }
 
         public WorkoutSet(int orderNum)
         {
             OrderNum = orderNum;
+            Stroke = new WorkoutStroke(-1, "Default", "Default");
         }
         public WorkoutSet()
         {

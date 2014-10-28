@@ -13,15 +13,19 @@ namespace WorkoutPlanAPI
      */
     public class Strokes_BLL
     {
-        public List<string> getStrokeNames()
+        public List<WorkoutStroke> getStrokes()
         {
             SwimWorkoutDBContext swimDB = new SwimWorkoutDBContext();
 
-            List<string> strokes = swimDB.getStrokes();
-
-            return strokes;
+            return swimDB.getStrokes();
         }
 
+        public WorkoutStroke getStrokes(int strokeID)
+        {
+            SwimWorkoutDBContext swimDB = new SwimWorkoutDBContext();
+
+            return swimDB.getStrokes(strokeID);
+        }
 
 
         //This method Would call ListOfWorkOutPlanIDs method to get list of 
