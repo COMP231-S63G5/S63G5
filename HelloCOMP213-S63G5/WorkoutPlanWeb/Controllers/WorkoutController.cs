@@ -21,7 +21,7 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult AddNewPlan()
         {
             Strokes_BLL strokes = new Strokes_BLL();
-            ViewBag.strokes = strokes.getStrokeNames();
+            ViewBag.strokes = strokes.getStrokes();
             WorkoutPlan workoutPlan = new WorkoutPlan();
             workoutPlan.WorkoutSet = new List<WorkoutSet>();
             return View(workoutPlan);
@@ -46,6 +46,7 @@ namespace WorkoutPlanWeb.Controllers
             { 
                 Session["WorkoutSetList"] = new List<WorkoutSet>();
             }
+
             return View();
         }
 
@@ -58,13 +59,16 @@ namespace WorkoutPlanWeb.Controllers
 
             Session["WorkoutSetList"] = _workoutSets;
 
+            Strokes_BLL strokes = new Strokes_BLL();
+            ViewBag.strokes = strokes.getStrokes();
+
             return PartialView("WorkoutSetList", _workoutSets);
         }
 
         [HttpPost]
         public ActionResult editSet(FormCollection form)
         {
-
+            Strokes_BLL strokes = new Strokes_BLL();
             WorkoutSet workoutSet = new WorkoutSet();
             
             workoutSet.Repeats = int.Parse(form["item.Repeats"]);
@@ -74,6 +78,7 @@ namespace WorkoutPlanWeb.Controllers
             workoutSet.OrderNum = int.Parse(form["item.OrderNum"]);
             workoutSet.PaceTime = int.Parse(form["item.PaceTime"]);
             workoutSet.Description = form["item.Description"];
+            workoutSet.Stroke = strokes.getStrokes(int.Parse(form["strokeSelect"]));
 
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
             _workoutSets[workoutSet.OrderNum - 1] = workoutSet;
@@ -85,10 +90,29 @@ namespace WorkoutPlanWeb.Controllers
             return Json(new { success = true });
         }
 
-        public ActionResult Partial1()
+        // Function to remove a set from the WorkoutSetList Session Variable
+        [HttpPost]
+        public ActionResult deleteSet(int index)
         {
-            return View();
+         //   index = index - 1;
+            List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
+
+            _workoutSets.RemoveAt(index - 1);
+
+            // This will reorder the workout sets in the list
+            for (int i = index - 1; i < _workoutSets.Count; i++)
+            {
+                _workoutSets[i].OrderNum = i + 1;
+            }
+            
+            Session["WorkoutSetList"] = _workoutSets;
+
+            Strokes_BLL strokes = new Strokes_BLL();
+            ViewBag.strokes = strokes.getStrokes();
+            
+            return PartialView("WorkoutSetList", _workoutSets);
         }
+
 
     }
 }
