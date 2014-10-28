@@ -4,20 +4,53 @@
 <script>
     $(document).ready(function () {
 
-        $('a.EditSet').click(function (event) {
+        $('a.saveLink').click(function (event) {
+
+            if ($(this).hasClass('disabled')) {
+                return false;
+            }
+
             var rowId = event.target.id;
             console.log("You clicked on:", rowId);
 
             var form = $(this).closest('form');
+            var valid = true;
+
+            form.find('input').each(function () {
+                console.log($(this).attr("id") + ": " + $(this).prop("tagName") + " " + $(this).attr("type"));
+                if ($(this).attr("type") == "number" ) {
+                    console.log("number");
+                    if ($.isNumeric($(this).val())) {
+                        if ($(this).val() < 0) {
+                            valid = false;
+                            $(this).addClass("error");
+                        }
+                        else {
+                            $(this).removeClass("error");
+                        }
+                    }
+                    else {
+                        valid = false;
+                        $(this).addClass("error");
+                    }
+                }
+            })
 
             console.log(form.serialize());
-            $.ajax({
-                url: '@Url.Action("editSet")',
-                data: form.serialize(),
-                type: 'POST',
-            });
-            
+            if (valid) {
+                $.ajax({
+                    url: '@Url.Action("editSet")',
+                    data: form.serialize(),
+                    type: 'POST',
+                });
+
+                $(this).addClass("disabled").removeClass("enabled");
+            }
             return false;
+        });
+
+        $("input").change(function (event) {
+            $(this).parent().parent().find('.saveLink').removeClass("disabled").addClass("enabled");
         });
 
     });
@@ -46,7 +79,6 @@
                 &nbsp;&nbsp;&nbsp;
             </div>
             <div class="workoutSetCell">               
-                 @Html.HiddenFor(model => item.Stroke.ID)
                 <select id="strokeSelect" name="strokeSelect">
 
                     @foreach (WorkoutPlanObjects.WorkoutStroke stroke in ViewBag.strokes)
@@ -84,7 +116,7 @@
                     "editSet",
                     "Workout",
                     new { url = Request.RawUrl },
-                    new { @class = "EditSet", id = item.OrderNum }
+                    new { @class = "saveLink disabled", id = item.OrderNum }
                 )
             </div>
             <div class="workoutSetCell">

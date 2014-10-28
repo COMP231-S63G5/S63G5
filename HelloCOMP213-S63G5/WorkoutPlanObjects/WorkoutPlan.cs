@@ -11,6 +11,8 @@ namespace WorkoutPlanObjects
         private List<WorkoutSet> _workoutSet;
         private String _date;
 
+        private int _id; // Added ID attribute
+
         public List<WorkoutSet> WorkoutSet
         {
             get { return _workoutSet; }
@@ -19,6 +21,12 @@ namespace WorkoutPlanObjects
         public String Date {
             get { return _date; }
             set { _date = value; }
+        }
+
+        public int ID
+        {
+            get { return _id; }
+            set { _id = value; }
         }
 
         public WorkoutPlan()

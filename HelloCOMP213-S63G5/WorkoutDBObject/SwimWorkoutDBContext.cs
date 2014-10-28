@@ -99,6 +99,99 @@ namespace WorkoutDBObject
             }
 
         }
+
+        // Inserts new Plan
+        public int insertWorkoutPlan(String date)
+        {
+            try
+            {
+                string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "insertWorkoutPlan";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter parm = cmd.Parameters.Add("@date", SqlDbType.Date);
+                parm.Value = new DateTime(int.Parse(date.Substring(6,4)),int.Parse(date.Substring(0,2)),int.Parse(date.Substring(3,2)));
+                
+                int planId = (int)cmd.ExecuteScalar();
+
+                conn.Close();
+
+                return planId;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        // Inserts new set
+        public int insertWorkoutSet(WorkoutSet set)
+        {
+            try
+            {
+                string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "insertWorkoutSet";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@strokeID", set.Stroke.ID);
+                cmd.Parameters.Add("@repeats", set.Repeats);
+                cmd.Parameters.Add("@distance", set.WorkoutSetDistance);
+                cmd.Parameters.Add("@description", set.Description);
+                cmd.Parameters.Add("@paceTime", set.PaceTime);
+                cmd.Parameters.Add("@restPeriod", set.RestPeriod);
+
+                int setId = (int)cmd.ExecuteScalar();
+
+                conn.Close();
+
+                return setId;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        // Inserts workout member
+        public int insertWorkoutPlanMember(int parentId, int childId, int memberOrder)
+        {
+            try
+            {
+                string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "insertWorkoutMember";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@parentId", parentId);
+                cmd.Parameters.Add("@childId", childId);
+                cmd.Parameters.Add("@memberOrder", memberOrder);
+
+                int workoutMemberId = (int)cmd.ExecuteScalar();
+
+                conn.Close();
+
+                return workoutMemberId;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
         //This method returns List Of Existing WorkOut Plan Ids From Database
         public List<int> getWorkOutPlanIds() {
 

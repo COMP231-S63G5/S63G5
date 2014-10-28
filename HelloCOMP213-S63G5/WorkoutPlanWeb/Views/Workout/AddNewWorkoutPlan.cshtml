@@ -46,7 +46,9 @@
 
         document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
 
-        document.getElementsByName("Date")[0].value = tempDate.toDateString();
+        document.getElementsByName("dateField")[0].value = tempDate.getMonth()+1 +"-"+tempDate.getDate()+"-"+tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+
+        console.log(document.getElementsByName("dateField")[0].value);
     }
 
     //Helper function, gets the date of the first Monday of September
@@ -65,17 +67,19 @@
     }
 </script>
 
-
 <h1>Workout Plan</h1>
-<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
-<h4 id="planDateTag"></h4>
 
-@Html.Hidden("dateField");
-
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
+    <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+    <h4 id="planDateTag"></h4>
+
+    @Html.Hidden("dateField");
+
+
 
     <fieldset>
 

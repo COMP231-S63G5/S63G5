@@ -25,6 +25,24 @@ height:32px;
     min-width: 4%;
 }
 
+.error {
+    background-color: red;
+}
+
+a.saveLink
+{
+    background: url("../Images/Save-icon.png") no-repeat top left;
+     display: inline-block;
+     width: 20px;
+     height: 20px;
+     text-indent: -9999px; /* hides the link text */
+}
+
+a.disabled
+{
+    opacity: 0.4;
+}
+
 .workoutSetCell input[type="number"]{
     width: 5%;
     min-width: 25px;

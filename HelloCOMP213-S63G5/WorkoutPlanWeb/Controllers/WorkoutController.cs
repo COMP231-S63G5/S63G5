@@ -40,6 +40,7 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult AddNewWorkoutPlan()
         {
             if (Session["WorkoutSetList"] == null)
@@ -47,9 +48,25 @@ namespace WorkoutPlanWeb.Controllers
                 Session["WorkoutSetList"] = new List<WorkoutSet>();
             }
 
+            Strokes_BLL strokes = new Strokes_BLL();
+            ViewBag.strokes = strokes.getStrokes();
+
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddNewWorkoutPlan(FormCollection form)
+        {
+            WorkOutPlan_DLL plan_dll = new WorkOutPlan_DLL();
+            WorkoutPlan workoutPlan = new WorkoutPlan();
+
+            workoutPlan.Date = form["dateField"];
+            workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
+
+            plan_dll.insertWorkoutPlan(workoutPlan);
+
+            return RedirectToAction("Index", "Home");
+        }
 
         public PartialViewResult createSet()
         {
