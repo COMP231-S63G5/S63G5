@@ -8,7 +8,7 @@ using WorkoutPlanObjects;
 
 namespace WorkoutPlanAPI
 {
-    public class WorkOutPlan_DLL
+    public class WorkOutPlan_BLL
     {
         //This method Would call ListOfWorkOutPlanIDs method to get list of 
         //existing workoutPlan ids from Business Layer.
@@ -17,6 +17,11 @@ namespace WorkoutPlanAPI
             SwimWorkoutDBContext swimDB2 = new SwimWorkoutDBContext();
             List<int> listOfWorkOutPlanIDs = swimDB2.getWorkOutPlanIds();
             return listOfWorkOutPlanIDs;
+        }
+        public List<List<string>> getWorkPlanDetails(int id) {
+            SwimWorkoutDBContext swimDb = new SwimWorkoutDBContext();
+            List<List<string>> listOfWorkOutSets = swimDb.getWorkOutPlan(id);
+            return listOfWorkOutSets;
         }
 
         // Method to insert workout plan to DB

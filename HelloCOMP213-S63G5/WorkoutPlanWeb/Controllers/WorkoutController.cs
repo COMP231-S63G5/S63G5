@@ -57,7 +57,7 @@ namespace WorkoutPlanWeb.Controllers
         [HttpPost]
         public ActionResult AddNewWorkoutPlan(FormCollection form)
         {
-            WorkOutPlan_DLL plan_dll = new WorkOutPlan_DLL();
+            WorkOutPlan_BLL plan_dll = new WorkOutPlan_BLL();
             WorkoutPlan workoutPlan = new WorkoutPlan();
 
             workoutPlan.Date = form["dateField"];

@@ -28,14 +28,7 @@ namespace WorkoutPlanAPI
         }
 
 
-        //This method Would call ListOfWorkOutPlanIDs method to get list of 
-        //existing workoutPlan ids from Business Layer.
-        public List<int> getWorkOutPlanIDsList()
-        {
-            SwimWorkoutDBContext swimDB2 = new SwimWorkoutDBContext();
-            List<int> listOfWorkOutPlanIDs = swimDB2.getWorkOutPlanIds();
-            return listOfWorkOutPlanIDs;
-        }
+     
        
     }
 }
