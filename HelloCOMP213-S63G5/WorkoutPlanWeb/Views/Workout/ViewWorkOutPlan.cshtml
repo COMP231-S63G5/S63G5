@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "ViewWorkOutPlan";
+}
+
+<h2>ViewWorkOutPlan</h2>
+@{
+    int counter=0;
+     
+}
+@foreach (List<string> listOfvalue in ViewBag.listOfSets)    
+{   int innercount=0;
+    counter++;
+    
+    @foreach(string value in listOfvalue){
+        innercount++;
+         @Html.Raw("<input type='text'>" +value + "</input>");
+    }
+}

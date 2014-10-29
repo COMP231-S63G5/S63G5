@@ -18,6 +18,6 @@
     @foreach (int item in ViewBag.listOfWorkOutPlanIDs)
     {
         
-        @Html.Raw("<li>"+@Html.ActionLink(item.ToString(),"","")+"</li>");
+        @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "WorkOutController", new { id = item },null) + "</li>");
     }
 </ul>

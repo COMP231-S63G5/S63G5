@@ -16,6 +16,13 @@ namespace WorkoutPlanWeb.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ViewWorkOutPlan(int id) {
+            WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
+            ViewBag.listOfSets = workoutbll.getWorkPlanDetails(id);
+            return View();
+        }
         
         [HttpGet]
         public ActionResult AddNewPlan()
@@ -35,10 +42,10 @@ namespace WorkoutPlanWeb.Controllers
             return RedirectToAction("Index","Home"); //TO-DO: Need to redirect to view workout plan page. Currently redirecting to the Home page after submit.
         }
 
-        public ActionResult ViewWorkoutPlan()
-        {
-            return View();
-        }
+      //  public ActionResult ViewWorkoutPlan()
+      //  {
+       //     return View();
+       // }
 
         [HttpGet]
         public ActionResult AddNewWorkoutPlan()
