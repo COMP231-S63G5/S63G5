@@ -13,7 +13,7 @@ namespace WorkoutPlanWeb.Controllers
     {
         
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult ViewWorkOutPlan(int id) {
             WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
             ViewBag.listOfSets = workoutbll.getWorkPlanDetails(id);

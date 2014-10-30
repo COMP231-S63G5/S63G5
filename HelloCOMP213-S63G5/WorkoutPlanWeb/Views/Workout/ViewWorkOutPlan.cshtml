@@ -7,12 +7,18 @@
     int counter=0;
      
 }
+
 @foreach (List<string> listOfvalue in ViewBag.listOfSets)    
-{   int innercount=0;
+{  // int innercount=0;
     counter++;
-    
-    @foreach(string value in listOfvalue){
-        innercount++;
-         @Html.Raw("<input type='text'>" +value + "</input>");
+    @Html.Raw("<div class='row' name='workoutset_" + counter + "' disabled>");
+   
+    foreach(string value in listOfvalue){
+    //  innercount++;
+         @Html.Raw("<input type='text' style='width:" + (value.Length * 10) + "px' class='col-xs-10' value='" + value + "' disabled/>");
+   
     }
+    
+    @Html.Raw("<input type='button' id='editset_"+counter+"' class='btn-xs' value='edit'/></div>");
+   
 }
