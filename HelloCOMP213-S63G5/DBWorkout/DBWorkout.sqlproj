@@ -71,4 +71,7 @@
   <ItemGroup>
     <RefactorLog Include="DBWorkout.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DBWorkout.publish.xml" />
+  </ItemGroup>
 </Project>

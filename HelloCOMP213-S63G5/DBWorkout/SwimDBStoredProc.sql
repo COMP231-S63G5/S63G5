@@ -5,8 +5,8 @@
 -- Description:	<This pulls all tbl_stroke values>
 -- =============================================
 
-IF OBJECT_ID ( 'getStrokes', 'P' ) IS NOT NULL 
-    DROP PROCEDURE getStrokes;
+--IF OBJECT_ID ( 'getStrokes', 'P' ) IS NOT NULL 
+  --  DROP PROCEDURE getStrokes;
 GO
 CREATE PROCEDURE getStrokes
 AS 
@@ -21,8 +21,8 @@ GO
 -- Description:	<This pulls a tbl_stroke value for a given ID>
 -- =============================================
 
-IF OBJECT_ID ( 'getStroke', 'P' ) IS NOT NULL 
-    DROP PROCEDURE getStroke;
+--IF OBJECT_ID ( 'getStroke', 'P' ) IS NOT NULL 
+ --   DROP PROCEDURE getStroke;
 GO
 CREATE PROCEDURE getStroke @id int 
 AS 
@@ -39,8 +39,8 @@ GO
 -- Description:	<This pulls a tbl_stroke value for a given ID>
 -- =============================================
 
-IF OBJECT_ID ( 'insertWorkoutPlan', 'P' ) IS NOT NULL 
-    DROP PROCEDURE insertWorkoutPlan;
+--IF OBJECT_ID ( 'insertWorkoutPlan', 'P' ) IS NOT NULL 
+--    DROP PROCEDURE insertWorkoutPlan;
 GO
 CREATE PROCEDURE insertWorkoutPlan @date varchar 
 AS 
@@ -60,8 +60,8 @@ GO
 -- Description:	<This inserts a set>
 -- =============================================
 
-IF OBJECT_ID ( 'insertWorkoutSet', 'P' ) IS NOT NULL 
-    DROP PROCEDURE insertWorkoutSet;
+--IF OBJECT_ID ( 'insertWorkoutSet', 'P' ) IS NOT NULL 
+ --   DROP PROCEDURE insertWorkoutSet;
 GO
 CREATE PROCEDURE insertWorkoutSet	@strokeID int, 
 									@repeats int,
@@ -95,8 +95,8 @@ GO
 -- Description:	<This inserts a record into tbl_workoutplan_member>
 -- =============================================
 
-IF OBJECT_ID ( 'insertWorkoutMember', 'P' ) IS NOT NULL 
-    DROP PROCEDURE insertWorkoutMember;
+--IF OBJECT_ID ( 'insertWorkoutMember', 'P' ) IS NOT NULL 
+--    DROP PROCEDURE insertWorkoutMember;
 GO
 CREATE PROCEDURE insertWorkoutMember	@parentID int, 
 										@childID int,
@@ -110,5 +110,5 @@ AS
      VALUES
            (@parentID
            ,@childID
-           ,@memberOrder
+           ,@memberOrder)
 GO

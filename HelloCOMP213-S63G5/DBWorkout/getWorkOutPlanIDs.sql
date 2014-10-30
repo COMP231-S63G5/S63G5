@@ -1,5 +1,5 @@
-﻿IF OBJECT_ID ( 'getWorkOutPlanIDs', 'P' ) IS NOT NULL 
-    DROP PROCEDURE getWorkOutPlanIDs;
+﻿--IF OBJECT_ID ( 'getWorkOutPlanIDs', 'P' ) IS NOT NULL 
+--    DROP PROCEDURE getWorkOutPlanIDs;
 GO
 CREATE PROCEDURE getWorkOutPlanIDs
 AS 

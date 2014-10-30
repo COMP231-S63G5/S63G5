@@ -1,5 +1,5 @@
-﻿IF OBJECT_ID ( 'getworkoutplan', 'P' ) IS NOT NULL 
-    DROP PROCEDURE getworkoutplan;
+﻿--IF OBJECT_ID ( 'getworkoutplan', 'P' ) IS NOT NULL 
+--    DROP PROCEDURE getworkoutplan;
 GO
 CREATE PROCEDURE getworkoutplan 
     @workoutplanID int
