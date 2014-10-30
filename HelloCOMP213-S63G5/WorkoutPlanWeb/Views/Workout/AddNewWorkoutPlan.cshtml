@@ -1,47 +1,36 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "AddNewWorkoutPlan";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
+}
 <h1>Workout Plan</h1>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+
+<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+<h4 id="planDateTag"></h4>
+
+@Html.Hidden("WorkoutPlan.Date") <!-- TO-DO: Need to pass the date field to controller on save-->
     
-    <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
-    <h4 id="planDateTag"></h4>
 
-    @Html.Hidden("dateField");
+@using (Ajax.BeginForm("createSet", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST"}))
+{
 
 
-    <br />
-    <fieldset>
 
-        @Ajax.ActionLink("Create New Set", 
-                         "createSet",
-                         new {id = 1}, 
-                         new AjaxOptions() {
-                             HttpMethod = "GET", 
-                             InsertionMode = InsertionMode.Replace, 
-                             UpdateTargetId = "setsDiv" 
-                         },
-                         new { id = "createSetLink" }
-                         );
-        
+
+
+
         <div id="setsDiv">
-            @Html.Partial("WorkoutSetList", Session["WorkoutSetList"]);
+
+
+            @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
         </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+    
+        <input type="submit" value="Save Plan" name="command" />
+        <input type="submit" value="Create New Set" name="command" />
+
 }
-
-
 <script type="text/javascript">
 
     // Function will run on page load
@@ -78,9 +67,9 @@
 
         document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
 
-        document.getElementsByName("dateField")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+        document.getElementsByName("WorkoutPlan.Date")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
 
-        console.log(document.getElementsByName("dateField")[0].value);
+        console.log(document.getElementsByName("WorkoutPlan.Date")[0].value);
     }
 
     //Helper function, gets the date of the first Monday of September
@@ -96,7 +85,6 @@
         return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
 
     }
-
 
     // set planDateTag onLoad
     window.onload = onPageLoad();

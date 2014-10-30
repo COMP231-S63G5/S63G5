@@ -11,12 +11,7 @@ namespace WorkoutPlanWeb.Controllers
 
     public class WorkoutController : Controller
     {
-        
-        public ActionResult Index()
-        {
-            return View();
-        }
-        
+
         [HttpGet]
         public ActionResult AddNewPlan()
         {
@@ -39,57 +34,65 @@ namespace WorkoutPlanWeb.Controllers
         {
             return View();
         }
-
         [HttpGet]
         public ActionResult AddNewWorkoutPlan()
         {
             if (Session["WorkoutSetList"] == null)
-            { 
+            {
                 Session["WorkoutSetList"] = new List<WorkoutSet>();
             }
-
             Strokes_BLL strokes = new Strokes_BLL();
             ViewBag.strokes = strokes.getStrokes();
-
             return View();
         }
-
-        [HttpPost]
-        public ActionResult AddNewWorkoutPlan(FormCollection form)
+        
+        public ActionResult SaveWorkoutPlan()
         {
             WorkOutPlan_DLL plan_dll = new WorkOutPlan_DLL();
             WorkoutPlan workoutPlan = new WorkoutPlan();
-
-            workoutPlan.Date = form["dateField"];
+            //workoutPlan = (WorkoutPlan)TempData["temp"];
+            //workoutPlan.Date = form["dateField"];  -- TODO - Need to model bind date field
             workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
 
-            plan_dll.insertWorkoutPlan(workoutPlan);
+           // plan_dll.insertWorkoutPlan(workoutPlan);       -- TODO - Need to test again 
 
-            return RedirectToAction("Index", "Home");
+//            Session.Clear();     --TODO - Do we clear or abandon the session?
+            Session.Abandon();
+            
+            return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index","Home")));
         }
 
-        public PartialViewResult createSet()
+        public ActionResult createSet(WorkoutPlan workoutPlan, string command)
         {
-            
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
-            _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
+            _workoutSets = workoutPlan.WorkoutSet;
+            if (command == "Save Plan")
+            {
+                Session["WorkoutSetList"] = _workoutSets;
+                //TempData["temp"] = workoutPlan;
+                return RedirectToAction("SaveWorkoutPlan","Workout");
 
-            Session["WorkoutSetList"] = _workoutSets;
+            }
+            else
+            {
+                _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
+                Session["WorkoutSetList"] = _workoutSets;
 
-            Strokes_BLL strokes = new Strokes_BLL();
-            ViewBag.strokes = strokes.getStrokes();
+                //Strokes_BLL strokes = new Strokes_BLL();
+                // Session["strokes"] = strokes.getStrokes();        TODO- Look into fixing strokes. 
 
-            return PartialView("WorkoutSetList", _workoutSets);
+                return PartialView("WorkoutSetList", _workoutSets);
+            }
         }
 
         [HttpPost]
-        public ActionResult editSet(FormCollection form)
+        public ActionResult editSet(FormCollection form)  //Code not relevant now, as now there's a better way to update the model. 
         {
             Strokes_BLL strokes = new Strokes_BLL();
             WorkoutSet workoutSet = new WorkoutSet();
-            
+
             workoutSet.Repeats = int.Parse(form["item.Repeats"]);
-            workoutSet.ID = int.Parse(form["item.ID"]); 
+            workoutSet.ID = int.Parse(form["item.ID"]);
             workoutSet.WorkoutSetDistance = int.Parse(form["item.WorkoutSetDistance"]);
             workoutSet.SingleDuration = int.Parse(form["item.SingleDuration"]);
             workoutSet.OrderNum = int.Parse(form["item.OrderNum"]);
@@ -100,7 +103,7 @@ namespace WorkoutPlanWeb.Controllers
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
             _workoutSets[workoutSet.OrderNum - 1] = workoutSet;
 
-           // _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
+            // _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
 
             Session["WorkoutSetList"] = _workoutSets;
 
@@ -110,8 +113,12 @@ namespace WorkoutPlanWeb.Controllers
         // Function to remove a set from the WorkoutSetList Session Variable
         [HttpPost]
         public ActionResult deleteSet(int index)
-        {
-         //   index = index - 1;
+        {       
+            //TO-DO - Update the model before deleting. 
+
+
+
+            //   index = index - 1;
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
 
             _workoutSets.RemoveAt(index - 1);
@@ -121,12 +128,12 @@ namespace WorkoutPlanWeb.Controllers
             {
                 _workoutSets[i].OrderNum = i + 1;
             }
-            
+
             Session["WorkoutSetList"] = _workoutSets;
 
-            Strokes_BLL strokes = new Strokes_BLL();
-            ViewBag.strokes = strokes.getStrokes();
-            
+            //Strokes_BLL strokes = new Strokes_BLL();
+            //Session["strokes"] = strokes.getStrokes();  TODO- Look into strokes
+
             return PartialView("WorkoutSetList", _workoutSets);
         }
 
