@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "ViewWorkoutPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Workout Plan</h1>
+<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+<h4 id="planDateTag"></h4>
+
+<!--
+    WORKOUT PLAN FORM
+-->
+<form id="addworkoutplanform" class="content-wrapper">
+    <br>
+    <div class="workoutsetGroup">
+
+        <table class="workoutTable">
+            <tr id="lastRow">
+                <td>
+                    <input type="button" id="addNewWorkoutSetBtn" class="btn sm" onclick="addWorkOutsetRow();" value="Add Set..." />
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</form>
