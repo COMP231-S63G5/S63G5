@@ -52,7 +52,7 @@ namespace WorkoutPlanWeb.Controllers
 
             return View(wp1);
         }
-        
+        /*
         [HttpGet]
         public ActionResult AddNewPlan()
         {
@@ -70,12 +70,7 @@ namespace WorkoutPlanWeb.Controllers
 
             return RedirectToAction("Index","Home"); //TO-DO: Need to redirect to view workout plan page. Currently redirecting to the Home page after submit.
         }
-
-      //  public ActionResult ViewWorkoutPlan()
-      //  {
-       //     return View();
-       // }
-
+        */
         [HttpGet]
         public ActionResult AddNewWorkoutPlan()
         {

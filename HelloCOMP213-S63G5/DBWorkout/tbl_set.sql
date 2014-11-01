@@ -6,5 +6,12 @@
 	distance int not null,
 	description varchar(40) not null,
 	paceTime varchar(10),
-	restPeriod varchar(10)
+	restPeriod varchar(10),
+	E1 int not null default 0,
+	E2 int NOT NULL DEFAULT 0,
+	E3 int NOT NULL DEFAULT 0,
+	S1 int NOT NULL DEFAULT 0,
+	S2 int NOT NULL DEFAULT 0,
+	S3 int NOT NULL DEFAULT 0,
+	REC int NOT NULL DEFAULT 0
 );
