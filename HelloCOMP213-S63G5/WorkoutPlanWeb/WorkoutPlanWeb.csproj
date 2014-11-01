@@ -310,6 +310,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Workout\AddNewPlan.cshtml" />
+    <Content Include="Views\Workout\AddNewWorkoutPlan.cshtml" />
+    <Content Include="Views\Workout\WorkoutSetList.cshtml" />
+    <Content Include="Views\Workout\ViewWorkOutPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

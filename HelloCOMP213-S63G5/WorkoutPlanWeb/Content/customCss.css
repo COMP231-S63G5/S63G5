@@ -8,21 +8,38 @@ float:left;
 height:32px;
 }
 
-.workoutSetForm {
-    width:100%;
+.workoutSetTable {
+    width:960px;
 }
 
 .workoutSetCell {
     vertical-align:middle;
-    display:inline;
+    text-align:center;
+    margin:auto;
+    padding:2px;
 }
 
+.number {
+    width: 55px;
+}
+
+.text {
+    width: 165px;
+}
+.label {
+    width: 10px;
+    margin:auto;
+}
 .workoutSetCell h4{
     display:inline;
 }
 
 .blankspace {
-    min-width: 4%;
+    width: 45px;
+}
+
+.select {
+    width: 110px;
 }
 
 .error {
@@ -54,12 +71,13 @@ a.disabled
 }
 
 .workoutSetCell input[type="number"]{
-    width: 5%;
-    min-width: 25px;
+    width: 75%;
+    margin-left:auto;
+    margin-right: auto;
 }
 
 .workoutSetCell input[type="text"]{
-    width: 15%;
+    width: 80%;
     min-width: 25px;
 }
 
@@ -67,23 +85,16 @@ a.disabled
     display: none;
 }
 
-.workoutTable td input, td select{
-    width:80%;
-    margin-top:auto;
-    margin-bottom:auto;
-    display:inline-block;
-    
+.workoutSetCell select{
+    width:75%;    
+    border-radius:10px;
+    height:30px;
 }
 
 .workoutTable td.label{
     vertical-align:middle;
     display:normal;
     width:2%;
-}
-
-select {
-    border-radius:10px;
-    height:30px;
 }
 
 /*
