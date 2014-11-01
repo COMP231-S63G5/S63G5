@@ -64,7 +64,7 @@
                 @Html.HiddenFor(model => item.OrderNum)
             </div>
             <div class="workoutRepeats workoutSetCell">
-                @Html.EditorFor(modelItem => item.Repeats)
+                @Html.EditorFor(modelItem => item.Repeats, new { placeholder = "Repeats" })
             </div>
             <div class="workoutSetCell">
                 X
