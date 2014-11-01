@@ -18,9 +18,10 @@ namespace WorkoutPlanAPI
             List<int> listOfWorkOutPlanIDs = swimDB2.getWorkOutPlanIds();
             return listOfWorkOutPlanIDs;
         }
-        public List<List<string>> getWorkPlanDetails(int id) {
+        public List<Dictionary<string, string>> getWorkPlanDetails(int id)
+        {
             SwimWorkoutDBContext swimDb = new SwimWorkoutDBContext();
-            List<List<string>> listOfWorkOutSets = swimDb.getWorkOutPlan(id);
+            List<Dictionary<string, string>> listOfWorkOutSets = swimDb.getWorkOutPlan(id);
             return listOfWorkOutSets;
         }
 

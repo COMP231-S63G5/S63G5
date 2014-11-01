@@ -15,9 +15,42 @@ namespace WorkoutPlanWeb.Controllers
 
         [HttpGet]
         public ActionResult ViewWorkOutPlan(int id) {
+
             WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
-            ViewBag.listOfSets = workoutbll.getWorkPlanDetails(id);
-            return View();
+            List<Dictionary<string, string>> listOfSets = workoutbll.getWorkPlanDetails(id);
+
+            WorkoutPlan wp1 = new WorkoutPlan();
+            if (listOfSets.Count > 0)
+            {
+                wp1.Date = listOfSets[0]["planDate"];
+                wp1.ID = Convert.ToInt32(listOfSets[0]["WorkOutPlan_ID"]);
+            }
+               List<WorkoutSet> wp1_sets=new List<WorkoutSet>();
+
+                foreach(Dictionary<string,string> set in listOfSets){
+                    WorkoutSet setObj = new WorkoutSet();
+                    setObj.ID = Convert.ToInt32(set["Set_Id"]);
+                    setObj.OrderNum = Convert.ToInt32(set["memberOrder"]);
+                    setObj.PaceTime = Convert.ToInt32(set["paceTime"]);
+                    setObj.Repeats = Convert.ToInt32(set["repeats"]);
+                    setObj.RestPeriod = Convert.ToInt32(set["restPeriod"]);
+                    setObj.Description = set["Set_Desc"];
+                    setObj.WorkoutSetDistance = Convert.ToInt32(set["distance"]);
+
+                    int strokeID = Convert.ToInt32(set["Stroke_Id"]);
+                    string stroke_name = set["Name"];
+                    string stroke_desc = set["Stroke_Desc"];
+                    WorkoutStroke stroke = new WorkoutStroke(strokeID,stroke_name,stroke_desc);
+
+                    setObj.Stroke = stroke;
+
+                    wp1_sets.Add(setObj);
+                }
+
+                wp1.WorkoutSet = wp1_sets;
+
+
+            return View(wp1);
         }
         
         [HttpGet]
@@ -29,7 +62,7 @@ namespace WorkoutPlanWeb.Controllers
             workoutPlan.WorkoutSet = new List<WorkoutSet>();
             return View(workoutPlan);
         }
-
+        
         [HttpPost]
         public ActionResult AddNewPlan(WorkoutPlan workoutPlan)
         {

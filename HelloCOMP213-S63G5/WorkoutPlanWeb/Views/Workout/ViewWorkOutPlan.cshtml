@@ -5,23 +5,23 @@
 @model WorkoutPlanObjects.WorkoutPlan
 
 <h2>ViewWorkOutPlan</h2>
-@{
-    int counter=0;
-     
-}
-
-@foreach (List<string> listOfvalue in ViewBag.listOfSets)    
+<h2>@Html.Raw(Model.Date)</h2>
+@Html.Partial("WorkoutSetList", Model.WorkoutSet)
+<!--
+/*
+//foreach (List<string> listOfvalue in ViewBag.listOfSets)    
 {  // int innercount=0;
     counter++;
-    @Html.Raw("<div class='row' name='workoutset_" + counter + "' disabled>");
+    //   //Html.Raw("<div class='row' name='workoutset_" + counter + "' disabled>");
    
     foreach(string value in listOfvalue){
     //  innercount++;
-         @Html.Raw("<input type='text' style='width:" + (value.Length * 10) + "px' class='col-xs-10' value='" + value + "' disabled/>");
+         //Html.Raw("<input type='text' style='width:" + (value.Length * 10) + "px' class='col-xs-10' value='" + value + "' disabled/>");
    
     }
     
-    @Html.Raw("<input type='button' id='editset_"+counter+"' class='btn-xs' value='edit'/></div>");
+    //Html.Raw("<input type='button' id='editset_"+counter+"' class='btn-xs' value='edit'/></div>");
    
 }
+   -->
 @Html.ActionLink("Print", "PrintPlan", "Workout");

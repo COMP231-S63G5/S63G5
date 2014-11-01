@@ -230,9 +230,10 @@ namespace WorkoutDBObject
         }//end of getWorkOutPlanIds method
 
 
-        public List<List<string>> getWorkOutPlan(int id) {
+        public List<Dictionary<string, string>> getWorkOutPlan(int id)
+        {
 
-            List<List<string>> listOfSets = new List<List<string>>();
+            List<Dictionary<string, string>> listOfSets = new List<Dictionary<string, string>>();
             try{
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
                 
@@ -248,20 +249,21 @@ namespace WorkoutDBObject
             
                 while (reader.Read())
                 {
-                    List<string> listOfValues = new List<string>(); 
-                    listOfValues.Add(reader["WorkOutPlan_ID"].ToString());
-                    listOfValues.Add(reader["Set_Id"].ToString());
-                    listOfValues.Add(reader["Stroke_Id"].ToString());
-                    listOfValues.Add(reader["Name"].ToString());
-                    listOfValues.Add(reader["Description"].ToString());
-                    listOfValues.Add(reader["Member_Id"].ToString());
-                    listOfValues.Add(reader["memberOrder"].ToString());
-                    listOfValues.Add(reader["planDate"].ToString());
-                    listOfValues.Add(reader["repeats"].ToString());
-                    listOfValues.Add(reader["distance"].ToString());
-                    listOfValues.Add(reader["effortLevel"].ToString());
-                    listOfValues.Add(reader["paceTime"].ToString());
-                    listOfValues.Add(reader["restPeriod"].ToString());
+
+                    Dictionary<string, string> listOfValues = new Dictionary<string,string>();
+                    listOfValues.Add("WorkOutPlan_ID", reader["WorkOutPlan_ID"].ToString());
+                    listOfValues.Add("Set_Id",reader["Set_Id"].ToString());
+                    listOfValues.Add("Stroke_Id",reader["Stroke_Id"].ToString());
+                    listOfValues.Add("Name",reader["Name"].ToString());
+                    listOfValues.Add("Stroke_Desc", reader["Stroke_Desc"].ToString());
+                    listOfValues.Add("Member_Id", reader["Member_Id"].ToString());
+                    listOfValues.Add("memberOrder", reader["memberOrder"].ToString());
+                    listOfValues.Add("planDate",reader["planDate"].ToString());
+                    listOfValues.Add("repeats",reader["repeats"].ToString());
+                    listOfValues.Add("distance",reader["distance"].ToString());
+                    listOfValues.Add("Set_Desc",reader["Set_Desc"].ToString());
+                    listOfValues.Add("paceTime",reader["paceTime"].ToString());
+                    listOfValues.Add("restPeriod",reader["restPeriod"].ToString());
                     listOfSets.Add(listOfValues);
                 }
 
