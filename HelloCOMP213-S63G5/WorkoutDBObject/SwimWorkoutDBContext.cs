@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 
 using WorkoutPlanObjects;
+using System.Collections;
 
 
 namespace WorkoutDBObject
@@ -17,6 +18,7 @@ namespace WorkoutDBObject
         private SqlConnection conn;
         private SqlCommand cmd;
         private SqlDataReader reader;
+        
 
         public SwimWorkoutDBContext()
         {
@@ -222,15 +224,63 @@ namespace WorkoutDBObject
                 //ADDING -1 to List Of returned ids if there is any error
                 listOfWorkOutPlanIds.Add(-1);
             }
-            finally
-            {
-
-            }
+           
 
             return listOfWorkOutPlanIds;
         }//end of getWorkOutPlanIds method
 
 
+        public List<Dictionary<string, string>> getWorkOutPlan(int id)
+        {
+
+            List<Dictionary<string, string>> listOfSets = new List<Dictionary<string, string>>();
+            try{
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                
+                
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "getworkoutplan";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@workoutplanID", id);
+                reader = cmd.ExecuteReader();
+            
+                while (reader.Read())
+                {
+
+                    Dictionary<string, string> listOfValues = new Dictionary<string,string>();
+                    listOfValues.Add("WorkOutPlan_ID", reader["WorkOutPlan_ID"].ToString());
+                    listOfValues.Add("Set_Id",reader["Set_Id"].ToString());
+                    listOfValues.Add("Stroke_Id",reader["Stroke_Id"].ToString());
+                    listOfValues.Add("Name",reader["Name"].ToString());
+                    listOfValues.Add("Stroke_Desc", reader["Stroke_Desc"].ToString());
+                    listOfValues.Add("Member_Id", reader["Member_Id"].ToString());
+                    listOfValues.Add("memberOrder", reader["memberOrder"].ToString());
+                    listOfValues.Add("planDate",reader["planDate"].ToString());
+                    listOfValues.Add("repeats",reader["repeats"].ToString());
+                    listOfValues.Add("distance",reader["distance"].ToString());
+                    listOfValues.Add("Set_Desc",reader["Set_Desc"].ToString());
+                    listOfValues.Add("paceTime",reader["paceTime"].ToString());
+                    listOfValues.Add("restPeriod",reader["restPeriod"].ToString());
+                    listOfSets.Add(listOfValues);
+                }
+
+                conn.Close();   
+              }
+              catch (Exception)
+              {
+                   
+                //   List<string> listOfValues = new List<string>();
+                //    listOfValues.Add("Error");
+                //    listOfSets.Add();
+                  return null;
+               }
+
+            return listOfSets;
+        
+        }
 
     }
 }

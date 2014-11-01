@@ -1,137 +1,73 @@
 ﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSet>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
 
-        $('a.saveLink').click(function (event) {
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    @{var count = 0;}
+    @foreach (var item in Model)
+    {
 
-            if ($(this).hasClass('disabled')) {
-                return false;
-            }
 
-            var rowId = event.target.id;
-            console.log("You clicked on:", rowId);
+    @Html.HiddenFor(model => item.ID, new {@Name= "WorkoutSet[" + count + "].ID" })
+    <div>
+        @Html.HiddenFor(model => item.OrderNum,new {@Name="WorkoutSet[" + count + "].OrderNum"})
+    </div>
+    <div class="workoutRepeats workoutSetCell">
+        @Html.EditorFor(modelItem => item.Repeats, null, "WorkoutSet[" + count + "].Repeats")
+    </div>
+    <div class="workoutSetCell">
+        X
+    </div>
+    <div class="workoutSetCell">
+        @Html.EditorFor(modelItem => item.WorkoutSetDistance, null, "WorkoutSet[" + count + "].WorkoutSetDistance")
+    </div>
+    <div class="workoutSetCell">
+        m
+    </div>
+    <div class="workoutSetCell blankspace">
+        &nbsp;&nbsp;&nbsp;
+    </div>
+    <div class="workoutSetCell">
+        <!--Html.HiddenFor(model => item.Stroke.ID, new { Name = "WorkoutSet[" + count + "].Stroke.ID" })-->
+        <select id="strokeSelect" name="strokeSelect">
 
-            var form = $(this).closest('form');
-            var valid = true;
+            <!--foreach (WorkoutPlanObjects.WorkoutStroke stroke in (List<WorkoutPlanObjects.WorkoutStroke>)Session["strokes"])
+            {
+                <option value="stroke.ID">
+                        if (item.Stroke.ID == stroke.ID) { Html.Raw("selected")    }
+                   stroke.Name
+                </option>
+            }-->
+        </select>
+    </div>
+    <div class="workoutSetCell">
+        <h4>[</h4>
+    </div>
+    <div class="workoutSetCell">
+        @Html.TextBoxFor(modelItem => item.Description, new{ @Name="WorkoutSet[" + count + "].Description",@Placeholder="Description"} )
+    </div>
+    <div class="workoutSetCell">
+        <h4>]</h4>
+    </div>
+    <div class="workoutSetCell">
+        @Html.EditorFor(modelItem => item.PaceTime, null, "WorkoutSet[" + count + "].PaceTime")
+    </div>
+    <div class="workoutSetCell">
+        @Html.EditorFor(modelItem => item.SingleDuration, null, "WorkoutSet[" + count + "].SingleDuration")
+    </div>
+    <div class="workoutSetCell">
+        @Ajax.ActionLink("Delete",
+        "deleteSet",
+        new { index = item.OrderNum },
+        new AjaxOptions()
+        {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "setsDiv"
+        },
+        new { id = "deleteSetLink" }
+        )
+    </div>
 
-            form.find('input').each(function () {
-                console.log($(this).attr("id") + ": " + $(this).prop("tagName") + " " + $(this).attr("type"));
-                if ($(this).attr("type") == "number" ) {
-                    console.log("number");
-                    if ($.isNumeric($(this).val())) {
-                        if ($(this).val() < 0) {
-                            valid = false;
-                            $(this).addClass("error");
-                        }
-                        else {
-                            $(this).removeClass("error");
-                        }
-                    }
-                    else {
-                        valid = false;
-                        $(this).addClass("error");
-                    }
-                }
-            })
-
-            console.log(form.serialize());
-            if (valid) {
-                $.ajax({
-                    url: '@Url.Action("editSet")',
-                    data: form.serialize(),
-                    type: 'POST',
-                });
-
-                $(this).addClass("disabled").removeClass("enabled");
-            }
-            return false;
-        });
-
-        $("input").change(function (event) {
-            $(this).parent().parent().find('.saveLink').removeClass("disabled").addClass("enabled");
-        });
-
-    });
-</script>
-
-@foreach (var item in Model) {
-        
-        <form class="workoutSetForm">
-            @Html.HiddenFor(model => item.ID)
-            <div>
-                @Html.HiddenFor(model => item.OrderNum)
-            </div>
-            <div class="workoutRepeats workoutSetCell">
-                @Html.EditorFor(modelItem => item.Repeats, new { placeholder = "Repeats" })
-            </div>
-            <div class="workoutSetCell">
-                X
-            </div>
-            <div class="workoutSetCell">
-                @Html.EditorFor(modelItem => item.WorkoutSetDistance)
-            </div>
-            <div class="workoutSetCell">
-                m
-            </div>
-            <div class="workoutSetCell blankspace">
-                &nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="workoutSetCell">               
-                <select id="strokeSelect" name="strokeSelect">
-
-                    @foreach (WorkoutPlanObjects.WorkoutStroke stroke in ViewBag.strokes)
-                    {
-                        <option value="@stroke.ID" 
-                                
-                                @if(item.Stroke.ID == stroke.ID)
-                                {
-                                    @Html.Raw("selected")
-                                        
-                                }
-
-                                > @stroke.Name </option>
-                    }
-                </select>
-            </div>
-            <div class="workoutSetCell">
-                <h4>[</h4>
-            </div>
-            <div class="workoutSetCell">
-                @Html.TextBoxFor(modelItem => item.Description, new { placeholder="Description" })
-            </div>
-            <div class="workoutSetCell">
-                <h4>]</h4>
-            </div>
-            <div class="workoutSetCell">
-                @Html.EditorFor(modelItem => item.PaceTime)
-            </div>
-            <div class="workoutSetCell">
-                @Html.EditorFor(modelItem => item.SingleDuration)
-            </div>
-            <div class="workoutSetCell">
-                @Html.ActionLink(
-                    "Save",
-                    "editSet",
-                    "Workout",
-                    new { url = Request.RawUrl },
-                    new { @class = "saveLink disabled", id = item.OrderNum }
-                )
-            </div>
-            <div class="workoutSetCell">
-                @Ajax.ActionLink("Delete",
-                         "deleteSet",
-                         new { index = item.OrderNum  },
-                         new AjaxOptions()
-                         {
-                             HttpMethod = "POST",
-                             InsertionMode = InsertionMode.Replace,
-                             UpdateTargetId = "setsDiv"
-                         },
-                         new { @class = "deleteLink", id = "deleteSetLink" }
-                         );
-            </div>
-        </form>
-}
+    count++;
+    }
 

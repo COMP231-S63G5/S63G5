@@ -15,7 +15,7 @@ namespace WorkoutPlanWeb.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             
-            Strokes_BLL StrokesBllObj = new Strokes_BLL();
+            WorkOutPlan_BLL StrokesBllObj = new WorkOutPlan_BLL();
             ViewBag.listOfWorkOutPlanIDs = StrokesBllObj.getWorkOutPlanIDsList();
        
             return View();

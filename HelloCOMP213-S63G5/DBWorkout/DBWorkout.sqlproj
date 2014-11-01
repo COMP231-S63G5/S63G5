@@ -65,10 +65,11 @@
     <Build Include="tbl_workoutplan.sql" />
     <Build Include="tbl_workoutplan_member.sql" />
     <Build Include="SwimDBStoredProc.sql" />
-    <Build Include="getWorkoutPlan.sql" />
-    <Build Include="getWorkOutPlanIDs.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DBWorkout.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBWorkout.publish.xml" />
   </ItemGroup>
 </Project>
