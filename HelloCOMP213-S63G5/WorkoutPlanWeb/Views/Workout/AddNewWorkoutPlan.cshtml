@@ -5,22 +5,20 @@
 }
 <h1>Workout Plan</h1>
 
-
 <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
 <h4 id="planDateTag"></h4>
 
-@Html.Hidden("WorkoutPlan.Date") <!-- TO-DO: Need to pass the date field to controller on save-->
-    
-
-@using (Ajax.BeginForm("createSet", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST"}))
+@using (Ajax.BeginForm("workoutAction", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
 {
+  @Html.Hidden("WorkoutPlanDate")
+  @Html.Hidden("deleteId")
+
+    <h4 id="planDateTag"></h4>
+
         <div id="setsDiv">
-
-
             @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
         </div>
-
-    
+ 
         <input type="submit" value="Save Plan" name="command" />
         <input type="submit" value="Create New Set" name="command" />
 
@@ -61,9 +59,9 @@
 
         document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
 
-        document.getElementsByName("WorkoutPlan.Date")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+        document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
 
-        console.log(document.getElementsByName("WorkoutPlan.Date")[0].value);
+        console.log(document.getElementsByName("WorkoutPlanDate")[0].value);
     }
 
     //Helper function, gets the date of the first Monday of September

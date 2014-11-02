@@ -87,40 +87,52 @@ namespace WorkoutPlanWeb.Controllers
         {
             WorkOutPlan_BLL plan_dll = new WorkOutPlan_BLL();
             WorkoutPlan workoutPlan = new WorkoutPlan();
-            //workoutPlan = (WorkoutPlan)TempData["temp"];
-            //workoutPlan.Date = form["dateField"];  -- TODO - Need to model bind date field
             workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
-
-           // plan_dll.insertWorkoutPlan(workoutPlan);       -- TODO - Need to test again 
-
-//            Session.Clear();     --TODO - Do we clear or abandon the session?
-            Session.Abandon();
+            workoutPlan.Date = Session["WorkoutPlanDate"] as String;
+            plan_dll.insertWorkoutPlan(workoutPlan);        
+            Session.Clear();   
+            
             
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index","Home")));
         }
 
-        public ActionResult createSet(WorkoutPlan workoutPlan, string command)
+        public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int deleteId = -1,string command = "")
         {
+            Strokes_BLL strokes = new Strokes_BLL();
+            Session["strokes"] = strokes.getStrokes();                    
+            Session["WorkoutPlanDate"] = WorkoutPlanDate;
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
             _workoutSets = workoutPlan.WorkoutSet;
+            Session["WorkoutSetList"] = _workoutSets;
             if (command == "Save Plan")
-        {
-                Session["WorkoutSetList"] = _workoutSets;
-                //TempData["temp"] = workoutPlan;
+            {           
                 return RedirectToAction("SaveWorkoutPlan","Workout");
             
             }
+            else if(command == "Create New Set")
+            {
+                return RedirectToAction("createSet", "Workout");
+            }
+            else if(command == "delete")
+            {
+                return RedirectToAction("deleteSet", "Workout", new { index = deleteId});
+            }
             else
             {
-            _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
-            Session["WorkoutSetList"] = _workoutSets;
-
-                //Strokes_BLL strokes = new Strokes_BLL();
-                // Session["strokes"] = strokes.getStrokes();        TODO- Look into fixing strokes. 
-
-            return PartialView("WorkoutSetList", _workoutSets);
+                return View(); //TO-DO: 
+            }
         }
+        public PartialViewResult createSet()
+        {
+             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
+             _workoutSets.Add(new WorkoutSet(_workoutSets.Count + 1));
+             Session["WorkoutSetList"] = _workoutSets;
+
+             return PartialView("WorkoutSetList", _workoutSets);   
         }
+        
+
+
 
         [HttpPost]
         public ActionResult editSet(FormCollection form)  //Code not relevant now, as now there's a better way to update the model. 
@@ -148,13 +160,10 @@ namespace WorkoutPlanWeb.Controllers
         }
 
         // Function to remove a set from the WorkoutSetList Session Variable
-        [HttpPost]
-        public ActionResult deleteSet(int index)
+        
+        public PartialViewResult deleteSet(int index)
         {
-            //TO-DO - Update the model before deleting. 
-
-
-
+            
          //   index = index - 1;
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
 

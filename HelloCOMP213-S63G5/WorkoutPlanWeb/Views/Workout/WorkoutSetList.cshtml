@@ -44,17 +44,7 @@
             <td class="workoutSetCell blankspace">
             </td>
             <td class="workoutSetCell select ">
-                <!--Html.HiddenFor(model => item.Stroke.ID, new { Name = "WorkoutSet[" + count + "].Stroke.ID" })-->
-                <select id="strokeSelect" name="strokeSelect">
-
-                    <!--foreach (WorkoutPlanObjects.WorkoutStroke stroke in (List<WorkoutPlanObjects.WorkoutStroke>)Session["strokes"])
-                    {
-                        <option value="stroke.ID">
-                                if (item.Stroke.ID == stroke.ID) { Html.Raw("selected")    }
-                           stroke.Name
-                        </option>
-                    }-->
-                </select>
+               @Html.DropDownListFor(model => item.Stroke.ID, new SelectList((List<WorkoutPlanObjects.WorkoutStroke>)Session["strokes"], "ID", "Name", item.Stroke.ID), new { @Name = "WorkoutSet[" + count + "].Stroke.ID" })
             </td>
             <td class="workoutSetCell label">
                 <h4>[</h4>
@@ -91,8 +81,9 @@
                 @Html.EditorFor(modelItem => item.S3, null, "WorkoutSet[" + count + "].S3")
             </td>
             <td class="workoutSetCell">
-                @Ajax.ActionLink("Delete",
-                                 "deleteSet",
+                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('deleteId')[0].value = @item.OrderNum"/>
+                <!--Ajax.ActionLink("Delete",
+                                "deleteSet",
                                  new { index = item.OrderNum },
                                  new AjaxOptions()
                                  {
@@ -100,8 +91,8 @@
                                      InsertionMode = InsertionMode.Replace,
                                      UpdateTargetId = "setsDiv"
                                  },
-                                 new { id = "deleteSetLink" }
-                                 )
+                                 new { id = "deleteSetLink"}
+                                 )-->
                 @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })
                 @Html.HiddenFor(model => item.OrderNum, new { @Name = "WorkoutSet[" + count + "].OrderNum" })
             </td>

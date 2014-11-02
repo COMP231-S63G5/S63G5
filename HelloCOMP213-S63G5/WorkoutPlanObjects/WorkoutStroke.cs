@@ -36,5 +36,7 @@ namespace WorkoutPlanObjects
             Name = name;
             Description = description;
         }
+
+        public WorkoutStroke() {}
     }
 }
