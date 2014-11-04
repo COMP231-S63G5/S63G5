@@ -83,6 +83,26 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
+        public ActionResult PrintWorkoutPlan(int id)
+        {
+            WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
+            WorkoutPlan workoutPlan = new WorkoutPlan();
+            //workoutPlan = (WorkoutPlan)workoutbll.getWorkPlanDetails(id);       --Will be uncommented once the getWorkPlanDetails returns the correct type(WorkoutPlan).
+
+            if (workoutPlan != null)
+            {
+                PrintToPDF printToPdf = new PrintToPDF(workoutPlan);
+            }
+            else
+            {
+                //TO-DO: return error
+            }
+            
+
+            return View();
+        }
+
+
         public ActionResult SaveWorkoutPlan()
         {
             WorkOutPlan_BLL plan_dll = new WorkOutPlan_BLL();
