@@ -230,10 +230,10 @@ namespace WorkoutDBObject
         }//end of getWorkOutPlanIds method
 
 
-        public List<Dictionary<string, string>> getWorkOutPlan(int id)
+        public WorkoutPlan getWorkOutPlan(int id)
         {
-
-            List<Dictionary<string, string>> listOfSets = new List<Dictionary<string, string>>();
+            WorkoutPlan workoutplan = new WorkoutPlan();
+            List<WorkoutSet> listOfSets = new List<WorkoutSet>();
             try{
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
                 
@@ -246,27 +246,46 @@ namespace WorkoutDBObject
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@workoutplanID", id);
                 reader = cmd.ExecuteReader();
-            
+
+
+                workoutplan.ID = id;
+                
+                
+
                 while (reader.Read())
                 {
+                    if (workoutplan.Date==null || workoutplan.Date=="")
+                    {
+                        workoutplan.Date = reader["planDate"].ToString();
+                    }
+                    WorkoutSet WOSet = new WorkoutSet();
+                    WorkoutStroke stroke = new WorkoutStroke();
 
-                    Dictionary<string, string> listOfValues = new Dictionary<string,string>();
-                    listOfValues.Add("WorkOutPlan_ID", reader["WorkOutPlan_ID"].ToString());
-                    listOfValues.Add("Set_Id",reader["Set_Id"].ToString());
-                    listOfValues.Add("Stroke_Id",reader["Stroke_Id"].ToString());
-                    listOfValues.Add("Name",reader["Name"].ToString());
-                    listOfValues.Add("Stroke_Desc", reader["Stroke_Desc"].ToString());
-                    listOfValues.Add("Member_Id", reader["Member_Id"].ToString());
-                    listOfValues.Add("memberOrder", reader["memberOrder"].ToString());
-                    listOfValues.Add("planDate",reader["planDate"].ToString());
-                    listOfValues.Add("repeats",reader["repeats"].ToString());
-                    listOfValues.Add("distance",reader["distance"].ToString());
-                    listOfValues.Add("Set_Desc",reader["Set_Desc"].ToString());
-                    listOfValues.Add("paceTime",reader["paceTime"].ToString());
-                    listOfValues.Add("restPeriod",reader["restPeriod"].ToString());
-                    listOfSets.Add(listOfValues);
+                    WOSet.ID=Convert.ToInt32(reader["Set_Id"]);
+                    stroke.ID=Convert.ToInt32(reader["Stroke_Id"]);
+                    stroke.Name=reader["Name"].ToString();
+                    stroke.Description= reader["Stroke_Desc"].ToString();
+                    //listOfValues.Add("Member_Id", reader["Member_Id"].ToString());
+                    WOSet.OrderNum=Convert.ToInt32(reader["memberOrder"]);
+                  //  listOfValues.Add("planDate",reader["planDate"].ToString());
+                    WOSet.Repeats=Convert.ToInt32(reader["repeats"]);
+                    WOSet.WorkoutSetDistance=Convert.ToInt32(reader["distance"]);
+                    WOSet.Description=reader["Set_Desc"].ToString();
+                    WOSet.PaceTime = Convert.ToInt32(reader["paceTime"]);
+                    WOSet.RestPeriod=Convert.ToInt32(reader["restPeriod"]);
+                    WOSet.Stroke = stroke;
+                    WOSet.E1 =Convert.ToInt32(reader["E1"]);
+                    WOSet.E2 = Convert.ToInt32(reader["E2"]);
+                    WOSet.E3 = Convert.ToInt32(reader["E3"]);
+                    WOSet.S1 = Convert.ToInt32(reader["S1"]);
+                    WOSet.S2 = Convert.ToInt32(reader["S2"]);
+                    WOSet.S3 = Convert.ToInt32(reader["S3"]);
+                   
+
+                    listOfSets.Add(WOSet);
                 }
 
+                workoutplan.WorkoutSet = listOfSets;
                 conn.Close();   
               }
               catch (Exception)
@@ -278,7 +297,7 @@ namespace WorkoutDBObject
                   return null;
                }
 
-            return listOfSets;
+            return workoutplan;
         
         }
 

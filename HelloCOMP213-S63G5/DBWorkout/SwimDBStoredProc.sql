@@ -130,7 +130,8 @@ AS
 			tbl_workoutplan.planDate,
 			tbl_set.repeats,
 			tbl_set.distance,tbl_set.description AS Set_Desc,
-			tbl_set.paceTime,tbl_set.restPeriod
+			tbl_set.paceTime,tbl_set.restPeriod,
+			tbl_set.E1,tbl_set.E2,tbl_set.E3,tbl_set.S1,tbl_set.S2,tbl_set.S3,tbl_set.REC
     FROM tbl_set
 			inner join tbl_workoutplan_member ON tbl_workoutplan_member.childID=tbl_set.ID
 			inner join tbl_workoutplan ON tbl_workoutplan.ID=tbl_workoutplan_member.parentID
