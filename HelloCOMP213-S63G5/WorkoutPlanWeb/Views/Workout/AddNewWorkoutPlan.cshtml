@@ -59,7 +59,7 @@
 
         document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
 
-        document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+        document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "/" + tempDate.getDate() + "/" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
 
         console.log(document.getElementsByName("WorkoutPlanDate")[0].value);
     }

@@ -11,7 +11,7 @@ namespace WorkoutPlanObjects
 
         private int _restPeriod;
         private int _paceTime;
-        private string _description;
+        private string _description = "";
 
         //Energy Fields
         private int _E1;
@@ -20,6 +20,7 @@ namespace WorkoutPlanObjects
         private int _S1;
         private int _S2;
         private int _S3;
+        private int _REC;
 
         public string Description 
         {
@@ -70,7 +71,11 @@ namespace WorkoutPlanObjects
             get { return _S3; }
             set { _S3 = value; }
         }
-
+        public int REC
+        {
+            get { return _REC; }
+            set { _REC = value; }
+        }
 
         public WorkoutSet(  int repeats, 
                             int workoutsetdistance, 
@@ -84,7 +89,8 @@ namespace WorkoutPlanObjects
                             int E3 = 0, 
                             int S1 = 0, 
                             int S2 = 0, 
-                            int S3 = 0 )
+                            int S3 = 0,
+                            int REC = 0)
         {
             Repeats = repeats;
             WorkoutSetDistance = workoutsetdistance;           
@@ -99,6 +105,7 @@ namespace WorkoutPlanObjects
             S1 = this.S1;
             S2 = this.S2;
             S3 = this.S3;
+            REC = this.REC;
         }
 
         public WorkoutSet(int orderNum)

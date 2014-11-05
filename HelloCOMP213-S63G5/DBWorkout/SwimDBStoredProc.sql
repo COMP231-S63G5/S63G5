@@ -67,6 +67,12 @@ CREATE PROCEDURE insertWorkoutSet	@strokeID int,
 									@repeats int,
 									@distance int,
 									@description varchar,
+									@E1 int,
+									@E2 int,
+									@E3 int,
+									@S1 int,
+									@S2 int,
+									@S3 int,
 									@paceTime varchar = null,
 									@restPeriod varchar = null 
 AS 
@@ -77,7 +83,13 @@ AS
 			   ,[distance]
 			   ,[description]
 			   ,[paceTime]
-			   ,[restPeriod])
+			   ,[restPeriod]
+			   ,[E1]
+			   ,[E2]
+			   ,[E3]
+			   ,[S1]
+			   ,[S2]
+			   ,[S3])
 	OUTPUT INSERTED.ID
     VALUES
            (@strokeID
@@ -85,7 +97,13 @@ AS
            ,@distance
            ,@description
            ,@paceTime
-           ,@restPeriod);
+           ,@restPeriod
+		   ,@E1
+		   ,@E2
+		   ,@E3
+		   ,@S1
+		   ,@S2
+		   ,@S3);
 GO
 
 

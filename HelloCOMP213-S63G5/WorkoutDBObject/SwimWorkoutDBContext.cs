@@ -117,7 +117,7 @@ namespace WorkoutDBObject
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter parm = cmd.Parameters.Add("@date", SqlDbType.Date);
-                parm.Value = new DateTime(int.Parse(date.Substring(6,4)),int.Parse(date.Substring(0,2)),int.Parse(date.Substring(3,2)));
+                parm.Value = Convert.ToDateTime(date);
                 
                 int planId = (int)cmd.ExecuteScalar();
 
@@ -151,6 +151,13 @@ namespace WorkoutDBObject
                 cmd.Parameters.Add("@description", set.Description);
                 cmd.Parameters.Add("@paceTime", set.PaceTime);
                 cmd.Parameters.Add("@restPeriod", set.RestPeriod);
+                cmd.Parameters.Add("@E1", set.E1);
+                cmd.Parameters.Add("@E2", set.E2);
+                cmd.Parameters.Add("@E3", set.E3);
+                cmd.Parameters.Add("@S1", set.S1);
+                cmd.Parameters.Add("@S2", set.S2);
+                cmd.Parameters.Add("@S3", set.S3);
+                cmd.Parameters.Add("@REC", set.REC);
 
                 int setId = (int)cmd.ExecuteScalar();
 
@@ -182,11 +189,13 @@ namespace WorkoutDBObject
                 cmd.Parameters.Add("@childId", childId);
                 cmd.Parameters.Add("@memberOrder", memberOrder);
 
-                int workoutMemberId = (int)cmd.ExecuteScalar();
+                cmd.ExecuteNonQuery();
+
+               // int workoutMemberId = (int)cmd.ExecuteScalar();
 
                 conn.Close();
-
-                return workoutMemberId;
+                return 1;
+                //return workoutMemberId;
             }
             catch (Exception e)
             {
@@ -280,6 +289,7 @@ namespace WorkoutDBObject
                     WOSet.S1 = Convert.ToInt32(reader["S1"]);
                     WOSet.S2 = Convert.ToInt32(reader["S2"]);
                     WOSet.S3 = Convert.ToInt32(reader["S3"]);
+                    WOSet.REC = Convert.ToInt32(reader["REC"]);
                    
 
                     listOfSets.Add(WOSet);

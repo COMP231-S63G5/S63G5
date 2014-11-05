@@ -23,6 +23,7 @@
         <th class="workoutSetCell">[S1]</th>
         <th class="workoutSetCell">[S2]</th>
         <th class="workoutSetCell">[S3]</th>
+        <th class="workoutSetCell">[REC]</th>
     </tr>
 
     @{var count = 0;}
@@ -84,6 +85,9 @@
             </td>
             <td class="number workoutSetCell">
                 @Html.Label(item.S3.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.REC.ToString())
             </td>
             <td class="workoutSetCell">          
                 @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })

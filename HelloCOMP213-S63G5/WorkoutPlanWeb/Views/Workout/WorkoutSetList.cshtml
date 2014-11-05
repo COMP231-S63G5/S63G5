@@ -23,6 +23,7 @@
             <th class="workoutSetCell">[S1]</th>
             <th class="workoutSetCell">[S2]</th>
             <th class="workoutSetCell">[S3]</th>
+            <th class="workoutSetCell">[REC]</th>
         </tr>
 
     @{var count = 0;}
@@ -79,6 +80,9 @@
             </td>
             <td class="number workoutSetCell">
                 @Html.EditorFor(modelItem => item.S3, null, "WorkoutSet[" + count + "].S3")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.REC, null, "WorkoutSet[" + count + "].REC")
             </td>
             <td class="workoutSetCell">
                 <input type="submit" value="delete" name="command" onclick="document.getElementsByName('deleteId')[0].value = @item.OrderNum"/>
