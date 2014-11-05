@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "EditWorkoutPlan";
+}
+@model WorkoutPlanObjects.WorkoutPlan
+
+<h1>Edit Workout Plan</h1>
+
+<h4>Date: <input type="date" id="date" value="@Model.Date" onchange="setPlanDate();" /></h4>
+<h4 id="planDateTag"></h4>
+
+@using (Ajax.BeginForm("workoutAction", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
+{
+    @Html.Hidden("WorkoutPlanDate")
+
+    <h4 id="planDateTag"></h4>
+
+    <div id="setsDiv">
+        @Html.Partial("EditSetList", Session["WorkoutSetList"])
+    </div>
+
+    <input type="submit" value="Save Plan" name="command" />
+    <input type="submit" value="Create New Set" name="command" />
+
+}
+<script type="text/javascript">
+
+    // Function will run on page load
+    function onPageLoad() {
+
+        setPlanDate();      //set initial plan date with current date
+    }
+
+    // Function will dynamically update planDateTag header tags with week and day number
+    function setPlanDate() {
+        /*
+        * ASSUMPTIONS:
+        *
+        *   1. Week begins on the Monday and ends Sunday. Ie Mon = Day1, Sun = Day7
+        *   2. Season begins 1st Monday of September
+        *
+        */
+
+        var tempDate = new Date(document.getElementById("date").value);
+        tempDate.setDate(tempDate.getDate() + 1);
+
+        var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+        var seasonStartDate = getSeasonStartDate(workoutDate);
+
+        if (workoutDate < seasonStartDate) {
+            seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
+        }
+
+        var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
+        var totalWeeks = (totalDays - (totalDays % 7)) / 7;
+
+        var weekNumber = totalWeeks + 1;
+        var dayNumber = (totalDays % 7) + 1;
+
+        document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
+
+        document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "-" + tempDate.getDate() + "-" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+
+        console.log(document.getElementsByName("WorkoutPlanDate")[0].value);
+    }
+
+    //Helper function, gets the date of the first Monday of September
+    function getSeasonStartDate(workoutDate) {
+
+        // Getting any date in the first week of september with a Monday
+        var septDay = new Date(workoutDate.getFullYear(), 08, 01);
+
+        if (septDay.getDay() > 1) {
+            septDay.setDate(septDay.getDate() + 7);
+        }
+
+        return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
+
+    }
+
+    // set planDateTag onLoad
+    window.onload = onPageLoad();
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -7,3 +7,17 @@
 
 <h2>@Html.Raw(Model.Date)</h2>
 @Html.Partial("ViewWorkOutSet", Model.WorkoutSet)
+
+<h4>Total Duration : @Model.WorkoutSet.Sum(a => a.TotalDuration) minutes</h4><br />
+
+@Html.BeginForm("WorkoutAction", "Workout", FormMethod.Post)
+{
+    @Html.Hidden("Id") <!--Need to test this-->
+
+    <input type="submit" value="Edit Plan" name="command" />
+    <input type="submit" value="Print Plan" name="command" />
+}
+
+<script>
+    window.onload  = document.getElementsByName('Id')[0].value = @Model.ID
+</script>

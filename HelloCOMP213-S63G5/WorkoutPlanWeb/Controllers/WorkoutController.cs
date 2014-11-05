@@ -52,11 +52,11 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
-        public ActionResult PrintWorkoutPlan(int id)
+        public ActionResult PrintWorkoutPlan(int planId)
         {
             WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
             WorkoutPlan workoutPlan = new WorkoutPlan();
-            //workoutPlan = (WorkoutPlan)workoutbll.getWorkPlanDetails(id);       --Will be uncommented once the getWorkPlanDetails returns the correct type(WorkoutPlan).
+            workoutPlan = workoutbll.getWorkPlanDetails(planId);   
 
             if (workoutPlan != null)
             {
@@ -69,6 +69,14 @@ namespace WorkoutPlanWeb.Controllers
             
 
             return View();
+        }
+
+        public ActionResult EditWorkoutPlan(int planId)
+        {
+            WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
+            WorkoutPlan workoutPlan = new WorkoutPlan();
+            workoutPlan = workoutbll.getWorkPlanDetails(planId);
+            return View(workoutPlan);
         }
 
 
@@ -85,7 +93,7 @@ namespace WorkoutPlanWeb.Controllers
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index","Home")));
         }
 
-        public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int deleteId = -1,string command = "")
+        public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int Id = -1,string command = "")
         {
             Strokes_BLL strokes = new Strokes_BLL();
             Session["strokes"] = strokes.getStrokes();                    
@@ -104,7 +112,15 @@ namespace WorkoutPlanWeb.Controllers
             }
             else if(command == "delete")
             {
-                return RedirectToAction("deleteSet", "Workout", new { index = deleteId});
+                return RedirectToAction("deleteSet", "Workout", new { index = Id});
+            }
+            else if (command == "Print Plan")
+            {
+                return RedirectToAction("PrintWorkoutPlan", "Workout", new { planId = Id });
+            }
+            else if (command == "Edit Plan")
+            {
+                return RedirectToAction("EditWorkoutPlan", "Workout", new { planId = Id });
             }
             else
             {
