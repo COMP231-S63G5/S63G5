@@ -42,15 +42,14 @@ GO
 --IF OBJECT_ID ( 'insertWorkoutPlan', 'P' ) IS NOT NULL 
 --    DROP PROCEDURE insertWorkoutPlan;
 GO
-CREATE PROCEDURE insertWorkoutPlan @date varchar 
+CREATE PROCEDURE insertWorkoutPlan @date date 
 AS 
     SET NOCOUNT ON;
     INSERT INTO [dbo].[tbl_workoutplan]
            ([planDate])
 	OUTPUT INSERTED.ID
     VALUES
-           (Convert(datetime, @date, 102 ) );
-	SELECT SCOPE_IDENTITY();
+           (@date );
 GO
 
 
