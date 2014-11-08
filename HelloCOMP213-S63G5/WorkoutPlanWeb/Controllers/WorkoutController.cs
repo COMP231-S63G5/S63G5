@@ -74,8 +74,8 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult EditWorkoutPlan(int planId)
         {
             WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
-            WorkoutPlan workoutPlan = new WorkoutPlan();
-            workoutPlan = workoutbll.getWorkPlanDetails(planId);
+            WorkoutPlan workoutPlan = workoutbll.getWorkPlanDetails(planId);
+            Session["WorkoutSetList"] = workoutPlan.WorkoutSet;
             return View(workoutPlan);
         }
 
@@ -86,17 +86,39 @@ namespace WorkoutPlanWeb.Controllers
             WorkoutPlan workoutPlan = new WorkoutPlan();
             workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
             workoutPlan.Date = Session["WorkoutPlanDate"] as String;
-            plan_dll.insertWorkoutPlan(workoutPlan);        
-            Session.Clear();   
+            plan_dll.insertWorkoutPlan(workoutPlan);
+            Session["WorkoutSetList"] == null;  
             
             
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index","Home")));
         }
 
+        public ActionResult UpdateWorkoutPlan()
+        {
+            WorkOutPlan_BLL plan_dll = new WorkOutPlan_BLL();
+            WorkoutPlan workoutPlan = new WorkoutPlan();
+            workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
+            workoutPlan.Date = Session["WorkoutPlanDate"] as String;
+            //TO-DO: Need to delete the existing workoutplan first.
+            //if (true)  -- Do a check first to see if the existing workout plan was deleted
+            //{
+            //    
+            //}
+            plan_dll.insertWorkoutPlan(workoutPlan);
+            Session["WorkoutSetList"] == null;
+
+
+            return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index", "Home")));
+        }
+
         public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int Id = -1,string command = "")
         {
-            Strokes_BLL strokes = new Strokes_BLL();
-            Session["strokes"] = strokes.getStrokes();                    
+            if (Session["strokes"] == null)
+            {
+                Strokes_BLL strokes = new Strokes_BLL();
+                Session["strokes"] = strokes.getStrokes();          
+            }
+                     
             Session["WorkoutPlanDate"] = WorkoutPlanDate;
             List<WorkoutSet> _workoutSets = Session["WorkoutSetList"] as List<WorkoutSet>;
             _workoutSets = workoutPlan.WorkoutSet;
@@ -121,6 +143,10 @@ namespace WorkoutPlanWeb.Controllers
             else if (command == "Edit Plan")
             {
                 return RedirectToAction("EditWorkoutPlan", "Workout", new { planId = Id });
+            }
+            else if (command == "Update Plan")
+            {
+                return RedirectToAction("UpdateWorkoutPlan", "Workout"); 
             }
             else
             {

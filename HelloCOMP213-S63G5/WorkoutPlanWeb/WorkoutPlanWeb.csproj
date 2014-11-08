@@ -314,6 +314,8 @@
     <Content Include="Views\Workout\WorkoutSetList.cshtml" />
     <Content Include="Views\Workout\ViewWorkOutPlan.cshtml" />
     <Content Include="Views\Workout\ViewWorkOutSet.cshtml" />
+    <Content Include="Views\Workout\EditSetList.cshtml" />
+    <Content Include="Views\Workout\EditWorkOutPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
