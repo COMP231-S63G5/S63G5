@@ -60,7 +60,8 @@ namespace WorkoutPlanWeb.Controllers
 
             if (workoutPlan != null)
             {
-                PrintToPDF printToPdf = new PrintToPDF(workoutPlan);
+                PrintToPDF printToPdf = new PrintToPDF();
+                printToPdf.PrintWorkoutPlan(workoutPlan);
             }
             else
             {
