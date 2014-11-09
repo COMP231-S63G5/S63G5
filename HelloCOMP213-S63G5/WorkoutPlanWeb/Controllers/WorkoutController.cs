@@ -87,7 +87,7 @@ namespace WorkoutPlanWeb.Controllers
             workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
             workoutPlan.Date = Session["WorkoutPlanDate"] as String;
             plan_dll.insertWorkoutPlan(workoutPlan);
-            Session["WorkoutSetList"] == null;  
+            Session["WorkoutSetList"] = null;  
             
             
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index","Home")));
@@ -105,7 +105,7 @@ namespace WorkoutPlanWeb.Controllers
             //    
             //}
             plan_dll.insertWorkoutPlan(workoutPlan);
-            Session["WorkoutSetList"] == null;
+            Session["WorkoutSetList"] = null;
 
 
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index", "Home")));
@@ -126,7 +126,6 @@ namespace WorkoutPlanWeb.Controllers
             if (command == "Save Plan")
             {           
                 return RedirectToAction("SaveWorkoutPlan","Workout");
-            
             }
             else if(command == "Create New Set")
             {
@@ -150,7 +149,7 @@ namespace WorkoutPlanWeb.Controllers
             }
             else
             {
-                return View(); //TO-DO: 
+                return View(); //TO-DO: return error message
             }
         }
         public PartialViewResult createSet()
