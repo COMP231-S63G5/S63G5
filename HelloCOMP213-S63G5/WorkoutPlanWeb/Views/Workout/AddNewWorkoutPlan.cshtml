@@ -11,7 +11,7 @@
 @using (Ajax.BeginForm("workoutAction", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
 {
   @Html.Hidden("WorkoutPlanDate")
-  @Html.Hidden("deleteId")
+  @Html.Hidden("Id")
 
     <h4 id="planDateTag"></h4>
 

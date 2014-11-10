@@ -85,7 +85,7 @@
                 @Html.EditorFor(modelItem => item.REC, null, "WorkoutSet[" + count + "].REC")
             </td>
             <td class="workoutSetCell">
-                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('deleteId')[0].value = @item.OrderNum"/>
+                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('Id')[0].value = @item.OrderNum"/>
                 <!--Ajax.ActionLink("Delete",
                                 "deleteSet",
                                  new { index = item.OrderNum },
