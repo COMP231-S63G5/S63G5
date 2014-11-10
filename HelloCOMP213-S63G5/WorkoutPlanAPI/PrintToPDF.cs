@@ -82,7 +82,7 @@ namespace WorkoutPlanAPI
 
             cb.SetFontAndSize(boldFont.BaseFont, 15);
             cb.SetTextMatrix(40, 720);
-            cb.ShowText(string.Format("Date: " +wp.Date));
+            cb.ShowText(string.Format("Date: " +wp.Date).Substring(0,16));
             
 
             // we draw some text on a certain position
@@ -103,13 +103,14 @@ namespace WorkoutPlanAPI
 
         void PrintContent(Document doc, PdfContentByte cb, WorkoutPlan wp)
         {
-            int current_y = 680;    //start from top to bottom
+            int current_y = 660;    //start from top to bottom
             int row_gap = 20;
             int indent_80 = 80;
             int indent_100 = 100;
             cb.BeginText();
-
-
+            cb.SetFontAndSize(boldFont.BaseFont, 15);
+            cb.SetTextMatrix(indent_80, current_y + 20);
+            cb.ShowText("TYMS             Week             Day");
                 foreach (var item in wp.WorkoutSet)
                 {
                    // print item
@@ -121,14 +122,18 @@ namespace WorkoutPlanAPI
                             if (item.RestPeriod ==0 )
 	                            {
                                     cb.SetFontAndSize(normalFont, 10);
-                                    cb.ShowText(string.Format("{0,-10} X {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10} {10,10} {11,10} ",
-                                        item.Repeats, item.WorkoutSetDistance, item.SingleDuration, item.Stroke.Name, item.Description, item.E1 , item.E2 , item.E3, item.S1,item.S2,item.S3,item.REC)); 
+                                    //cb.ShowText(string.Format("{0,-10} X {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10} {10,10} {11,10} ",
+                                      //  item.Repeats, item.WorkoutSetDistance, item.SingleDuration, item.Stroke.Name, item.Description, item.E1 , item.E2 , item.E3, item.S1,item.S2,item.S3,item.REC)); 
+                                    cb.ShowText(string.Format("{0,-4} X {1,4} m    {2,4} {3,15}  {4,20} min  ",
+                                        item.Repeats, item.WorkoutSetDistance, item.Stroke.Name, item.Description, item.SingleDuration)); 
 	                            }
                             else
 	                            {
                                     cb.SetFontAndSize(normalFont, 10);
-                                    cb.ShowText(string.Format("{0,-10} X {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10} {10,10} {11,10} {12,10} ",
-                                        item.Repeats, item.WorkoutSetDistance, item.SingleDuration, item.Stroke.Name, item.Description,item.RestPeriod, item.E1, item.E2, item.E3, item.S1, item.S2, item.S3, item.REC)); 
+                                    //cb.ShowText(string.Format("{0,-10} X {1,10} {2,10} {3,10} {4,10} {5,10} {6,10} {7,10} {8,10} {9,10} {10,10} {11,10} {12,10} min ",
+                                     //   item.Repeats, item.WorkoutSetDistance, item.SingleDuration, item.Stroke.Name, item.Description,item.RestPeriod, item.E1, item.E2, item.E3, item.S1, item.S2, item.S3, item.REC)); 
+                                    cb.ShowText(string.Format("{0,-4} X {1,4} m    {2,4} {3,15}  on {4,4} {5,20} min  ",
+                                        item.Repeats, item.WorkoutSetDistance, item.Stroke.Name, item.Description, item.RestPeriod, item.SingleDuration)); 
 	                            }
                           
                         }
@@ -138,7 +143,7 @@ namespace WorkoutPlanAPI
                            // cb.ShowText(string.Format("{0,4} X {1,4} {2,4} {3,4} {4,10} {5,4} {6,4} {7,4} {8,4} {9,4} {10,4} {11,4} {12,4} ",
                             //   item.Repeats, item.WorkoutSetDistance, item.SingleDuration, item.Stroke.Name, item.Description, item.PaceTime, item.E1, item.E2, item.E3, item.S1, item.S2, item.S3, item.REC));
 
-                            cb.ShowText(string.Format("{0,-4} X {1,4} m    {2,4} {3,15}  on {4,4} {5,20}  ",
+                            cb.ShowText(string.Format("{0,-4} X {1,4} m    {2,4} {3,15}  on {4,4} {5,20} min  ",
                                  item.Repeats, item.WorkoutSetDistance, item.Stroke.Name, item.Description, item.PaceTime,item.SingleDuration)); 
                         }
 
@@ -154,8 +159,9 @@ namespace WorkoutPlanAPI
                     }
                 }
             
-            cb.SetTextMatrix(indent_80, current_y); current_y = current_y - row_gap;
-            cb.ShowText(string.Format("Total Duration: {0,10}", wp.WorkoutSet.Sum(a => a.TotalDuration)));
+            cb.SetTextMatrix(indent_80, current_y - 20); current_y = current_y - row_gap;
+            cb.SetFontAndSize(boldFont.BaseFont, 12);
+            cb.ShowText(string.Format("Total Duration: {0,10} minutes", wp.WorkoutSet.Sum(a => a.TotalDuration)));
             cb.EndText();
         }
         
