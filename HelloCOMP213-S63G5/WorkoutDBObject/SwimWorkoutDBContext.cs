@@ -311,5 +311,38 @@ namespace WorkoutDBObject
         
         }
 
+        public Boolean deleteWorkOutPlan(int id)
+        {
+
+            try
+            {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+                
+                conn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "deleteworkoutplan";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@workoutplanID", id);
+                cmd.ExecuteReader();
+                
+                conn.Close();
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                //   List<string> listOfValues = new List<string>();
+                //    listOfValues.Add("Error");
+                //    listOfSets.Add();
+                return false;
+            }
+            
+        }
+
+
     }
 }

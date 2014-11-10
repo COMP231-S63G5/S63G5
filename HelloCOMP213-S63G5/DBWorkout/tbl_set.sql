@@ -4,7 +4,7 @@
 	strokeID int NOT NULL FOREIGN KEY REFERENCES tbl_stroke(ID),
 	repeats int not null,
 	distance int null,
-	description varchar(40) null,
+	description varchar(100) null,
 	paceTime varchar(10),
 	restPeriod varchar(10),
 	E1 int not null default 0,

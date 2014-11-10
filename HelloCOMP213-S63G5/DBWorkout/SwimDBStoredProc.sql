@@ -65,7 +65,7 @@ GO
 CREATE PROCEDURE insertWorkoutSet	@strokeID int, 
 									@repeats int,
 									@distance int,
-									@description varchar,
+									@description varchar(100),
 									@E1 int,
 									@E2 int,
 									@E3 int,
@@ -147,7 +147,7 @@ AS
 			tbl_set.ID AS Set_Id,
 			tbl_stroke.ID AS Stroke_Id,tbl_stroke.Name,tbl_stroke.Description AS Stroke_Desc,
 			tbl_workoutplan_member.ID as Member_Id,tbl_workoutplan_member.memberOrder,
-			tbl_workoutplan.planDate,
+			REPLACE(CONVERT(VARCHAR(25),tbl_workoutplan.planDate,111), '/','-') as planDate, -- planDate needed to be pulled in a specific format for the input-date in view
 			tbl_set.repeats,
 			tbl_set.distance,tbl_set.description AS Set_Desc,
 			tbl_set.paceTime,tbl_set.restPeriod,
@@ -170,4 +170,22 @@ AS
     SET NOCOUNT ON;
     SELECT WPids.ID
     FROM tbl_workoutplan WPids;
+GO
+
+
+-- ==================================================================
+-- Author: <Azim Ousmand>
+-- Description: <This stored proc deletes all sets and plan from DB>
+-- ==================================================================
+GO
+CREATE PROCEDURE deleteworkoutplan 
+    @workoutplanID int
+AS 
+    SET NOCOUNT ON;
+    DELETE FROM tbl_set 
+	WHERE ID in (SELECT twm.childID FROM tbl_workoutplan_member twm WHERE twm.parentID = @workoutplanID );
+
+	DELETE FROM tbl_workoutplan
+	WHERE tbl_workoutplan.ID=@workoutplanID;
+
 GO

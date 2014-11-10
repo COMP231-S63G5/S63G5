@@ -68,5 +68,14 @@ namespace WorkoutPlanAPI
             }
 
         }
+
+        // Method to insert all plan members
+        public Boolean deleteWorkoutPlan(int planId)
+        {
+            SwimWorkoutDBContext swimDB = new SwimWorkoutDBContext();
+
+            return swimDB.deleteWorkOutPlan(planId);
+
+        }
     }
 }

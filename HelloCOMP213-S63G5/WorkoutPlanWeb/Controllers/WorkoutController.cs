@@ -77,6 +77,7 @@ namespace WorkoutPlanWeb.Controllers
             WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
             WorkoutPlan workoutPlan = workoutbll.getWorkPlanDetails(planId);
             Session["WorkoutSetList"] = workoutPlan.WorkoutSet;
+            Session["WorkoutPlanId"] = planId;
             return View(workoutPlan);
         }
 
@@ -100,15 +101,15 @@ namespace WorkoutPlanWeb.Controllers
             WorkoutPlan workoutPlan = new WorkoutPlan();
             workoutPlan.WorkoutSet = Session["WorkoutSetList"] as List<WorkoutSet>;
             workoutPlan.Date = Session["WorkoutPlanDate"] as String;
-            //TO-DO: Need to delete the existing workoutplan first.
-            //if (true)  -- Do a check first to see if the existing workout plan was deleted
-            //{
-            //    
-            //}
-            plan_dll.insertWorkoutPlan(workoutPlan);
-            Session["WorkoutSetList"] = null;
+            workoutPlan.ID = (int)Session["WorkoutPlanId"];
 
-
+            
+            if (plan_dll.deleteWorkoutPlan(workoutPlan.ID)) 
+            {
+                plan_dll.insertWorkoutPlan(workoutPlan);
+                Session["WorkoutSetList"] = null;   
+            }
+            
             return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index", "Home")));
         }
 
