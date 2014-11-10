@@ -1,0 +1,116 @@
+﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSet>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <table class="workoutSetTable">
+        <tr>
+            <th class="workoutSetCell">[Repeats] </th>
+            <th></th>
+            <th class="workoutSetCell">[Distance] </th>
+            <th></th>
+            <th></th>
+            <th class="workoutSetCell">[Stroke] </th>
+            <th></th>
+            <th class="workoutSetCell">[Description] </th>
+            <th></th>
+            <th class="workoutSetCell">[Pace] </th>
+            <th class="workoutSetCell">[Rest] </th>
+            <th></th>
+            <th class="workoutSetCell">[E1]</th>
+            <th class="workoutSetCell">[E2]</th>
+            <th class="workoutSetCell">[E3]</th>
+            <th class="workoutSetCell">[S1]</th>
+            <th class="workoutSetCell">[S2]</th>
+            <th class="workoutSetCell">[S3]</th>
+            <th class="workoutSetCell">[REC]</th>
+            <th></th>
+            <th class="workoutSetCell">[Duration] </th>
+        </tr>
+
+    @{var count = 0;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.Repeats, null, "WorkoutSet[" + count + "].Repeats")
+            </td>
+            <td class="workoutSetCell label">
+                <p>X</p>
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.WorkoutSetDistance, null, "WorkoutSet[" + count + "].WorkoutSetDistance")
+            </td>
+            <td class="workoutSetCell label">
+                <p>m</p>
+            </td>
+            <td class="workoutSetCell blankspace">
+            </td>
+            <td class="workoutSetCell select ">
+               @Html.DropDownListFor(model => item.Stroke.ID, new SelectList((List<WorkoutPlanObjects.WorkoutStroke>)Session["strokes"], "ID", "Name", item.Stroke.ID), new { @Name = "WorkoutSet[" + count + "].Stroke.ID" })
+            </td>
+            <td class="workoutSetCell label">
+                <h4>[</h4>
+            </td>
+            <td class="workoutSetCell text" >
+                @Html.TextBoxFor(modelItem => item.Description, new { @Name = "WorkoutSet[" + count + "].Description", @Placeholder = "Description" })
+            </td>
+            <td class="workoutSetCell label">
+                <h4>]</h4>
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.PaceTime, null, "WorkoutSet[" + count + "].PaceTime")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.RestPeriod, null, "WorkoutSet[" + count + "].RestPeriod")
+            </td>
+            <td class="workoutSetCell blankspace"></td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.E1, null, "WorkoutSet[" + count + "].E1")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.E2, null, "WorkoutSet[" + count + "].E2")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.E3, null, "WorkoutSet[" + count + "].E3")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.S1, null, "WorkoutSet[" + count + "].S1")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.S2, null, "WorkoutSet[" + count + "].S2")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.S3, null, "WorkoutSet[" + count + "].S3")
+            </td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.REC, null, "WorkoutSet[" + count + "].REC")
+            </td>
+            <td class="workoutSetCell blankspace"></td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.SingleDuration, null, "WorkoutSet[" + count + "].SingleDuration")
+            </td>
+            <td class="workoutSetCell">
+                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('Id')[0].value = @item.OrderNum"/>
+                <!--Ajax.ActionLink("Delete",
+                                "deleteSet",
+                                 new { index = item.OrderNum },
+                                 new AjaxOptions()
+                                 {
+                                     HttpMethod = "POST",
+                                     InsertionMode = InsertionMode.Replace,
+                                     UpdateTargetId = "setsDiv"
+                                 },
+                                 new { id = "deleteSetLink"}
+                                 )-->
+                @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })
+                @Html.HiddenFor(model => item.OrderNum, new { @Name = "WorkoutSet[" + count + "].OrderNum" })
+            </td>
+
+
+        </tr>
+        count++;
+    }
+</table>
+
+<h4>Total Duration : @Model.Sum(a => a.TotalDuration) minutes</h4><br/>

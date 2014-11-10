@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "ViewWorkoutPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model WorkoutPlanObjects.WorkoutPlan
+
+<h2>@Html.Raw(Model.Date)</h2>
+
+
+@using(Html.BeginForm("WorkoutAction", "Workout", FormMethod.Post))
+{
+    @Html.Partial("ViewWorkOutSet", Model.WorkoutSet)
+    @Html.Hidden("Id")
+
+    <input type="submit" value="Edit Plan" name="command" />
+    <input type="submit" value="Print Plan" name="command" />
+}
+
+<script>
+   window.onload  = document.getElementsByName('Id')[0].value = Model.ID
+</script>

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSet>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<table class="workoutSetTable">
+    <tr>
+        <th class="workoutSetCell">[Repeats] </th>
+        <th></th>
+        <th class="workoutSetCell">[Distance] </th>
+        <th></th>
+        <th></th>
+        <th class="workoutSetCell">[Stroke] </th>
+        <th></th>
+        <th class="workoutSetCell">[Description] </th>
+        <th></th>
+        <th class="workoutSetCell">[Pace] </th>
+        <th class="workoutSetCell">[Rest] </th>
+        <th></th>
+        <th class="workoutSetCell">[E1]</th>
+        <th class="workoutSetCell">[E2]</th>
+        <th class="workoutSetCell">[E3]</th>
+        <th class="workoutSetCell">[S1]</th>
+        <th class="workoutSetCell">[S2]</th>
+        <th class="workoutSetCell">[S3]</th>
+        <th class="workoutSetCell">[REC]</th>
+        <th class="workoutSetCell">[Duration]</th>
+    </tr>
+
+    @{var count = 0;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="number workoutSetCell">
+                @Html.Label(item.Repeats.ToString())
+                
+            </td>
+            <td class="workoutSetCell label">
+                <p>X</p>
+            </td>
+            <td class="number workoutSetCell">
+              
+                @Html.Label(item.WorkoutSetDistance.ToString())
+            </td>
+            <td class="workoutSetCell label">
+                <p>m</p>
+            </td>
+            <td class="workoutSetCell blankspace"></td>
+            <td class="workoutSetCell select ">
+                @Html.Label(item.Stroke.Name)
+            </td>
+            <td class="workoutSetCell label">
+                <h4>[</h4>
+            </td>
+            <td class="workoutSetCell text">
+                @Html.Label(item.Description)
+            </td>
+            <td class="workoutSetCell label">
+                <h4>]</h4>
+            </td>
+            <td class="number workoutSetCell">
+               
+                @Html.Label(item.PaceTime.ToString())
+            </td>
+            <td class="number workoutSetCell">
+               
+                @Html.Label(item.RestPeriod.ToString())
+            </td>
+            <td class="workoutSetCell blankspace"></td>
+            <td class="number workoutSetCell">
+               
+                @Html.Label(item.E1.ToString())
+             </td>
+            <td class="number workoutSetCell">
+                
+                @Html.Label(item.E2.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.E3.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.S1.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.S2.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.S3.ToString())
+            </td>
+            <td class="number workoutSetCell">
+                @Html.Label(item.REC.ToString())
+            </td>
+            <td class="number workoutSetCell">
+
+                @Html.Label(item.SingleDuration.ToString())
+            </td>
+            <td class="workoutSetCell">          
+                @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })
+                @Html.HiddenFor(model => item.OrderNum, new { @Name = "WorkoutSet[" + count + "].OrderNum" })
+            </td>
+
+
+        </tr>
+        count++;
+    }
+</table>
+
+<h4>Total Duration : @Model.Sum(a => a.TotalDuration) minutes</h4><br />
+

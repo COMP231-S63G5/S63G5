@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+
+}
+
+<h3>Add a new workout plans</h3>
+
+@Html.ActionLink("(old)Add NEW Workout Plan...", "AddNewPlan", "Workout")
+@Html.ActionLink("Add NEW Workout Plan...", "AddNewWorkoutPlan", "Workout")
+
+<h3>Workout Plans</h3>
+
+<!-- TODO - Populate with list of workouts that were created. -->
+
+<ul>
+    @foreach (int item in ViewBag.listOfWorkOutPlanIDs)
+    {
+        
+        @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout", new { @id = item },null) + "</li>");
+       // @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout") + "</li>");
+    }
+</ul>

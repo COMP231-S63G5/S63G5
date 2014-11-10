@@ -1,0 +1,145 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Add New WorkoutPlan";
+    
+}
+@model WorkoutPlanObjects.WorkoutPlan
+
+
+<h1>Workout Plan</h1>
+<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+<h4 id="planDateTag"></h4>
+
+<!--
+    WORKOUT PLAN FORM
+-->
+@using (Html.BeginForm("AddNewPlan", "Workout", FormMethod.Post, new { @class="content-wrapper", @id = "addworkoutplanform" }))
+{
+    <br>
+    <div class="workoutsetGroup">
+
+        <table class="workoutTable" >
+            <tr id="lastRow">
+                <td>
+
+                    <input type="button" id="addNewWorkoutSetBtn" class="btn sm" onclick="addWorkOutsetRow();" value="Add Set..." />
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+    <input type="submit" id="submit" value="submit" />
+}
+
+
+<script type="text/javascript">
+
+    var numberOfSets;
+
+    // Function will run on page load
+    function onPageLoad() {
+        
+        numberOfSets = 0;   //set number of sets to 0
+        setPlanDate();      //set initial plan date with current date
+
+    }
+
+    
+    // Function will dynamically update planDateTag header tags with week and day number
+    function setPlanDate() {
+        /*
+        * ASSUMPTIONS:
+        * 
+        *   1. Week begins on the Monday and ends Sunday. Ie Mon = Day1, Sun = Day7
+        *   2. Season begins 1st Monday of September
+        * 
+        */
+
+        var tempDate = new Date(document.getElementById("date").value);
+        tempDate.setDate(tempDate.getDate() + 1);
+
+        var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+        var seasonStartDate = getSeasonStartDate(workoutDate);
+
+        if (workoutDate < seasonStartDate)
+        {
+            seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
+        }
+
+        var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
+        var totalWeeks = (totalDays - (totalDays % 7)) / 7;
+
+        var weekNumber = totalWeeks + 1;
+        var dayNumber = (totalDays % 7 ) + 1;
+
+        document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
+    }
+
+    //Helper function, gets the date of the first Monday of September
+    function getSeasonStartDate(workoutDate) {
+
+        // Getting any date in the first week of september with a Monday
+        var septDay = new Date(workoutDate.getFullYear(), 08, 01); 
+
+        if (septDay.getDay() > 1)
+        {
+            septDay.setDate(septDay.getDate() + 7);
+        }
+
+        return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
+
+    }
+
+
+    function deleteRow(r) {
+      //  var i = document.getElementById(r).rowIndex;
+        //  document.getElementById("workoutTable").deleteRow(i);
+
+
+        $('#'+r).remove();
+
+    }
+
+
+    // set planDateTag onLoad
+    window.onload = onPageLoad();
+
+
+    //  OnClick function for adding new set
+    function addWorkOutsetRow() {
+
+        numberOfSets++;
+        var data = "<tr id='set_" + numberOfSets + "' >";
+      
+        //var data = data + "<td align='right'><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet["+numberOfSets+"].Repeats'  data-val='true' data-val-number='The field test must be a number.' data-val-required='The test field is required.'/></td>"
+        var data = data + "<td align='right'> <input type='hidden' name='WorkoutSet.Index' value='repeat_" + numberOfSets + "' /><input type=text placeholder=Repeats id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat_" + numberOfSets + "].Repeats'/></td>";
+        var data = data + "<td align='center' class='label'>&nbsp;<h4>X</h4>&nbsp;</td>";
+        var data = data + "<td align='left'><input type=text placeholder=Distance id='set_repeats_" + numberOfSets + "' name = 'WorkoutSet[repeat_" + numberOfSets + "].WorkoutSetDistance'  />m</td>";
+        var data = data + "<td><select id='set_detail_" + numberOfSets + "' name= 'WorkoutSet[repeat_"+numberOfSets+"].Stroke.ID'> " 
+          {
+                @foreach(string stroke in ViewBag.strokes)
+                {
+                  @Html.Raw("+ \"<option>"+stroke+"</option>\"");
+                }
+             }
+            + "</select></td>";
+    
+        var data = data + "<td>(<input type=text placeholder=Description id='set_description_" + numberOfSets + "' />)</td>";
+        var data = data + "<td class='label'>&nbsp;<h4>on</h4>&nbsp;</td>";
+
+        var data = data + "<td><input type=text placeholder=Duration id='set_repeats_" + numberOfSets + "' name = WorkoutSet[repeat_" + numberOfSets + "].SingleDuration /></td>";
+        var data = data + "<td><input type='button' value='x' onclick='deleteRow(\"set_" + numberOfSets + "\");' /></td>";
+
+        var data = data + "</tr>";
+
+
+        $("#lastRow").before(data);
+    }
+
+
+</script>
+
+<!-- TODO: insert workout sets.
+    
+-->
