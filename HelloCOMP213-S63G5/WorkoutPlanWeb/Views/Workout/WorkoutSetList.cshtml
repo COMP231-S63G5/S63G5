@@ -24,6 +24,8 @@
             <th class="workoutSetCell">[S2]</th>
             <th class="workoutSetCell">[S3]</th>
             <th class="workoutSetCell">[REC]</th>
+            <th></th>
+            <th class="workoutSetCell">[Duration] </th>
         </tr>
 
     @{var count = 0;}
@@ -60,7 +62,7 @@
                 @Html.EditorFor(modelItem => item.PaceTime, null, "WorkoutSet[" + count + "].PaceTime")
             </td>
             <td class="number workoutSetCell">
-                @Html.EditorFor(modelItem => item.SingleDuration, null, "WorkoutSet[" + count + "].SingleDuration")
+                @Html.EditorFor(modelItem => item.RestPeriod, null, "WorkoutSet[" + count + "].RestPeriod")
             </td>
             <td class="workoutSetCell blankspace"></td>
             <td class="number workoutSetCell">
@@ -84,8 +86,12 @@
             <td class="number workoutSetCell">
                 @Html.EditorFor(modelItem => item.REC, null, "WorkoutSet[" + count + "].REC")
             </td>
+            <td class="workoutSetCell blankspace"></td>
+            <td class="number workoutSetCell">
+                @Html.EditorFor(modelItem => item.SingleDuration, null, "WorkoutSet[" + count + "].SingleDuration")
+            </td>
             <td class="workoutSetCell">
-                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('deleteId')[0].value = @item.OrderNum"/>
+                <input type="submit" value="delete" name="command" onclick="document.getElementsByName('Id')[0].value = @item.OrderNum"/>
                 <!--Ajax.ActionLink("Delete",
                                 "deleteSet",
                                  new { index = item.OrderNum },

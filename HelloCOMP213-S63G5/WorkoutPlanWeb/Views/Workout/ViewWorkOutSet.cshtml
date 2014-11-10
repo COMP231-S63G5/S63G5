@@ -24,6 +24,7 @@
         <th class="workoutSetCell">[S2]</th>
         <th class="workoutSetCell">[S3]</th>
         <th class="workoutSetCell">[REC]</th>
+        <th class="workoutSetCell">[Duration]</th>
     </tr>
 
     @{var count = 0;}
@@ -63,7 +64,7 @@
             </td>
             <td class="number workoutSetCell">
                
-                @Html.Label(item.SingleDuration.ToString())
+                @Html.Label(item.RestPeriod.ToString())
             </td>
             <td class="workoutSetCell blankspace"></td>
             <td class="number workoutSetCell">
@@ -88,6 +89,10 @@
             </td>
             <td class="number workoutSetCell">
                 @Html.Label(item.REC.ToString())
+            </td>
+            <td class="number workoutSetCell">
+
+                @Html.Label(item.SingleDuration.ToString())
             </td>
             <td class="workoutSetCell">          
                 @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })

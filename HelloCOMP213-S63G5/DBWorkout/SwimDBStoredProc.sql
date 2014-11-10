@@ -74,7 +74,8 @@ CREATE PROCEDURE insertWorkoutSet	@strokeID int,
 									@S3 int,
 									@REC int,
 									@paceTime varchar = null,
-									@restPeriod varchar = null 
+									@restPeriod varchar = null,
+									@duration int 
 AS 
     SET NOCOUNT ON;
 	INSERT INTO [dbo].[tbl_set]
@@ -90,7 +91,8 @@ AS
 			   ,[S1]
 			   ,[S2]
 			   ,[S3]
-			   ,[REC])
+			   ,[REC]
+			   ,[duration])
 	OUTPUT INSERTED.ID
     VALUES
            (@strokeID
@@ -105,7 +107,8 @@ AS
 		   ,@S1
 		   ,@S2
 		   ,@S3
-		   ,@REC);
+		   ,@REC
+		   ,@duration);
 GO
 
 
@@ -151,7 +154,7 @@ AS
 			tbl_set.repeats,
 			tbl_set.distance,tbl_set.description AS Set_Desc,
 			tbl_set.paceTime,tbl_set.restPeriod,
-			tbl_set.E1,tbl_set.E2,tbl_set.E3,tbl_set.S1,tbl_set.S2,tbl_set.S3,tbl_set.REC
+			tbl_set.E1,tbl_set.E2,tbl_set.E3,tbl_set.S1,tbl_set.S2,tbl_set.S3,tbl_set.REC,tbl_set.duration
     FROM tbl_set
 			inner join tbl_workoutplan_member ON tbl_workoutplan_member.childID=tbl_set.ID
 			inner join tbl_workoutplan ON tbl_workoutplan.ID=tbl_workoutplan_member.parentID

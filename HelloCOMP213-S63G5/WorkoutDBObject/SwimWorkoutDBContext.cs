@@ -158,6 +158,7 @@ namespace WorkoutDBObject
                 cmd.Parameters.Add("@S2", set.S2);
                 cmd.Parameters.Add("@S3", set.S3);
                 cmd.Parameters.Add("@REC", set.REC);
+                cmd.Parameters.Add("@duration", set.SingleDuration);
 
                 int setId = (int)cmd.ExecuteScalar();
 
@@ -290,6 +291,7 @@ namespace WorkoutDBObject
                     WOSet.S2 = Convert.ToInt32(reader["S2"]);
                     WOSet.S3 = Convert.ToInt32(reader["S3"]);
                     WOSet.REC = Convert.ToInt32(reader["REC"]);
+                    WOSet.SingleDuration = Convert.ToInt32(reader["duration"]);
                    
 
                     listOfSets.Add(WOSet);
