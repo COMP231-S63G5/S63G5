@@ -86,18 +86,8 @@
                 @Html.EditorFor(modelItem => item.SingleDuration, null, "WorkoutSet[" + count + "].SingleDuration")
             </td>
             <td class="workoutSetCell">
-                <!-- <input type="submit" value="delete" name="command" onclick="document.getElementsByName('deleteId')[0].value = item.OrderNum" />
-                 Ajax.ActionLink("Delete",
-                                 "deleteSet",
-                                  new { index = item.OrderNum },
-                                  new AjaxOptions()
-                                  {
-                                      HttpMethod = "POST",
-                                      InsertionMode = InsertionMode.Replace,
-                                      UpdateTargetId = "setsDiv"
-                                  },
-                                  new { id = "deleteSetLink"}
-                                  )-->
+                 <input type="submit" value="delete" name="command" onclick="document.getElementsByName('Id')[0].value = @item.OrderNum" />
+
                 @Html.HiddenFor(model => item.ID, new { @Name = "WorkoutSet[" + count + "].ID" })
                 @Html.HiddenFor(model => item.OrderNum, new { @Name = "WorkoutSet[" + count + "].OrderNum" })
             </td>
