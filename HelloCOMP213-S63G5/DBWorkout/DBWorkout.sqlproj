@@ -60,10 +60,8 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="tbl_stroke.sql" />
     <Build Include="tbl_set.sql" />
     <Build Include="tbl_workoutplan.sql" />
-    <Build Include="tbl_workoutplan_member.sql" />
     <Build Include="SwimDBStoredProc.sql" />
   </ItemGroup>
   <ItemGroup>
