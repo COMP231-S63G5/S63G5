@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutPlanObjects", "WorkoutPlanObjects\WorkoutPlanObjects.csproj", "{4ADD8400-2960-4871-93F7-D9E7E5D25BFD}"
 EndProject
@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutDBObject", "WorkoutD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutPlanAPI", "WorkoutPlanAPI\WorkoutPlanAPI.csproj", "{B4CD976A-AE1A-40D3-BA38-CB27E63341C4}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DBWorkout", "DBWorkout\DBWorkout.sqlproj", "{0195F9AE-8061-48B3-A68B-8962983922DD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutPlanWeb", "WorkoutPlanWeb\WorkoutPlanWeb.csproj", "{7786134F-46EA-459C-8E76-B3789B1FDF96}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SwimWorkoutsDB", "SwimWorkoutsDB\SwimWorkoutsDB.sqlproj", "{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,16 +31,16 @@ Global
 		{B4CD976A-AE1A-40D3-BA38-CB27E63341C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4CD976A-AE1A-40D3-BA38-CB27E63341C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4CD976A-AE1A-40D3-BA38-CB27E63341C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0195F9AE-8061-48B3-A68B-8962983922DD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{7786134F-46EA-459C-8E76-B3789B1FDF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7786134F-46EA-459C-8E76-B3789B1FDF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7786134F-46EA-459C-8E76-B3789B1FDF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7786134F-46EA-459C-8E76-B3789B1FDF96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E7337F-7C2A-4191-8D5B-77ED80E3B526}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
