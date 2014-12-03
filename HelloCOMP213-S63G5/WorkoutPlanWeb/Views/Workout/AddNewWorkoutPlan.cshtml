@@ -3,26 +3,68 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<h1>Workout Plan</h1>
+<h1 class="pageHeader">Create New Workout Plan</h1>
 
-<h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
-<h4 id="planDateTag"></h4>
+<div id="plan_conents" class="plan_content box">
 
-@using (Ajax.BeginForm("workoutAction", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
-{
-  @Html.Hidden("WorkoutPlanDate")
-  @Html.Hidden("Id")
-
-    <h4 id="planDateTag"></h4>
-
-        <div id="setsDiv">
-            @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
-        </div>
+    <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
+    <center>
+        <h2 id="planDateTag"></h2>
+        <h4>@DateTime.Today.ToString("yyyy-MM-dd") </h4>                    
+    </center>
  
-        <input type="submit" value="Save Plan" name="command" />
-        <input type="submit" value="Create New Set" name="command" />
+    <h4 id="planDateTag"></h4>
+    <div id="setsDiv">
+        @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
+    </div>
 
-}
+</div>
+
+<div id="plan_div" class="activeDiv edit_box box">
+    <table width="100%" align="center" class="tab-container">
+        <tr>
+            <td>
+                <input type="button" class="tab" value="Edit Plan" data-tab="editPlan" />
+                <input type="button" class="tab" value="New Section" data-tab="addSection" />
+                <input type="button" class="tab" value="Delete Plan" data-tab="deletePlan" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="editPlan" class="hidden">
+        <h2>Edit Plan</h2>
+        <form>
+            <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div id="addSection" class="hidden">
+        <h2>Add Section</h2>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        Section Name: <input type="text" id="sectionName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Insert Position: <select id="sectionPosition"></select>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Add Section" />
+        </form>
+    </div>
+    <div id="deletePlan" class="hidden">
+        <h2>Delete Plan</h2>
+        <form>
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
+
+</div>
+
 <script type="text/javascript">
 
     // Function will run on page load
@@ -80,6 +122,32 @@
 
     // set planDateTag onLoad
     window.onload = onPageLoad();
+
+</script>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+
+    $(".editBtn").click(function () {
+
+        var div = $(this).data("div");
+
+        $(".activeDiv").removeClass("activeDiv").addClass("hidden");
+        $("#" + div).removeClass("hidden").addClass("activeDiv");
+
+    });
+
+    $(".tab").click(function () {
+
+        $(".tab-selected").addClass("tab").removeClass("tab-selected");
+        $(this).addClass("tab-selected").removeClass("tab");
+
+        var tab = $(this).data("tab");
+
+        $(".activeTab").removeClass("activeTab").addClass("hidden");
+        $("#" + tab).removeClass("hidden").addClass("activeTab");
+
+    });
 </script>
 
 @section Scripts {

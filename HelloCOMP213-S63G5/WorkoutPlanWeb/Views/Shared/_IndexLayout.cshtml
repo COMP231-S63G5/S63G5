@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <!--<link href="~/Content/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="~/Content/customCss.css" type="text/css" rel="stylesheet">
+    <link href="~/Content/css/style.css" type="text/css" rel="stylesheet">
+    <link href="~/Content/Site.css" type="text/css" rel="stylesheet">
+    <!--  @Styles.Render("~/Content/css")-->
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="body_home">
+        <header>
+            <div class="content-wrapper">
+
+                <div class="float-right">
+                    <p class="site-title">@Html.ActionLink(".", "Index", "Home", new { @class = "site_logo" })</p>
+                    <!-- Azim - Commenting out the Login portion for now. (2014/10/16)
+
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    -->
+
+                    <nav>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
+            @RenderBody()
+        </section>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - Swim Workout Planner</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

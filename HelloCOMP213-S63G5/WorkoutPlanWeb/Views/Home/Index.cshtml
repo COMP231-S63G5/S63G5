@@ -1,24 +1,46 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_IndexLayout.cshtml";
 }
 @section featured {
 
 }
 
-<h3>Add a new workout plans</h3>
+<div id="home_content">
+    <table width="100%">
+        <tr>
+            <td align="right"><img src="../Images/whistle.png" alt="whistle" /></td>
+            <td align="left"><h3>Workout Plans</h3></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center">
+                @Html.ActionLink("+ Add new plan", "AddNewWorkoutPlan", "Workout", null, new { @class = "add_WO_btn" })
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="id_list">
 
-@Html.ActionLink("(old)Add NEW Workout Plan...", "AddNewPlan", "Workout")
-@Html.ActionLink("Add NEW Workout Plan...", "AddNewWorkoutPlan", "Workout")
+                    <h2>Plan Id</h2>
+                    <ul>
+                        @foreach (int item in ViewBag.listOfWorkOutPlanIDs)
+                        {
 
-<h3>Workout Plans</h3>
+                            @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout", new { @id = item }, null) + "</li>");
+                            // @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout") + "</li>");
+                        }
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
 
-<!-- TODO - Populate with list of workouts that were created. -->
+    
 
-<ul>
-    @foreach (int item in ViewBag.listOfWorkOutPlanIDs)
-    {
-        
-        @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout", new { @id = item },null) + "</li>");
-       // @Html.Raw("<li>" + @Html.ActionLink(item.ToString(), "ViewWorkOutPlan", "Workout") + "</li>");
-    }
-</ul>
+    <!-- TODO - Populate with list of workouts that were created. -->
+
+
+
+</div>
