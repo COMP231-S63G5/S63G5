@@ -61,5 +61,9 @@
   <ItemGroup>
     <Build Include="tbl_WorkoutPlan.sql" />
     <Build Include="tbl_Set.sql" />
+    <Build Include="StoredProcedures.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SwimWorkoutsDB.publish.xml" />
   </ItemGroup>
 </Project>
