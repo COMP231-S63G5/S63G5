@@ -256,6 +256,12 @@
     <Content Include="Content\css\bootstrap-theme.css.map" />
     <Content Include="Content\css\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\swimbg.jpg" />
+    <Content Include="Images\swimmer_bg.jpg" />
+    <Content Include="Images\swim_bg.jpg" />
+    <Content Include="Images\swim_bg.png" />
+    <Content Include="Images\swim_workout_logo.png" />
+    <Content Include="Images\whistle.png" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -316,6 +322,7 @@
     <Content Include="Views\Workout\ViewWorkOutSet.cshtml" />
     <Content Include="Views\Workout\EditSetList.cshtml" />
     <Content Include="Views\Workout\EditWorkOutPlan.cshtml" />
+    <Content Include="Views\Shared\_IndexLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

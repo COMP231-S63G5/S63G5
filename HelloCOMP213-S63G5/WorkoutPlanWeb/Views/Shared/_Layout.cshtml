@@ -8,47 +8,41 @@
        <!--<link href="~/Content/css/bootstrap.min.css" rel="stylesheet">--> 
         <link href="~/Content/customCss.css" type="text/css" rel="stylesheet">
         <link href="~/Content/css/style.css" type="text/css" rel="stylesheet">  
-        @Styles.Render("~/Content/css")
+        <link href="~/Content/Site.css" type="text/css" rel="stylesheet">  
+      <!--  @Styles.Render("~/Content/css")-->
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("Swim Workout Planner", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-
-                    <!-- Azim - Commenting out the Login portion for now. (2014/10/16)
+        <div id="body">
+            <header>
+                <div class="content-wrapper">
+                        
+                    <div class="float-right">
+                        <p class="site-title">@Html.ActionLink(".", "Index", "Home", new { @class = "site_logo" })</p>
+                        <!-- Azim - Commenting out the Login portion for now. (2014/10/16)
 
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
                     -->
 
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
+                        <nav>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </header>
-        <div id="body">
+            </header>
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
             </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - Swim Workout Planner</p>
+            <footer>
+                <div class="content-wrapper">
+                    <div class="float-left">
+                        <p>&copy; @DateTime.Now.Year - Swim Workout Planner</p>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
 
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
