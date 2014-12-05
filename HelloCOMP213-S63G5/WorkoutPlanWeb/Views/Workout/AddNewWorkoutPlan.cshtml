@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     
 }
-@model IEnumerable<WorkoutPlanObjects.WorkoutSetObject>
+@model WorkoutPlanObjects.WorkoutPlanObject
 
 <h1 class="pageHeader">Create New Workout Plan</h1>
 
@@ -12,7 +12,15 @@
     <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
     <center>
         <h2 id="planDateTag"></h2>
-        <h4>@DateTime.Today.ToString("yyyy-MM-dd") </h4>                    
+        @if (Model.PlanDate == null)
+        {
+            <h4>@DateTime.Today.ToString("yyyy-MM-dd") </h4>
+        }
+        else
+        {
+            <h4>@Model.PlanDate.ToString("yyyy-MM-dd") </h4>
+        }
+        
     </center>
  
     <h4 id="planDateTag"></h4>
@@ -35,10 +43,11 @@
 
     <div id="editPlan" class="hidden">
         <h2>Edit Plan</h2>
-        <form>
-            <h4>Date: <input type="date" id="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
+        @using(Html.BeginForm("updatePlanDate","Workout",FormMethod.Post))
+        { 
+            <h4>Date: <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
             <input type="submit" value="Save" />
-        </form>
+        }
     </div>
     <div id="addSection" class="hidden">
         <h2>Add Section</h2>
@@ -66,9 +75,11 @@
     </div>
     <div id="deletePlan" class="hidden">
         <h2>Delete Plan</h2>
-        <form>
-            <input type="submit" value="Delete" />
-        </form>
+        @using (Html.BeginForm("deletePlan","Workout",FormMethod.Post))
+        {
+            @Html.Hidden("tblID", Model.tblID)   
+            <input type="submit" value="Delete"/>
+        }
     </div>
 
 </div>

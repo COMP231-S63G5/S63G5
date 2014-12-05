@@ -48,8 +48,16 @@ namespace WorkoutPlanWeb.Controllers
                 Session["WorkoutSetList"] = new List<WorkoutSetObject>();
             }
 
+            if (Session["wp"] == null)
+            {
+                WorkoutPlanObject wp = new WorkoutPlanObject(DateTime.Now);
+                wp.tblID = 0;
+                Session["wp"] = wp;
+            }
+            WorkoutPlanObject wp1 = Session["wp"] as WorkoutPlanObject;
+
             //WorkoutSetObject ws = new WorkoutSetObject("home");
-            return View();
+            return View(wp1);
         }
 
         //public ActionResult PrintWorkoutPlan(int planId)
@@ -115,10 +123,6 @@ namespace WorkoutPlanWeb.Controllers
 
         public ActionResult addSection(string sectionName, string selectPosition)
         {
-            if (Session["wp"] == null)
-            {
-                Session["wp"] = new WorkoutPlanObject(DateTime.Now);
-            }
 
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = new WorkoutSetObject(sectionName);
@@ -131,6 +135,23 @@ namespace WorkoutPlanWeb.Controllers
             //return PartialView("WorkoutsetList",wp.SubSetList);
             return RedirectToAction("AddNewWorkoutPlan","Workout");
         }
+
+        public ActionResult deletePlan(string tblID)
+        {
+
+            //TO-DO: Delete the plan using the tblID of the plan
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult updatePlanDate(DateTime date)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            wp.PlanDate = date;
+            Session["wp"] = wp;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
+        }
+
 
         //public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int Id = -1,string command = "")
         //{

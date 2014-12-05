@@ -3,21 +3,34 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <table>
+    <table style="width:100%">
         <!-- TO-DO: format the tables and sets accordingly to its type   -->
         @foreach (var item in Model)
         {
             if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Section)
             {
              <tr>
-                 <td style="font-weight:bold">
+                 <td style="width:80%">
                      @Html.DisplayFor(i => item.Description)
+                 </td>
+                 <td>
+                     <input type="button" value="Edit" id="editSection"/>
                  </td>
              </tr>
             }
             else if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Group)
             {
-
+                <tr>
+                    <td style="width:80%">
+                        @Html.DisplayFor(i => item.Repeats)
+                    </td>
+                    <td>
+                        <input type="button" value="Edit" id="editGroup" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left:2em">[</td>
+                </tr>
             }
             else if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Set)
             {
