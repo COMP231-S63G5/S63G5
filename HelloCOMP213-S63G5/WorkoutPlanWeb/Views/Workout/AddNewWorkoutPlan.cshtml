@@ -43,7 +43,7 @@
     <div id="addSection" class="hidden">
         <h2>Add Section</h2>
         
-        @using (Html.BeginForm("addSection", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
+        @using (Html.BeginForm("addSection", "Workout",FormMethod.Post))
         { 
             <table>
                 <tr>
