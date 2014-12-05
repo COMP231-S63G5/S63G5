@@ -75,6 +75,13 @@ namespace WorkoutPlanObjects
             SubSetHashTable = new Hashtable();
             SubSetList = new List<WorkoutSetObject>();
         }
+
+        public WorkoutPlanObject(DateTime date)
+        {
+            PlanDate = date;
+            SubSetHashTable = new Hashtable();
+            SubSetList = new List<WorkoutSetObject>();
+        }
         public WorkoutPlanObject(int tblid, string name, DateTime date, List<WorkoutSetObject> workoutSets)
         {
             tblID = tblid;

@@ -1,8 +1,10 @@
 ﻿@{
     ViewBag.Title = "AddNewWorkoutPlan";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    
 }
+@model IEnumerable<WorkoutPlanObjects.WorkoutSetObject>
+
 <h1 class="pageHeader">Create New Workout Plan</h1>
 
 <div id="plan_conents" class="plan_content box">
@@ -40,21 +42,27 @@
     </div>
     <div id="addSection" class="hidden">
         <h2>Add Section</h2>
-        <form>
+        
+        @using (Html.BeginForm("addSection", "Workout", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "setsDiv", HttpMethod = "POST" }))
+        { 
             <table>
                 <tr>
                     <td>
-                        Section Name: <input type="text" id="sectionName" />
+                       Section Name: <input type="text" id="sectionName" name="sectionName" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Insert Position: <select id="sectionPosition"></select>
+                        Insert Position: <select id="sectionPosition" name="selectPosition">
+                                    <option value="0">0</option>    
+                                    <option value="1">1</option>                    
+                                    <option value="2">2</option>
+                        </select>
                     </td>
                 </tr>
             </table>
             <input type="submit" value="Add Section" />
-        </form>
+        }
     </div>
     <div id="deletePlan" class="hidden">
         <h2>Delete Plan</h2>
