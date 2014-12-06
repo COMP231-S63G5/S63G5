@@ -56,9 +56,8 @@ namespace WorkoutPlanWeb.Controllers
             }
             WorkoutPlanObject wp1 = Session["wp"] as WorkoutPlanObject;
             wp1.addWorkoutSection(new WorkoutSetObject("hello"), 0);
-            wp1.addWorkoutSection(new WorkoutSetObject("test"), 1);
-            //wp1.addWorkoutSection(new WorkoutSetObject("hello"), 6);
-            wp1.addWorkoutGroup(new WorkoutSetObject(2),1,1);
+            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 2);
+            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 6);
             Session["wp"] = wp1;
             Session["WorkoutSetList"] = wp1.SubSetList;
             //WorkoutSetObject ws = new WorkoutSetObject("home");

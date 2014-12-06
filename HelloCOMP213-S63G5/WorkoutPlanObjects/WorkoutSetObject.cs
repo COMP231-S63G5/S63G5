@@ -24,7 +24,7 @@ namespace WorkoutPlanObjects
         public string Rest;
         public EnumWorkoutSetType SetType;
         public string Stroke;
-        public List<WorkoutSetObject> SubSetList;
+        internal List<WorkoutSetObject> SubSetList;
         internal WorkoutPlanObject workoutPlan;   // root node
         internal int TotalRepeats;
 
@@ -141,11 +141,6 @@ namespace WorkoutPlanObjects
             {
                 throw new Exception("Error loading workout set from Database. set id:" + tblid);
             }
-        }
-
-        public WorkoutSetObject()
-        {
-            // TODO: Complete member initialization
         }
 
         public string getConsoleString()
