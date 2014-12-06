@@ -17,7 +17,7 @@ namespace WorkoutPlanObjects
         public int tblID;
         public DateTime PlanDate;
         public string PlanName;
-        private Hashtable SubSetHashTable;
+        public Hashtable SubSetHashTable;
         public List<WorkoutSetObject> SubSetList;
 
         public int TotalDistance
@@ -192,18 +192,18 @@ namespace WorkoutPlanObjects
             }
             else
             {
-                WorkoutSetObject temp_set;
+                WorkoutSetObject temp_set = new WorkoutSetObject(); ;
                 SubSetHashTable.Add(SubSetHashTable.Count + 1, null);   // add null to last index
                 // if insert a set after 3rd set (total 5 set), move 5th to 6th, 4th to 5th
                 for (int i = SubSetHashTable.Count; i > position; i--)
                 {
-                    temp_set = (WorkoutSetObject)SubSetHashTable[i];    // get 5th set
+                    temp_set = (WorkoutSetObject)SubSetHashTable[i-1];    // get 5th set
                     temp_set.OrderID++; // assign order id to 6
                     if (temp_set.ParentID > position)
                     {
                         temp_set.ParentID++;    // if parent id after 3, parent also move one position forward.
                     }
-                    SubSetHashTable[i + 1] = temp_set;  // move 5th to 6th in hash table,
+                    SubSetHashTable[i] = temp_set;  // move 5th to 6th in hash table,
                 }
                 workoutSet.OrderID = position + 1;  // assign order id to 4
                 workoutSet.ParentID = parent_set.OrderID;
