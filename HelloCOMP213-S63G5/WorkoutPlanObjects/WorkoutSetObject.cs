@@ -24,7 +24,7 @@ namespace WorkoutPlanObjects
         public string Rest;
         public EnumWorkoutSetType SetType;
         public string Stroke;
-        internal List<WorkoutSetObject> SubSetList;
+        public List<WorkoutSetObject> SubSetList;
         internal WorkoutPlanObject workoutPlan;   // root node
         internal int TotalRepeats;
 

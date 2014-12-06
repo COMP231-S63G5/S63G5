@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSetObject>
+
+<table class="group" width="90%">
+
+    @foreach (var group_item in Model)
+    { 
+        
+            if(group_item.SetType.ToString().Equals("Group"))
+            {
+                <tr>
+                <td>
+                    @Html.DisplayFor(j => group_item.OrderID)
+                </td>
+                <td style="width:80%" >
+                    @Html.DisplayFor(j => group_item.Description)
+                </td>
+                    <td width="100px" align="right">
+                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" />
+                    </td>
+                </tr>
+                <tr>
+                <td colspan="3">                    
+                    @Html.Partial("_WorkoutGroup", group_item.SubSetList)
+                </td>
+                </tr>
+            }
+            else
+            {
+                 @Html.Partial("_WorkoutSet", group_item)
+            }
+    }
+</table>
+

@@ -67,12 +67,22 @@ body {
 .plan_content{
     width: 800px;
     min-height:400px;
+
+}
+
+.plan_table{
+     width:95%;
 }
 
 .edit_box{
     width: 900px;
     min-height:150px;
     margin-top:60px;
+}
+
+.editBtn{
+    width:100px;
+    align-self:center;
 }
 
 header, footer {
@@ -209,4 +219,10 @@ a.site_logo
     margin-left:5px;
     text-align:left;
 
+}
+
+
+.group{
+    width:100%;
+    text-align:right;
 }
