@@ -10,17 +10,21 @@
             if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Section)
             {
              <tr>
+                 <td>
+                     @Html.DisplayFor(i=>item.OrderID)
+                 </td>
                  <td style="width:80%">
                      @Html.DisplayFor(i => item.Description)
                  </td>
                  <td>
-                     <input type="button" value="Edit" id="editSection"/>
+                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" />
                  </td>
              </tr>
             }
             else if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Group)
             {
                 <tr>
+                    <td>@Html.DisplayFor(i=>item.OrderID)</td>
                     <td style="width:80%">
                         @Html.DisplayFor(i => item.Repeats)
                     </td>

@@ -41,10 +41,10 @@
         </tr>
     </table>
 
-    <div id="editPlan" class="hidden">
+    <div id="editPlan" class="activeTab">
         <h2>Edit Plan</h2>
-        @using(Html.BeginForm("updatePlanDate","Workout",FormMethod.Post))
-        { 
+        @using (Html.BeginForm("updatePlanDate", "Workout", FormMethod.Post))
+        {
             <h4>Date: <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="setPlanDate();" /></h4>
             <input type="submit" value="Save" />
         }
@@ -62,14 +62,15 @@
                 </tr>
                 <tr>
                     <td>
-                        Insert Position: <select id="sectionPosition" name="selectPosition">
-                                    <option value="0">0</option>    
-                                    <option value="1">1</option>                    
-                                    <option value="2">2</option>
-                        </select>
+                        Insert Position: <input type="text" id="selectPosition" name="selectPosition" list="sectionPositions" size="3" /> 
                     </td>
                 </tr>
             </table>
+            <datalist id="sectionPositions">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </datalist>
             <input type="submit" value="Add Section" />
         }
     </div>
@@ -81,6 +82,111 @@
             <input type="submit" value="Delete"/>
         }
     </div>
+
+   
+
+
+
+</div>
+
+<div id="section_div" class="edit_box box hidden">
+    <table width="100%" align="center" class="tab-container">
+        <tr>
+            <td>
+                <input type="button" class="tab" value="Edit Section" data-tab="editSection" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
+            </td>
+        </tr>
+
+    </table>
+    <div id="editSection" class="hidden">
+        <h2>Edit Section</h2>
+        @using (Html.BeginForm("editSection", "Workout", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td><h4>Section Name:</h4></td>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Update Section" /></td>
+                    <td><input type="submit" value="Delete Section" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+
+
+    <div id="addGroup" class="hidden">
+        <h2>Add Workout Group</h2>
+        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>Repeats: <input type="text" /></td>
+                    <td>Group Location After: <input type="text" list="grouplocations" size="3"/></td>
+                </tr>
+            </table>
+
+            <input type="submit" value="Add Group" />
+            <datalist id="grouplocations">
+                <option>0</option><!-- TO-DO: Populate the datalist with the locations of the group-->
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </datalist>
+        }
+    </div>
+
+    <div id="addSet" class="hidden">
+        <h2>Add Workout Set</h2>
+        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <th width="50">Repeats</th>
+                    <th width="50">Distance</th>
+                    <th width="50">Stroke</th>
+                    <th width="50">Type</th>
+                    <th width="50">Duration</th>
+                    <th width="50">Total Distance</th>
+                    <th width="50">Energy Group</th>
+                    <th width="50">Set Location After</th>
+                </tr>
+                <tr>
+                    <td><input type="text"  size="5"/></td>
+                    <td><input type="text"  size="5" /></td>
+                    <td><input type="text" list="strokes" size="10"/></td>
+                    <td><input type="text" list="type" size="10"/></td>
+                    <td><input type="text" size="10"/></td>
+                    <td><input type="text" size="10"/></td>
+                    <td><input type="text" size="10"/></td>
+                    <td><input type="text" size="5"/></td>
+                    
+                </tr>
+
+                
+
+            </table>
+    <input type="submit" value="Add Set" style="margin:10px"/>
+
+        }
+        <datalist id="strokes">
+            <option value="Free">
+            <option value="Fly">
+            <option value="Back">
+            <option value="Rest">
+            <option value="Medley">
+        </datalist>
+
+        <datalist id="type">
+            <option value="Pace">
+            <option value="Rest">
+        </datalist>
+    </div>
+
+
 
 </div>
 
