@@ -55,7 +55,11 @@ namespace WorkoutPlanWeb.Controllers
                 Session["wp"] = wp;
             }
             WorkoutPlanObject wp1 = Session["wp"] as WorkoutPlanObject;
-
+            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 0);
+            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 2);
+            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 6);
+            Session["wp"] = wp1;
+            Session["WorkoutSetList"] = wp1.SubSetList;
             //WorkoutSetObject ws = new WorkoutSetObject("home");
             return View(wp1);
         }

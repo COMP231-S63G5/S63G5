@@ -57,7 +57,7 @@
             <table>
                 <tr>
                     <td>
-                       Section Name: <input type="text" id="sectionName" name="sectionName" />
+                       Section Name: <input type="text" id="sectionName" name="sectionName" list="sectionNames"/>
                     </td>
                 </tr>
                 <tr>
@@ -67,9 +67,22 @@
                 </tr>
             </table>
             <datalist id="sectionPositions">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option>0</option>
+                @foreach (var item in Model.SubSetList)
+                {
+                    if (item.SetType == WorkoutPlanObjects.EnumWorkoutSetType.Section)
+                    {
+                        <option>
+                            @item.OrderID
+                        </option>
+                    }
+                }
+            </datalist>
+            
+            <datalist id="sectionNames">
+                <option>Warm up</option>
+                <option>Main</option>
+                <option>Warm down</option>
             </datalist>
             <input type="submit" value="Add Section" />
         }
