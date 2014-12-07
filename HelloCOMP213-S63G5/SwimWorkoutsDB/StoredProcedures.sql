@@ -116,7 +116,7 @@ CREATE PROCEDURE getworkoutplan
 AS 
     SET NOCOUNT ON;
     SELECT  tbl_WorkoutPlan.planID,
-			tbl_WorkoutPlan.totalDistance,
+			tbl_WorkoutPlan.totalDistance as totalPlanDistance,
 			tbl_WorkoutPlan.totalDuration,
 			tbl_Set.setID,
 			tbl_Set.setType,
