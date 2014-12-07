@@ -225,12 +225,28 @@ namespace WorkoutPlanWeb.Controllers
             return RedirectToAction("AddNewWorkoutPlan", "Workout");
         }
 
-        public ActionResult addSet()
+        public ActionResult addSet(string repeat, string distance, string stroke, string type, string duration,string description, string totalDistance,string energyGroup,string energyAmount, string position, string parentId)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            //TO-Do: Server side validation
+            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, type, description, energyGroup, int.Parse(energyAmount));
+            wp.addWorkoutSet(ws, int.Parse(parentId),int.Parse(position));
+            Session["wp"] = wp;
+            Session["WorkoutSetList"] = wp.SubSetList;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
+        }
+
+        public ActionResult savePlan()
         {
             return View();
         }
 
-        public ActionResult savePlan()
+        public ActionResult editGroup()
+        {
+            return View();
+        }
+
+        public ActionResult editSet()
         {
             return View();
         }
