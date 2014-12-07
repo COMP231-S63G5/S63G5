@@ -171,10 +171,37 @@ namespace WorkoutPlanWeb.Controllers
             
         //    return JavaScript(String.Format("window.location = '{0}'", Url.Action("Index", "Home")));
         //}
+        public ActionResult editSection(string sectionName, string command, string parentId)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+
+            if (command == "Update Section")
+            {
+                wp.SubSetList[int.Parse(parentId)].Description = sectionName;
+                Session["wp"] = wp;
+                Session["WorkoutSetList"] = wp.SubSetList;
+                return RedirectToAction("AddNewWorkoutPlan", "Workout");
+            }
+
+            else
+            {
+                if (wp.SubSetList.Count >0) //a count of more than 0 indicates the section is not empty. 
+                {
+                    //TO-DO: Throw an error
+                }
+                else
+                {
+                    wp.remove(int.Parse(parentId));
+                    Session["wp"] = wp;
+                    Session["WorkoutSetList"] = wp.SubSetList;
+
+                }
+                return RedirectToAction("AddNewWorkoutPlan", "Workout");
+            }
+        }
 
         public ActionResult addSection(string sectionName, string selectPosition)
         {
-
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = new WorkoutSetObject(sectionName);
             wp.addWorkoutSection(ws, int.Parse(selectPosition));
@@ -182,10 +209,35 @@ namespace WorkoutPlanWeb.Controllers
 
             Session["WorkoutSetList"] = wp.SubSetList;
             Session["wp"] = wp;
-
+            
             //return PartialView("WorkoutsetList",wp.SubSetList);
             return RedirectToAction("AddNewWorkoutPlan","Workout");
         }
+
+        public  ActionResult addGroup(string repeats,string parentId,string position)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeats));
+            wp.addWorkoutGroup(ws, int.Parse(parentId), int.Parse(position));
+
+            Session["wp"] = wp;
+            Session["WorkoutSetList"] = wp.SubSetList;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
+        }
+
+        public ActionResult addSet()
+        {
+            return View();
+        }
+
+        public ActionResult savePlan()
+        {
+            return View();
+        }
+
+
+
+
 
         public ActionResult deletePlan(string tblID)
         {

@@ -115,16 +115,18 @@
     </table>
     <div id="editSection" class="hidden">
         <h2>Edit Section</h2>
-        @using (Html.BeginForm("editSection", "Workout", FormMethod.Post))
+        @using(Html.BeginForm("editSection", "Workout", FormMethod.Post))
         {
+            @Html.Hidden("parentId")
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
                     <td><input type="text" /></td>
                 </tr>
+
                 <tr>
-                    <td><input type="submit" value="Update Section" /></td>
-                    <td><input type="submit" value="Delete Section" /></td>
+                    <td><input type="submit" value="Update Section" name="command"/></td>
+                    <td><input type="submit" value="Delete Section" name="command"/></td>
                 </tr>
             </table>
         }
@@ -133,12 +135,13 @@
 
     <div id="addGroup" class="hidden">
         <h2>Add Workout Group</h2>
-        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
+        @using(Html.BeginForm("addGroup", "Workout", FormMethod.Post))
         {
+            @Html.Hidden("parentId")
             <table>
                 <tr>
-                    <td>Repeats: <input type="text" /></td>
-                    <td>Group Location After: <input type="text" list="grouplocations" size="3"/></td>
+                    <td>Repeats: <input type="text" name="repeats"/></td>
+                    <td>Group Location After: <input type="text" list="grouplocations" size="3"  name="position"/></td>
                 </tr>
             </table>
 
@@ -154,8 +157,9 @@
 
     <div id="addSet" class="hidden">
         <h2>Add Workout Set</h2>
-        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        @using(Html.BeginForm("addSet", "Workout", FormMethod.Post))
         {
+             @Html.Hidden("parentId")
             <table>
                 <tr>
                     <th width="50">Repeats</th>
