@@ -23,21 +23,17 @@ GO
 --IF OBJECT_ID ( 'insertWorkoutPlan', 'P' ) IS NOT NULL 
 --    DROP PROCEDURE insertWorkoutPlan;
 GO
-CREATE PROCEDURE addWorkOutPlan    @date date,
+CREATE PROCEDURE addWorkOutPlan    @plandate date,
 								   @ttl_distance int, 
-								   @ttl_duration nvarchar(10)
-AS 
+								   @ttl_duration varchar(10)
+AS
     SET NOCOUNT ON;
     INSERT INTO [dbo].[tbl_WorkoutPlan]
            ([planDate],[totalDistance],[totalDuration])
 	OUTPUT INSERTED.planID
     VALUES
-           (@date,@ttl_distance,@ttl_duration );
+           (@plandate,@ttl_distance,@ttl_duration );
 GO
-
-
-
-
 -- =============================================
 -- Author:		<Hiren Patel>
 -- Create date: <>
@@ -45,7 +41,7 @@ GO
 -- =============================================
 
 --IF OBJECT_ID ( 'insertWorkoutSet', 'P' ) IS NOT NULL 
- --   DROP PROCEDURE insertWorkoutSet;
+--   DROP PROCEDURE insertWorkoutSet;
 GO
 CREATE PROCEDURE insertWorkoutSet	@SetType nvarchar(10), 
 									@planID int,
