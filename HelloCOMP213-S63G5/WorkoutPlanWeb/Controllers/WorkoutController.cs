@@ -50,15 +50,62 @@ namespace WorkoutPlanWeb.Controllers
 
             if (Session["wp"] == null)
             {
-                WorkoutPlanObject wp = new WorkoutPlanObject(DateTime.Now);
-                wp.tblID = 0;
-                Session["wp"] = wp;
+                WorkoutPlanObject plan = new WorkoutPlanObject("Swim plan UI", DateTime.Now);
+
+                WorkoutSetObject set1 = new WorkoutSetObject("Warm up");
+                plan.addWorkoutSection(set1, 0);
+
+                WorkoutSetObject set2 = new WorkoutSetObject(4, 50, "free", "1:00", "description 1", "E1", 200);
+                plan.addWorkoutSet(set2, 1, 1);
+
+                WorkoutSetObject set3 = new WorkoutSetObject("Main");
+                plan.addWorkoutSection(set3, 2);
+
+                WorkoutSetObject set4 = new WorkoutSetObject(1, 100, "back", "1:30", "description 2", "E2", 100);
+                plan.addWorkoutSet(set4, 3, 3);
+
+                WorkoutSetObject set5 = new WorkoutSetObject(4);
+                plan.addWorkoutGroup(set5, 3, 4);
+
+                WorkoutSetObject set6 = new WorkoutSetObject(2);
+                plan.addWorkoutGroup(set6, 5, 5);
+
+                WorkoutSetObject set7 = new WorkoutSetObject(1, 50, "fly", "1:00", "description 3", "E3", 400);
+                plan.addWorkoutSet(set7, 6, 6);
+
+                WorkoutSetObject set8 = new WorkoutSetObject("Warm down");
+                plan.addWorkoutSection(set8, 7);
+
+                WorkoutSetObject set9 = new WorkoutSetObject(4, 100, "free", "2:00", "description 4", "S1", 400);
+                plan.addWorkoutSet(set9, 8, 8);
+
+                //Console.WriteLine("Printing workout plan object generated from UI.\n"); 
+                //Console.WriteLine(plan.getConsoleString());
+                //Console.ReadLine();
+
+                List<WorkoutSetObject> setDB = new List<WorkoutSetObject>(){
+                    new WorkoutSetObject(14,"Section",1,0,"","","","","Warm up","",0,1,0),
+                    new WorkoutSetObject(15,"Set",4,50,"Free","1:00","","4:00","description 1","E1",200,2,1),
+                    new WorkoutSetObject(16,"Section",1,0,"","","","","Main","",0,3,0),
+                    new WorkoutSetObject(17,"Set",1,100,"Back","1:30","1:30","description 2","E2","100",0,4,3),
+                    new WorkoutSetObject(18,"Group",4,0,"","","","","","",0,5,3),
+                    new WorkoutSetObject(19,"Group",2,0,"","","","","","",0,6,5),
+                    new WorkoutSetObject(20,"Set",1,50,"Fly","1:00","","8:00","description 3","E3",400,7,6),
+                    new WorkoutSetObject(21,"Section",1,0,"","","","","Warm down","",0,8,0),
+                    new WorkoutSetObject(22,"Set",4,100,"Free","2:00","","8:00","description 4","S1",400,9,8),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,10,8),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,11,10),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,12,10)
+                };
+
+                WorkoutPlanObject plan2 = new WorkoutPlanObject(1, "Swim plan DB", DateTime.Now, setDB);
+                Session["wp"] = plan2;
+
             }
             WorkoutPlanObject wp1 = Session["wp"] as WorkoutPlanObject;
-            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 0);
-            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 2);
-            wp1.addWorkoutSection(new WorkoutSetObject("hello"), 6);
+            
             Session["wp"] = wp1;
+            
             Session["WorkoutSetList"] = wp1.SubSetList;
             //WorkoutSetObject ws = new WorkoutSetObject("home");
             return View(wp1);
