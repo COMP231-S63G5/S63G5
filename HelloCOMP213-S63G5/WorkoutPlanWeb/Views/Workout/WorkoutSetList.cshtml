@@ -3,72 +3,62 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <table class="section" style="padding:0; padding-right:50px;">
-    <!-- TO-DO: format the tables and sets accordingly to its type   -->
-    @foreach (var plan_item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(j => plan_item.OrderID).&nbsp;
-            </td>
-            <td>
-                @Html.DisplayFor(item => plan_item.Description)
-            </td>
-            <td>
-                <input type="button" value="Edit Section" class="editBtn" data-div="section_div" data-parent="@Html.DisplayFor(item=> plan_item.OrderID)" onclick="document.getElementsByName('parentId')[0].value=@plan_item.OrderID" />
-            </td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td colspan="2" class="full_cell" align="right">
-                <table class="section">
-                    @foreach (var section_item in plan_item.SubSetList)
-                    {
-
-                        if (section_item.SetType.ToString().Equals("Set"))
+    <table class="plan_table">
+        <!-- TO-DO: format the tables and sets accordingly to its type   -->
+        @foreach (var plan_item in Model)
+        {
+            <tr>
+                 <td>
+                      @Html.DisplayFor(item=>plan_item.OrderID)
+                 </td>
+                 <td style="width:80%">
+                     @Html.DisplayFor(item=>plan_item.Description)
+                 </td>
+                 <td align="right">
+                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID')" />
+                 </td>
+             </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    <table class="section" width="95%">
+                        @foreach (var section_item in plan_item.SubSetList)
                         {
-                            @Html.Partial("_WorkoutSet", section_item)
+
+                            if (section_item.SetType.ToString().Equals("Set"))
+                            {
+                                @Html.Partial("_WorkoutSet", section_item)
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(j => section_item.OrderID)
+                                    </td>
+                                    <td style="width:95%">
+                                        @Html.DisplayFor(j => section_item.Description)
+                                        @Html.DisplayFor(j => section_item.SetType)
+                                    </td>
+                                    <td align="right">
+                                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">
+                                       @Html.Partial("_WorkoutGroup", section_item.SubSetList)
+                                    </td>
+                                </tr>
+                            }
 
                         }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(j => section_item.OrderID).&nbsp;
-                                </td>
-                                <td align="left">
-                                    @Html.DisplayFor(j => section_item.Repeats) X {
-                                </td>
-                                <td align="right">
-                                    <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="document.getElementsByName('parentId')[0].value=@section_item.ParentID" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td colspan="2" class="full_cell" align="right">
-                                    @Html.Partial("_WorkoutGroup", section_item.SubSetList)
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td align="left">
-                                    }
-                                </td>
-                                <td></td>
-                            </tr>
-                        }
+                    </table>
+                </td>
 
-                    }
-                </table>
-            </td>
+            </tr>
 
-        </tr>
-
-    }
+        }
 
 
-</table>
-
+    </table>
 
 

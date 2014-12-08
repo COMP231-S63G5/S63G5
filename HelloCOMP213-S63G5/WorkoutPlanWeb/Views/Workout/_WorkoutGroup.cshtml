@@ -1,43 +1,33 @@
 ﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSetObject>
 
-<table class="section">
+<table class="group" width="90%">
 
     @foreach (var group_item in Model)
     { 
         
-        
-
-        if(group_item.SetType.ToString().Equals("Group"))
-        {
-            <tr>
-                <td>                    
-                    @Html.DisplayFor(j => group_item.OrderID).&nbsp;
-                </td>
-                <td align="left">
-                    @Html.DisplayFor(j => group_item.Repeats) X {
-                </td>
+            if(group_item.SetType.ToString().Equals("Group"))
+            {
+                <tr>
                 <td>
-                    <input type="button" value="Edit Group" class="editBtn" data-div="group_div" data-parent="@Html.DisplayFor(item=> group_item.OrderID)" onclick="document.getElementsByName('parentId')[0].value=@group_item.ParentID" />
+                    @Html.DisplayFor(j => group_item.OrderID)
                 </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2" class="full_cell" align="right">                    
+                <td style="width:80%" >
+                    @Html.DisplayFor(j => group_item.Description)
+                </td>
+                    <td width="100px" align="right">
+                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID)" />
+                    </td>
+                </tr>
+                <tr>
+                <td colspan="3">                    
                     @Html.Partial("_WorkoutGroup", group_item.SubSetList)
                 </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td align="left">
-                    }
-                </td>
-                <td></td>
-            </tr>
-        }
-        else
-        {
-                @Html.Partial("_WorkoutSet", group_item)
-        }
+                </tr>
+            }
+            else
+            {
+                 @Html.Partial("_WorkoutSet", group_item)
+            }
     }
 </table>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -174,66 +175,133 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult editSection(string sectionName, string command, string parentId)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-
-            if (command == "Update Section")
+            if (sectionName == "")
             {
-                wp.SubSetList[int.Parse(parentId)].Description = sectionName;
-                Session["wp"] = wp;
-                Session["WorkoutSetList"] = wp.SubSetList;
-                return RedirectToAction("AddNewWorkoutPlan", "Workout");
+                ModelState.AddModelError("errorMessage", "Section name cannot be empty");
+                ModelState.AddModelError("editSection", "Section name cannot be empty");
             }
-
             else
             {
-                if (wp.SubSetList.Count >0) //a count of more than 0 indicates the section is not empty. 
+                WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(parentId)];
+                if (command == "Update Section")
                 {
-                    //TO-DO: Throw an error
-                }
-                else
-                {
-                    wp.remove(int.Parse(parentId));
+                    ws.Description = sectionName;
                     Session["wp"] = wp;
                     Session["WorkoutSetList"] = wp.SubSetList;
-
                 }
-                return RedirectToAction("AddNewWorkoutPlan", "Workout");
+
+                else if (command == "Delete Section")
+                {
+                    if (ws.SubSetList.Count >0) //a count of more than 0 indicates the section is not empty. 
+                    {
+                        ModelState.AddModelError("errorMessage", "Section must be empty before it can be deleted ");
+                        ModelState.AddModelError("editSection", "Section must be empty before it can be deleted ");
+                    }
+                    else
+                    {
+                        wp.remove(int.Parse(parentId));
+                        Session["wp"] = wp;
+                        Session["WorkoutSetList"] = wp.SubSetList;
+                    }
+                }
             }
+            return View("AddNewWorkoutPlan", wp);
         }
 
         public ActionResult addSection(string sectionName, string selectPosition)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            WorkoutSetObject ws = new WorkoutSetObject(sectionName);
-            wp.addWorkoutSection(ws, int.Parse(selectPosition));
-            //or use wp.addWorkoutSection(ws,0);
-
-            Session["WorkoutSetList"] = wp.SubSetList;
-            Session["wp"] = wp;
-            
-            //return PartialView("WorkoutsetList",wp.SubSetList);
-            return RedirectToAction("AddNewWorkoutPlan","Workout");
+            int pos;
+            if (sectionName == "")
+            {
+                ModelState.AddModelError("errorMessage", "Section name cannot be empty");
+                ModelState.AddModelError("addSectionName", "Section name cannot be empty");
+            }
+            else if(selectPosition == "")
+	        {
+                ModelState.AddModelError("errorMessage", "Position cannot be empty");
+                ModelState.AddModelError("addSectionPosition", "Position cannot be empty");
+	        }
+            else if (int.TryParse(selectPosition,out pos) == false)
+            {
+                ModelState.AddModelError("errorMessage", "Position must be a number");
+                ModelState.AddModelError("addSectionPosition", "Position must be a number");
+            }
+            else
+            {
+                WorkoutSetObject ws = new WorkoutSetObject(sectionName);
+                wp.addWorkoutSection(ws, int.Parse(selectPosition));
+                Session["WorkoutSetList"] = wp.SubSetList;
+                Session["wp"] = wp;
+            }
+            return View("AddNewWorkoutPlan", wp);
         }
 
         public  ActionResult addGroup(string repeats,string parentId,string position)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeats));
-            wp.addWorkoutGroup(ws, int.Parse(parentId), int.Parse(position));
-
-            Session["wp"] = wp;
-            Session["WorkoutSetList"] = wp.SubSetList;
-            return RedirectToAction("AddNewWorkoutPlan", "Workout");
+            int rep;
+            int pos; 
+            if (repeats == "")
+            {
+                ModelState.AddModelError("errorMessage", "Repeats cannot be empty");
+                ModelState.AddModelError("addGroupRepeat", "Repeats cannot be empty");
+            }
+            else if (int.TryParse(repeats,out rep) == false)
+            {
+                ModelState.AddModelError("errorMessage", "Repeats must be a number");
+                ModelState.AddModelError("addGroupRepeat", "Repeats must be a number");
+            }
+            else if (position=="")
+            {
+                ModelState.AddModelError("addGroupLocation", "Group position cannot be empty");
+                ModelState.AddModelError("errorMessage", "Group position cannot be empty");
+            }
+            else if (int.TryParse(position, out pos) == false)
+            {
+                ModelState.AddModelError("addGroupLocation", "Group position must be a number");
+                ModelState.AddModelError("errorMessage", "Group position must be a number");
+            }
+            else
+            {
+                WorkoutSetObject ws = new WorkoutSetObject(rep);
+                wp.addWorkoutGroup(ws, int.Parse(parentId), pos);
+                Session["wp"] = wp;
+                Session["WorkoutSetList"] = wp.SubSetList;
+            }
+            return View("AddNewWorkoutPlan", wp);
         }
 
         public ActionResult addSet(string repeat, string distance, string stroke, string type, string duration,string description, string totalDistance,string energyGroup,string energyAmount, string position, string parentId)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            if (repeat == "" || distance=="" || stroke=="" || type=="" || duration ==""||energyGroup==""||energyAmount==""||position=="")
+            {
+                ModelState.AddModelError("errorMessage", "Fields cannot be empty");
+            }
+            else
+            {             
             //TO-Do: Server side validation
             WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, type, description, energyGroup, int.Parse(energyAmount));
+            if (type == "Rest")
+            {
+                ws.Pace = null;
+            }
+            else if (type == "Pace")
+            {
+                ws.Rest = null;
+            }
+            else
+            {
+                ws.Rest = null;
+                ws.Pace = null;
+            }
             wp.addWorkoutSet(ws, int.Parse(parentId),int.Parse(position));
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
-            return RedirectToAction("AddNewWorkoutPlan", "Workout");
+
+            }
+            return View("AddNewWorkoutPlan", wp);
         }
 
         public ActionResult savePlan()
@@ -241,14 +309,60 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
-        public ActionResult editGroup()
+        public ActionResult editGroup(string repeats, string orderId)
         {
-            return View();
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            int rep;
+            if (repeats == "")
+            {
+                ModelState.AddModelError("errorMessage", "Repeats cannot be empty");
+                //ModelState.AddModelError("addGroupRepeat", "Repeats cannot be empty");  -- need to add to edit group view
+            }
+            else if (int.TryParse(repeats, out rep) == false)
+            {
+                ModelState.AddModelError("errorMessage", "Repeats must be a number");
+               // ModelState.AddModelError("addGroupRepeat", "Repeats must be a number");
+            }
+            else
+            { 
+                WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+                ws.Repeats = rep;
+                Session["wp"] = wp;
+                Session["WorkoutSetList"] = wp.SubSetList;
+            }
+            return View("AddNewWorkoutPlan", wp);
         }
 
-        public ActionResult editSet()
-        {
-            return View();
+        public ActionResult editSet(string repeat, string distance, string stroke, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string orderId)
+        {     
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+            ws.Repeats = int.Parse(repeat);
+            ws.Distance = int.Parse(distance);
+            ws.Stroke = stroke;
+            if (type=="Pace")
+            {
+                ws.Pace = type;
+                ws.Rest = null; // Only pace or rest can be in use
+            }
+            else if (type == "Rest")
+	        {
+                ws.Rest = type;
+                ws.Pace = null;
+	        }
+            else //some workoutsets do not require rest or pace
+            {
+                ws.Rest = null;
+                ws.Pace = null;
+            }
+            ws.Duration = duration;
+            ws.Description = description;
+            ws.EnergyGroupName = energyGroup;
+            ws.EnergyGroupAmount = int.Parse(energyAmount);
+          
+            Session["wp"] = wp;
+            Session["WorkoutSetList"] = wp.SubSetList;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
         }
 
 
@@ -269,6 +383,14 @@ namespace WorkoutPlanWeb.Controllers
             wp.PlanDate = date;
             Session["wp"] = wp;
             return RedirectToAction("AddNewWorkoutPlan", "Workout");
+        }
+
+        public JsonResult getSubSetPosition(string orderId)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+            List<int> ids = ws.getSubsetPositions();
+            return Json(ids);
         }
 
 

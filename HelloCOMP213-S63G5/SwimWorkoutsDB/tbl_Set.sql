@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[tbl_Set]
 (
 	[setID] INT IDENTITY(1000,1) NOT NULL PRIMARY KEY,
-	[setType] NVARCHAR(10) not null,
+	[setType] NVARCHAR(10) not null DEFAULT '',
 	[planID] int not null CONSTRAINT "foreignkeyPlanid" FOREIGN KEY REFERENCES tbl_WorkoutPlan([planID]) ON DELETE CASCADE,
 	[repeats] int NOT null DEFAULT 0,
 	[stroke] varchar(10) NOT null DEFAULT '',
