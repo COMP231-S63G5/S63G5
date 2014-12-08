@@ -20,6 +20,6 @@
         @Html.DisplayFor(j => Model.Duration)
     </td>
     <td width="100px" align="right">
-        <input type="button" value="Edit Set" class="editBtn" data-div="set_div" onclick="document.getElementsByName('parentId')[0].value=@Model.ParentID" />
+        <input type="button" value="Edit Set" class="editBtn" data-div="set_div" onclick="editSetBtnClicked(@Model.GroupID)" />
     </td>
 </tr>

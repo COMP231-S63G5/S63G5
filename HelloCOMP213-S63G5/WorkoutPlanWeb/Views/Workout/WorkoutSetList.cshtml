@@ -40,7 +40,7 @@
                                         @Html.DisplayFor(j => section_item.SetType)
                                     </td>
                                     <td align="right">
-                                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="document.getElementsByName('parentId')[0].value=@plan_item.ParentID" />
+                                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID)" />
                                     </td>
                                 </tr>
                                 <tr>

@@ -121,7 +121,7 @@
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
-                    <td><input type="text" /></td>
+                    <td><input type="text" name="sectionName" /></td>
                 </tr>
 
                 <tr>
@@ -202,6 +202,7 @@
         </datalist>
 
         <datalist id="type">
+            <option value="None">
             <option value="Pace">
             <option value="Rest">
         </datalist>
@@ -294,6 +295,17 @@
         $("#" + tab).removeClass("hidden").addClass("activeTab");
 
     });
+
+    function editGroupBtnClicked(groupId,parentId)
+    {
+
+    }
+
+    function editSetBtnClicked(groupId)
+    {
+        //need to change id to group id  and add hidden text when ui is done
+        document.getElementById("parentId")[0].value = groupId;
+    }
 </script>
 
 @section Scripts {

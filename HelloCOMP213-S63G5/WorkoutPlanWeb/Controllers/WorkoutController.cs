@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -175,9 +176,11 @@ namespace WorkoutPlanWeb.Controllers
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
 
+
             if (command == "Update Section")
             {
-                wp.SubSetList[int.Parse(parentId)].Description = sectionName;
+                WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(parentId)];
+                ws.Description = sectionName;
                 Session["wp"] = wp;
                 Session["WorkoutSetList"] = wp.SubSetList;
                 return RedirectToAction("AddNewWorkoutPlan", "Workout");
@@ -205,7 +208,7 @@ namespace WorkoutPlanWeb.Controllers
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = new WorkoutSetObject(sectionName);
             wp.addWorkoutSection(ws, int.Parse(selectPosition));
-            //or use wp.addWorkoutSection(ws,0);
+            
 
             Session["WorkoutSetList"] = wp.SubSetList;
             Session["wp"] = wp;
@@ -230,6 +233,19 @@ namespace WorkoutPlanWeb.Controllers
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             //TO-Do: Server side validation
             WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, type, description, energyGroup, int.Parse(energyAmount));
+            if (type == "Rest")
+            {
+                ws.Pace = null;
+            }
+            else if (type == "Pace")
+            {
+                ws.Rest = null;
+            }
+            else
+            {
+                ws.Rest = null;
+                ws.Pace = null;
+            }
             wp.addWorkoutSet(ws, int.Parse(parentId),int.Parse(position));
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
@@ -241,14 +257,46 @@ namespace WorkoutPlanWeb.Controllers
             return View();
         }
 
-        public ActionResult editGroup()
+        public ActionResult editGroup(string repeats, string orderId)
         {
-            return View();
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+            ws.Repeats = int.Parse(repeats);
+            Session["wp"] = wp;
+            Session["WorkoutSetList"] = wp.SubSetList;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
         }
 
-        public ActionResult editSet()
-        {
-            return View();
+        public ActionResult editSet(string repeat, string distance, string stroke, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string orderId)
+        {     
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+            ws.Repeats = int.Parse(repeat);
+            ws.Distance = int.Parse(distance);
+            ws.Stroke = stroke;
+            if (type=="Pace")
+            {
+                ws.Pace = type;
+                ws.Rest = null; // Only pace or rest can be in use
+            }
+            else if (type == "Rest")
+	        {
+                ws.Rest = type;
+                ws.Pace = null;
+	        }
+            else //some workoutsets do not require rest or pace
+            {
+                ws.Rest = null;
+                ws.Pace = null;
+            }
+            ws.Duration = duration;
+            ws.Description = description;
+            ws.EnergyGroupName = energyGroup;
+            ws.EnergyGroupAmount = int.Parse(energyAmount);
+          
+            Session["wp"] = wp;
+            Session["WorkoutSetList"] = wp.SubSetList;
+            return RedirectToAction("AddNewWorkoutPlan", "Workout");
         }
 
 
