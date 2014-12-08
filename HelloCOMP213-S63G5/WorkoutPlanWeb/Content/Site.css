@@ -70,9 +70,6 @@ body {
 
 }
 
-.plan_table{
-     width:95%;
-}
 
 .edit_box{
     width: 900px;
@@ -82,7 +79,6 @@ body {
 
 .editBtn{
     width:100px;
-    align-self:center;
 }
 
 header, footer {
@@ -225,4 +221,41 @@ a.site_logo
 .group{
     width:100%;
     text-align:right;
+}
+
+
+//PLAN VIEW STYLE
+
+table.plan_table{
+     background-color:orange;
+}
+table.plan_table td:first-child{
+    width:50px;
+}
+table.plan_table td:last-child{
+    width:100px;
+}
+table.plan_table td{
+}
+
+table.section{
+    width:100%;
+    margin:0;
+    padding:0;
+}
+table.section td{
+    width:80%;
+}
+
+table.section td:first-of-type{
+    width:50px;
+}
+table.section td:last-of-type{
+    width:100px;
+    margin:0;
+    padding:0;
+    text-align:right;
+}
+td.full_cell{
+    width:100%;
 }

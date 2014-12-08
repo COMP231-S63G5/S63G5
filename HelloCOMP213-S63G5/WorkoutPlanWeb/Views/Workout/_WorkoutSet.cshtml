@@ -3,7 +3,7 @@
 
 <tr>
     <td>
-        @Html.DisplayFor(j=>Model.OrderID). &nbsp;
+        @Html.DisplayFor(j => Model.OrderID).&nbsp;
     </td>
     <td align="left">
         @Html.DisplayFor(j => Model.Repeats) X @Html.DisplayFor(j => Model.Distance) &nbsp;&nbsp;&nbsp;
@@ -19,7 +19,7 @@
         &nbsp;
         @Html.DisplayFor(j => Model.Duration)
     </td>
-    <td width="100px" align="right">
+    <td >
         <input type="button" value="Edit Set" class="editBtn" data-div="set_div" onclick="document.getElementsByName('parentId')[0].value=@Model.ParentID" />
     </td>
 </tr>
