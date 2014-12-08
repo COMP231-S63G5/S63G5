@@ -15,7 +15,7 @@
                     @Html.DisplayFor(j => group_item.Description)
                 </td>
                     <td width="100px" align="right">
-                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" />
+                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID)" />
                     </td>
                 </tr>
                 <tr>

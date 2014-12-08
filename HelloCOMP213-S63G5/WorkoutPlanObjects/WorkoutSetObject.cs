@@ -20,7 +20,7 @@ namespace WorkoutPlanObjects
         public int EnergyGroupAmount;
         public int OrderID;
         public string Pace;
-        internal int ParentID;
+        public int ParentID;
         public string Rest;
         public EnumWorkoutSetType SetType;
         public string Stroke;
