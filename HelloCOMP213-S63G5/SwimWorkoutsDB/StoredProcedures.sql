@@ -25,14 +25,15 @@ GO
 GO
 CREATE PROCEDURE addWorkOutPlan    @plandate date,
 								   @ttl_distance int, 
-								   @ttl_duration varchar(10)
+								   @ttl_duration varchar(10),
+								   @plan_name varchar(50)
 AS
     SET NOCOUNT ON;
     INSERT INTO [dbo].[tbl_WorkoutPlan]
-           ([planDate],[totalDistance],[totalDuration])
+           ([planDate],[totalDistance],[totalDuration],[planName])
 	OUTPUT INSERTED.planID
     VALUES
-           (@plandate,@ttl_distance,@ttl_duration );
+           (@plandate,@ttl_distance,@ttl_duration,@plan_name );
 GO
 -- =============================================
 -- Author:		<Hiren Patel>
@@ -118,6 +119,7 @@ AS
     SELECT  tbl_WorkoutPlan.planID,
 			tbl_WorkoutPlan.totalDistance as totalPlanDistance,
 			tbl_WorkoutPlan.totalDuration,
+			tbl_WorkoutPlan.planName,
 			tbl_Set.setID,
 			tbl_Set.setType,
 			tbl_Set.repeats,
