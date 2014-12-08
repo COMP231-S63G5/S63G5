@@ -16,6 +16,7 @@ namespace WorkoutDBObject
         private SqlCommand cmd;
         private SqlDataReader reader;
         public string connString = "Data Source=Hiren; Initial Catalog=SwimWorkoutsDB; Integrated Security=True; User Id=coach; Password=swimdb;";
+        //string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
 
         //This method returns Unique Strokes existing in Set table
         public List<string> getStrokes() {
@@ -23,9 +24,6 @@ namespace WorkoutDBObject
 
             try
             {
-                string connString ="Data Source=Hiren; Initial Catalog=SwimWorkoutsDB; Integrated Security=True; User Id=coach; Password=swimdb;";
-             //   conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
-               // conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
                 conn = new SqlConnection(connString);
                 conn.Open();
 
@@ -60,8 +58,6 @@ namespace WorkoutDBObject
 
             try
             {
-                //string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
-               // conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
                 conn = new SqlConnection(connString);
                 conn.Open();
 
@@ -90,12 +86,11 @@ namespace WorkoutDBObject
 
 
 
-        public string insertWorkoutPlan(String date,int totalDistance,string totalDuration)
+        public string insertWorkoutPlan(String date,int totalDistance,string totalDuration,string planName)
         {
             try
             {
-               // string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
-              //  conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+               
                 conn = new SqlConnection(connString);
                 conn.Open();
 
@@ -106,8 +101,8 @@ namespace WorkoutDBObject
                 SqlParameter parm = cmd.Parameters.Add("@plandate", SqlDbType.Date);
                 parm.Value = Convert.ToDateTime(date);
                 cmd.Parameters.AddWithValue("@ttl_distance", totalDistance);
-                cmd.Parameters.AddWithValue("@ttl_duration", totalDuration);         
-
+                cmd.Parameters.AddWithValue("@ttl_duration", totalDuration);
+                cmd.Parameters.AddWithValue("@plan_name", planName);
                 int planId = (int)cmd.ExecuteScalar();
 
                 conn.Close();
@@ -129,6 +124,7 @@ namespace WorkoutDBObject
             int ttlplandis=0;
             int ttlplandur=0;
             DateTime plandate=Convert.ToDateTime(1000-10-10);
+            string planName;
 
             try
             {
@@ -144,19 +140,19 @@ namespace WorkoutDBObject
 
                 while (reader.Read())
                 {
-                    if(workoutplanID==null){
+                    if(workoutplanID==0){
                         workoutplanID = Convert.ToInt32(reader["planID"]);
                     }
-                    if(ttlplandis==null){
+                    if(ttlplandis==0){
                         ttlplandis = Convert.ToInt32(reader["totalPlanDistance"]);
                     }
-                    if (ttlplandur == null)
+                    if (ttlplandur ==0)
                     {
                         ttlplandur = Convert.ToInt32(reader["totalDuration"]);
                     }
-                    if(plandate==null){
-                        plandate =Convert.ToDateTime(reader["planDate"]);
-                    }
+                    planName = reader["planName"].ToString();  
+                    plandate =Convert.ToDateTime(reader["planDate"]);
+                    
 
 
                     WorkoutSetObject newset = new WorkoutSetObject(
@@ -191,11 +187,58 @@ namespace WorkoutDBObject
 
         }
 
+
+        public List<WorkoutSetObject> getWorkOutSets(int planid)
+        {
+           
+            List<WorkoutSetObject> listOfSets = new List<WorkoutSetObject>();
+
+            try
+            {
+                conn = new SqlConnection(connString);
+                conn.Open();
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "getworkoutplan";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@workoutplanID", planid);
+                reader = cmd.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    WorkoutSetObject newset = new WorkoutSetObject(
+                        Convert.ToInt32(reader["setID"]),
+                        reader["setType"].ToString(),
+                        Convert.ToInt32(reader["repeats"]),
+                        Convert.ToInt32(reader["distance"]),
+                        reader["stroke"].ToString(),
+                        reader["pace"].ToString(),
+                        reader["rest"].ToString(),
+                        reader["duration"].ToString(),
+                        reader["description"].ToString(),
+                        reader["energyName"].ToString(),
+                        Convert.ToInt32(reader["totalDistance"]),
+                        Convert.ToInt32(reader["orderID"]),
+                        Convert.ToInt32(reader["parentID"])
+                        );
+
+                    listOfSets.Add(newset);
+                }
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return listOfSets;
+        }
+
+
         public Boolean deleteWorkOutPlan(int id)
         {
             try
             {   
-               // conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
                 conn.Open();
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
