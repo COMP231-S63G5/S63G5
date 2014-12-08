@@ -385,6 +385,14 @@ namespace WorkoutPlanWeb.Controllers
             return RedirectToAction("AddNewWorkoutPlan", "Workout");
         }
 
+        public JsonResult getSubSetPosition(string orderId)
+        {
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
+            List<int> ids = ws.getSubsetPositions();
+            return Json(ids);
+        }
+
 
         //public ActionResult workoutAction(WorkoutPlan workoutPlan, string WorkoutPlanDate,int Id = -1,string command = "")
         //{

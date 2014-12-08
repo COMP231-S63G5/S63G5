@@ -119,7 +119,7 @@
         <h2>Edit Section</h2>
         @using(Html.BeginForm("editSection", "Workout", FormMethod.Post))
         {
-            @Html.Hidden("parentId")
+            @Html.Hidden("orderId")
     <h2>@Html.ValidationMessage("editSection")</h2>
             <table>
                 <tr>
@@ -140,7 +140,7 @@
         <h2>Add Workout Group</h2>
         @using(Html.BeginForm("addGroup", "Workout", FormMethod.Post))
         {
-            @Html.Hidden("parentId")
+            @Html.Hidden("addGroupParentId")
             <table>
                 <tr>
                     <td>Repeats: <input type="text" name="repeats"/><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
@@ -152,10 +152,6 @@
 
             <input type="submit" value="Add Group" />
             <datalist id="grouplocations">
-                <option>0</option><!-- TO-DO: Populate the datalist with the locations of the group-->
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
             </datalist>
         }
     </div>
@@ -164,7 +160,7 @@
         <h2>Add Workout Set</h2>
         @using(Html.BeginForm("addSet", "Workout", FormMethod.Post))
         {
-             @Html.Hidden("parentId")
+             @Html.Hidden("addSetParentId")
             <table>
                 <tr>
                     <th width="50">Repeats</th>
@@ -188,7 +184,7 @@
                     <td><input type="text" size="10" name="totalDistance"/></td>
                     <td><input type="text" size="10" name="energyGroup"/></td>
                     <td><input type="text" size="5" name="energyAmount"/></td>
-                    <td><input type="text" size="5" name="position"/></td>
+                    <td><input type="text" size="5" name="position" list="setlocations"/></td>
                     
                 </tr>
 
@@ -210,6 +206,9 @@
             <option value="None">
             <option value="Pace">
             <option value="Rest">
+        </datalist>
+        <datalist id="setlocations">
+
         </datalist>
     </div>
 
@@ -310,6 +309,33 @@
     {
         //need to change id to group id  and add hidden text when ui is done
         document.getElementById("parentId")[0].value = groupId;
+    }
+
+    function editSectionBtnClicked(groupId) {
+        document.getElementById("orderId").value = groupId;
+        document.getElementById("addSetParentId").value = groupId;
+        document.getElementById("addGroupParentId").value = groupId;
+
+        
+
+        var requrl = '@Url.Action("getSubSetPosition", "Workout")';
+        $.ajax({
+            type: "POST",
+            url: requrl,
+            data: "{orderId:'" + groupId + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $('#grouplocations').empty();
+                $('#setlocations').empty();
+                $.each(data, function (index, id) {
+                    $('#grouplocations').append('<option>' + id + '</option>');
+                    $('#setlocations').append('<option>' + id + '</option>');
+
+                //    }
+                });
+            },
+        });
     }
 </script>
 

@@ -180,6 +180,23 @@ namespace WorkoutPlanObjects
             }
         }
 
+        public List<int> getSubsetPositions()
+        {
+            List<int> posList = new List<int>();
+            posList.Add(OrderID);   // add node itself
+            if (SubSetList.Count > 0)
+            {
+                var sub = (from s in SubSetList
+                           orderby s.OrderID
+                           select s).ToList();  // sort subsets
+                foreach (WorkoutSetObject s in sub)
+                {
+                    posList.Add(s.OrderID); // add to list
+                }
+            }
+            return posList;
+        }
+
         //public void removeWorkoutSet(WorkoutSetObject workoutSet)
         //{
         //    if (workoutSet.SetType != EnumWorkoutSetType.Set)

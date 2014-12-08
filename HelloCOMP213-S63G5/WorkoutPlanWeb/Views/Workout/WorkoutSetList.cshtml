@@ -15,7 +15,7 @@
                      @Html.DisplayFor(item=>plan_item.Description)
                  </td>
                  <td align="right">
-                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="document.getElementsByName('parentId')[0].value=@plan_item.OrderID" />
+                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID')" />
                  </td>
              </tr>
             <tr>
@@ -60,4 +60,5 @@
 
 
     </table>
+
 
