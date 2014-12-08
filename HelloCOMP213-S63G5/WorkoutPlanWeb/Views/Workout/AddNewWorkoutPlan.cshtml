@@ -11,6 +11,7 @@
 
     <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
     <center>
+        <h2>@Html.ValidationMessage("errorMessage")</h2>
         <h2 id="planDateTag"></h2>
         @if (Model.PlanDate == null)
         {
@@ -57,12 +58,13 @@
             <table>
                 <tr>
                     <td>
-                       Section Name: <input type="text" id="sectionName" name="sectionName" list="sectionNames"/>
+                       Section Name: <input type="text" id="sectionName" name="sectionName" list="sectionNames"/> <h2>@Html.ValidationMessage("addSectionName")</h2>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         Insert Position: <input type="text" id="selectPosition" name="selectPosition" list="sectionPositions" size="3" /> 
+                        <h2>@Html.ValidationMessage("addSectionPosition")</h2>
                     </td>
                 </tr>
             </table>
@@ -118,6 +120,7 @@
         @using(Html.BeginForm("editSection", "Workout", FormMethod.Post))
         {
             @Html.Hidden("parentId")
+    <h2>@Html.ValidationMessage("editSection")</h2>
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
@@ -140,8 +143,10 @@
             @Html.Hidden("parentId")
             <table>
                 <tr>
-                    <td>Repeats: <input type="text" name="repeats"/></td>
-                    <td>Group Location After: <input type="text" list="grouplocations" size="3"  name="position"/></td>
+                    <td>Repeats: <input type="text" name="repeats"/><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
+                    <td>Group Location After: <input type="text" list="grouplocations" size="3"  name="position"/>
+                        <h2>@Html.ValidationMessage("addGroupLocation")</h2>
+                    </td>
                 </tr>
             </table>
 
