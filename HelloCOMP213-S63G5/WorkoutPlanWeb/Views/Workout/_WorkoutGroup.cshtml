@@ -11,23 +11,23 @@
                         @Html.DisplayFor(j => group_item.OrderID). &nbsp;
                     </td>
                     <td style="width:80%" >                        
-                        @for (int i = 0; i < ViewBag.indent; i++)
+                        @for (int i = 0; i < (int)Session["indent"]; i++)
                         {
                             @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
                         }
                         @Html.DisplayFor(j => group_item.Repeats) X {
                     </td>
                     <td width="100px" align="right">
-                        <input type="button" value="Edit Group" class="editBtn" data-div="group" data-orderid="@group_item.OrderID" data-parentid="@group_item.ParentID" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID)" />
+                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID,@group_item.Repeats)" />
                     </td>
                 </tr>               
-                ViewBag.indent++;
-                @Html.Partial("_WorkoutGroup", group_item.SubSetList)
-                ViewBag.indent--;
+                Session["indent"] = (int)Session["indent"] + 1;        
+                        @Html.Partial("_WorkoutGroup", group_item.SubSetList)
+                    Session["indent"] = (int)Session["indent"] - 1;
                 <tr>
                     <td></td>
                     <td>                        
-                    @for (int i = 0; i < ViewBag.indent; i++)
+                    @for (int i = 0; i < (int)Session["indent"]; i++)
                         {
                             @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
                         }

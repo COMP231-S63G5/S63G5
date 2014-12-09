@@ -259,3 +259,8 @@ table.section td:last-of-type{
 td.full_cell{
     width:100%;
 }
+
+tr.highlightRow{
+    background-color:orange;
+    color:#333;
+}

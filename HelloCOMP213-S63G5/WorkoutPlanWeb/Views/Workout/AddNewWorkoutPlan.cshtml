@@ -9,10 +9,14 @@
 
 <div id="plan_conents" class="plan_content box">
 
-    <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
-    @using(Html.BeginForm("savePlan","Workout",FormMethod.Post)){
-         <input type="submit" value="Save Plan" />
-    }
+    <div style="text-align:right; width:95%;">
+        <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
+        @using (Html.BeginForm("savePlan", "Workout", FormMethod.Post))
+        {
+            <input type="submit" value="Save Plan" />
+        }
+    </div>
+    
     
     <center>
         <h2>@Html.ValidationMessage("errorMessage")</h2>
@@ -35,13 +39,26 @@
 
 </div>
 
-<div id="plan_div" class="activeDiv edit_box box">
+<div id="" class=" edit_box box">
     <table width="100%" align="center" class="tab-container">
         <tr>
-            <td>
+            <td id="plan_div" class="activeDiv">
                 <input type="button" class="tab" value="Edit Plan" data-tab="editPlan" />
                 <input type="button" class="tab" value="New Section" data-tab="addSection" />
                 <input type="button" class="tab" value="Delete Plan" data-tab="deletePlan" />
+            </td>
+            <td id="section_div" class="hidden">
+                <input type="button" class="tab" value="Edit Section" data-tab="editSection" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
+            </td>
+            <td id="group_div" class="hidden">
+                <input type="button" class="tab" value="Edit Group" data-tab="editGroup" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
+            </td>
+            <td id="set_div" class="hidden">
+                <input type="button" class="tab" value="Edit Set" data-tab="editSet" />
             </td>
         </tr>
     </table>
@@ -54,6 +71,7 @@
             <input type="submit" value="Save" />
         }
     </div>
+
     <div id="addSection" class="hidden">
         <h2>Add Section</h2>
         
@@ -93,6 +111,7 @@
             <input type="submit" value="Add Section" />
         }
     </div>
+
     <div id="deletePlan" class="hidden">
         <h2>Delete Plan</h2>
         @using (Html.BeginForm("deletePlan","Workout",FormMethod.Post))
@@ -102,106 +121,78 @@
         }
     </div>
 
-   
-
-
-
-</div>
-
-<div id="section_div" class="edit_box box hidden">
-    <table width="100%" align="center" class="tab-container">
-        <tr>
-            <td>
-                <input type="button" class="tab" value="Edit Section" data-tab="editSection" />
-                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
-                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
-            </td>
-        </tr>
-
-    </table>
     <div id="editSection" class="hidden">
         <h2>Edit Section</h2>
-        @using(Html.BeginForm("editSection", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("editSection", "Workout", FormMethod.Post))
         {
             @Html.Hidden("orderId")
-    <h2>@Html.ValidationMessage("editSection")</h2>
+            <h2>@Html.ValidationMessage("editSection")</h2>
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
-                    <td><input type="text" name="sectionName" list="sectionvalues"/></td>
+                    <td><input type="text" name="sectionName" list="sectionvalues" /></td>
                 </tr>
 
                 <tr>
-                    <td><input type="submit" value="Update Section" name="command"/></td>
-                    <td><input type="submit" value="Delete Section" name="command"/></td>
+                    <td><input type="submit" value="Update Section" name="command" /></td>
+                    <td><input type="submit" value="Delete Section" name="command" /></td>
                 </tr>
             </table>
 
-    <datalist id="sectionvalues">
-        <option>Warm up</option>
-        <option>Main</option>
-        <option>Warm down</option>
-    </datalist>
+            <datalist id="sectionvalues">
+                <option>Warm up</option>
+                <option>Main</option>
+                <option>Warm down</option>
+            </datalist>
         }
     </div>
 
-
     <div id="addGroup" class="hidden">
         <h2>Add Workout Group</h2>
-        @using(Html.BeginForm("addGroup", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
         {
             @Html.Hidden("addGroupParentId")
             <table>
                 <tr>
-                    <td>Repeats: <input type="text" name="repeats"/><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
-                    <td>Group Location After: <input type="text" list="grouplocations" size="3"  name="position"/>
+                    <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
+                    <td>
+                        Group Location After: <input type="text" list="grouplocations" size="3" name="position" />
                         <h2>@Html.ValidationMessage("addGroupLocation")</h2>
                     </td>
                 </tr>
             </table>
 
             <input type="submit" value="Add Group" />
-            <datalist id="grouplocations">
-            </datalist>
+            <datalist id="grouplocations"></datalist>
         }
     </div>
 
     <div id="addSet" class="hidden">
         <h2>Add Workout Set</h2>
-        @using(Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
         {
-             @Html.Hidden("addSetParentId")
-            <table>
-                <tr>
-                    <th width="50">Repeats</th>
-                    <th width="50">Distance</th>
-                    <th width="50">Stroke</th>
-                    <th width="50">Type</th>
-                    <th width="50">Duration</th>
-                    <th width="50">Description</th>
-                    <th width="50">Total Distance</th>
-                    <th width="50">Energy Group</th>
-                    <th width="50">Energy Amount</th>
-                    <th width="50">Set Location After</th>
-                </tr>
-                <tr>
-                    <td><input type="text"  size="5" name="repeat"/></td>
-                    <td><input type="text"  size="5" name="distance"/></td>
-                    <td><input type="text" list="strokes" size="10" name="stroke"/></td>
-                    <td><input type="text" list="type" size="10" name="type"/></td>
-                    <td><input type="text" size="10" name="duration"/></td>
-                    <td><input type="text" size="15" name="description"/></td>
-                    <td><input type="text" size="10" name="totalDistance"/></td>
-                    <td><input type="text" size="10" name="energyGroup" list="energy"/></td>
-                    <td><input type="text" size="5" name="energyAmount"/></td>
-                    <td><input type="text" size="5" name="position" list="setlocations"/></td>
-                    
-                </tr>
+            @Html.Hidden("addSetParentId")
+            
+            <p>
+                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;                
+                Distance: <input type="text" size="5" name="distance" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
+                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
+                Duration: <input type="text" size="10" name="duration" id="editSetDuration" />&nbsp;&nbsp;&nbsp;
+            </p>
+            <p>                
+                Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" />
+            </p>
 
-                
-
-            </table>
-    <input type="submit" value="Add Set" style="margin:10px"/>
+            <br />
+            <br />
+            
+            <input type="submit" value="Add Set" style="margin:10px" />
 
         }
         <datalist id="strokes">
@@ -226,27 +217,9 @@
             <option value="Pace">
             <option value="Rest">
         </datalist>
-        <datalist id="setlocations">
-
-        </datalist>
+        <datalist id="setlocations"></datalist>
     </div>
 
-
-
-</div>
-
-
-<div id="group_div" class="edit_box box hidden">
-    <table width="100%" align="center" class="tab-container">
-        <tr>
-            <td>
-                <input type="button" class="tab" value="Edit Group" data-tab="editGroup" />
-                <input type="button" class="tab" value="Add Group" data-tab="addGroup2" />
-                <input type="button" class="tab" value="Add Set" data-tab="addSet2" />
-            </td>
-        </tr>
-
-    </table>
     <div id="editGroup" class="hidden">
         <h2>Edit Group</h2>
         @using (Html.BeginForm("editGroup", "Workout", FormMethod.Post))
@@ -256,7 +229,7 @@
             <table>
                 <tr>
                     <td><h4>Repeats: </h4></td>
-                    <td><input type="text" name="repeats" id="editGroupRepeats"/></td>
+                    <td><input type="text" name="repeats" id="editGroupRepeats" /></td>
                 </tr>
 
                 <tr>
@@ -267,137 +240,33 @@
         }
     </div>
 
-
-    <div id="addGroup2" class="hidden">
-        <h2>Add Workout Group</h2>
-        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
-        {
-            @Html.Hidden("addGroupParentId")
-            <table>
-                <tr>
-                    <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
-                    <td>
-                        Group Location After: <input type="text" list="grouplocations2" size="3" name="position" />
-                        <h2>@Html.ValidationMessage("addGroupLocation")</h2>
-                    </td>
-                </tr>
-            </table>
-
-            <input type="submit" value="Add Group" />
-            <datalist id="grouplocations2"></datalist>
-        }
-    </div>
-
-    <div id="addSet2" class="hidden">
-        <h2>Add Workout Set</h2>
-        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
-        {
-            @Html.Hidden("addSetParentId")
-            <table>
-                <tr>
-                    <th width="50">Repeats</th>
-                    <th width="50">Distance</th>
-                    <th width="50">Stroke</th>
-                    <th width="50">Type</th>
-                    <th width="50">Duration</th>
-                    <th width="50">Description</th>
-                    <th width="50">Total Distance</th>
-                    <th width="50">Energy Group</th>
-                    <th width="50">Energy Amount</th>
-                    <th width="50">Set Location After</th>
-                </tr>
-                <tr>
-                    <td><input type="text" size="5" name="repeat" /></td>
-                    <td><input type="text" size="5" name="distance" /></td>
-                    <td><input type="text" list="strokes" size="10" name="stroke2" /></td>
-                    <td><input type="text" list="type" size="10" name="type2" /></td>
-                    <td><input type="text" size="10" name="duration" /></td>
-                    <td><input type="text" size="15" name="description" /></td>
-                    <td><input type="text" size="10" name="totalDistance" /></td>
-                    <td><input type="text" size="10" name="energyGroup" list="energy2"/></td>
-                    <td><input type="text" size="5" name="energyAmount" /></td>
-                    <td><input type="text" size="5" name="position" list="setlocations2" /></td>
-
-                </tr>
-
-
-
-            </table>
-            <input type="submit" value="Add Set" style="margin:10px" />
-
-        }
-        <datalist id="strokes2">
-            <option value="Free">
-            <option value="Fly">
-            <option value="Back">
-            <option value="Rest">
-            <option value="Medley">
-        </datalist>
-        <datalist id="energy2">
-            <option value="E1">
-            <option value="E2">
-            <option value="E3">
-            <option value="S1">
-            <option value="S2">
-            <option value="S3">
-</datalist>
-
-
-        <datalist id="type2">
-            <option value="None">
-            <option value="Pace">
-            <option value="Rest">
-        </datalist>
-        <datalist id="setlocations2"></datalist>
-    </div>
-
-
-</div>
-
-<div id="set_div" class="edit_box box hidden">
-    <table width="100%" align="center" class="tab-container">
-        <tr>
-            <td>
-                <input type="button" class="tab" value="Edit Set" data-tab="editSet" />
-            </td>
-        </tr>
-    </table>
-
     <div id="editSet" class="hidden">
-        <h2>Add Workout Set</h2>
+        <h2>Edit Workout Set</h2>
         @using (Html.BeginForm("editSet", "Workout", FormMethod.Post))
         {
             @Html.Hidden("editSetOrderId")
-            <table>
-                <tr>
-                    <th width="50">Repeats</th>
-                    <th width="50">Distance</th>
-                    <th width="50">Stroke</th>
-                    <th width="50">Type</th>
-                    <th width="50">Duration</th>
-                    <th width="50">Description</th>
-                    <th width="50">Total Distance</th>
-                    <th width="50">Energy Group</th>
-                    <th width="50">Energy Amount</th>
-                </tr>
-                <tr>
-                    <td><input type="text" size="5" name="repeat" id="editSetRepeat"/></td>
-                    <td><input type="text" size="5" name="distance" id="editSetDistance"/></td>
-                    <td><input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes"/></td>
-                    <td><input type="text" list="type" size="10" name="type" id="editSetType"/></td>
-                    <td><input type="text" size="10" name="duration" id="editSetDuration"/></td>
-                    <td><input type="text" size="15" name="description" id="editSetDescription"/></td>
-                    <td><input type="text" size="10" name="totalDistance" id="editSetTotalDuration" /></td>
-                    <td><input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" /></td>
-                    <td><input type="text" size="5" name="energyAmount" id="editSetEnergyAmount"/></td>
 
-                </tr>
+            <p>
+                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;                
+                Distance: <input type="text" size="5" name="distance" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
+                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
+                Duration: <input type="text" size="10" name="duration" id="editSetDuration" />&nbsp;&nbsp;&nbsp;
+            </p>
+            <p>                
+                Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" />
+            </p>
 
-
-
-            </table>
+            <br />
+            <br />
+            
             <input type="submit" value="Update Set" style="margin:10px" name="command" />
-            <input type="submit" value="Delete Set" style="margin:10px" name="command"/>
+            <input type="submit" value="Delete Set" style="margin:10px" name="command" />
 
         }
         <datalist id="strokes">
@@ -423,7 +292,11 @@
             <option value="Rest">
         </datalist>
     </div>
+
 </div>
+
+
+
 
     <script type="text/javascript">
 
@@ -495,6 +368,11 @@
         $(".activeDiv").removeClass("activeDiv").addClass("hidden");
         $("#" + div).removeClass("hidden").addClass("activeDiv");
 
+        $(".highlightRow").removeClass("highlightRow");
+        $(this).closest("tr").addClass("highlightRow");
+
+        $(".tab-selected").addClass("tab").removeClass("tab-selected");
+        $(".activeTab").removeClass("activeTab").addClass("hidden");
     });
 
     $(".tab").click(function () {
@@ -552,10 +430,10 @@
             document.getElementById("editSetOrderId").value = groupId;
             document.getElementById("editSetRepeat").value = repeats;
             document.getElementById("editSetDistance").value = distance;
-            //document.getElementById("editSetStrokes").value = stroke;
-            //document.getElementById("editSetDuration").value = duration;
-            //document.getElementById("editSetDescription").value = description;
-            //document.getElementById("editSetEnergyGroup").value = energyGroupName;
+            document.getElementById("editSetStrokes").value = stroke;
+            document.getElementById("editSetDuration").value = duration;
+            document.getElementById("editSetDescription").value = description;
+            document.getElementById("editSetEnergyGroup").value = energyGroupName;
             document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
 
             document.getElementById("editSetTotalDuration").value = repeats * duration;
