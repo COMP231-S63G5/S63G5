@@ -326,6 +326,7 @@
     <Content Include="Views\Workout\_WorkoutGroup.cshtml" />
     <Content Include="Views\Workout\_WorkoutSet.cshtml" />
     <Content Include="Views\Workout\_planTab.cshtml" />
+    <Content Include="Views\Workout\_editSectionTab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

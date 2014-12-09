@@ -12,48 +12,60 @@
                       @Html.DisplayFor(item=>plan_item.OrderID)
                  </td>
                  <td style="width:80%">
-                     @Html.DisplayFor(item=>plan_item.Description)
+                     @Html.DisplayFor(item=>plan_item.Description) {
                  </td>
                  <td align="right">
-                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID')" />
+                     <input type="button" value="Edit Section" class="editBtn" data-div="section" data-orderid="@plan_item.OrderID" data-parentid="@plan_item.ParentID" onclick="editSectionBtnClicked('@plan_item.OrderID')" />
                  </td>
              </tr>
+
+            ViewBag.indent++;
+            foreach (var section_item in plan_item.SubSetList)
+            {
+
+                if (section_item.SetType.ToString().Equals("Set"))
+                {
+                    @Html.Partial("_WorkoutSet", section_item)
+
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(j => section_item.OrderID)
+                        </td>
+                        <td style="width:80%">                            
+                            @for (int i = 0; i < ViewBag.indent; i++)
+                            {
+                                @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
+                            }
+                            @Html.DisplayFor(j => section_item.Repeats) X {
+                        </td>
+                        <td align="right">
+                            <input type="button" value="Edit Group" class="editBtn" data-div="group" data-orderid="@section_item.OrderID" data-parentid="@section_item.ParentID" onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID)" />
+                        </td>
+                    </tr>
+                    ViewBag.indent++;
+                    @Html.Partial("_WorkoutGroup", section_item.SubSetList)
+                    ViewBag.indent--;
+                    <tr>
+                        <td></td>
+                        <td>                            
+                        @for (int i = 0; i < ViewBag.indent; i++)
+                            {
+                                @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
+                            }
+                        }</td>
+                        <td></td>
+                    </tr>
+                }
+
+            }
+            ViewBag.indent--;
             <tr>
-                <td colspan="3" align="right">
-                    <table class="section" width="95%">
-                        @foreach (var section_item in plan_item.SubSetList)
-                        {
-
-                            if (section_item.SetType.ToString().Equals("Set"))
-                            {
-                                @Html.Partial("_WorkoutSet", section_item)
-
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(j => section_item.OrderID)
-                                    </td>
-                                    <td style="width:95%">
-                                        @Html.DisplayFor(j => section_item.Description)
-                                        @Html.DisplayFor(j => section_item.SetType)
-                                    </td>
-                                    <td align="right">
-                                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID)" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" align="right">
-                                       @Html.Partial("_WorkoutGroup", section_item.SubSetList)
-                                    </td>
-                                </tr>
-                            }
-
-                        }
-                    </table>
-                </td>
-
+                <td></td>
+                <td>}<br /><br /></td>
+                <td></td>
             </tr>
 
         }

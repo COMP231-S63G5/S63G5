@@ -109,6 +109,7 @@ namespace WorkoutPlanWeb.Controllers
             
             Session["WorkoutSetList"] = wp1.SubSetList;
             //WorkoutSetObject ws = new WorkoutSetObject("home");
+            ViewBag.indent = 0;
             return View(wp1);
         }
 

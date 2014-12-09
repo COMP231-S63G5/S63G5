@@ -9,7 +9,7 @@
 
 <div id="plan_conents" class="plan_content box">
 
-    <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
+    <input type="button" class="editBtn" value="Edit Plan" data-div="plan" />
     <center>
         <h2>@Html.ValidationMessage("errorMessage")</h2>
         <h2 id="planDateTag"></h2>
@@ -34,10 +34,23 @@
 <div id="plan_div" class="activeDiv edit_box box">
     <table width="100%" align="center" class="tab-container">
         <tr>
-            <td>
+            <td id="planTabs" class="activeTabs">
                 <input type="button" class="tab" value="Edit Plan" data-tab="editPlan" />
                 <input type="button" class="tab" value="New Section" data-tab="addSection" />
                 <input type="button" class="tab" value="Delete Plan" data-tab="deletePlan" />
+            </td>
+            <td id="sectionTabs" class="hidden">
+                <input type="button" class="tab" value="Edit Section" data-tab="editSection" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
+            </td>
+            <td id="groupTabs" class="hidden">
+                <input type="button" class="tab" value="Edit Group" data-tab="editGroup" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
+            </td>
+            <td id="setTabs" class="hidden">
+                <input type="button" class="tab" value="Edit Set" data-tab="editSet" />
             </td>
         </tr>
     </table>
@@ -98,29 +111,12 @@
         }
     </div>
 
-   
-
-
-
-</div>
-
-<div id="section_div" class="edit_box box hidden">
-    <table width="100%" align="center" class="tab-container">
-        <tr>
-            <td>
-                <input type="button" class="tab" value="Edit Section" data-tab="editSection" />
-                <input type="button" class="tab" value="Add Group" data-tab="addGroup" />
-                <input type="button" class="tab" value="Add Set" data-tab="addSet" />
-            </td>
-        </tr>
-
-    </table>
     <div id="editSection" class="hidden">
         <h2>Edit Section</h2>
-        @using(Html.BeginForm("editSection", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("editSection", "Workout", FormMethod.Post))
         {
             @Html.Hidden("orderId")
-    <h2>@Html.ValidationMessage("editSection")</h2>
+            <h2>@Html.ValidationMessage("editSection")</h2>
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
@@ -128,8 +124,8 @@
                 </tr>
 
                 <tr>
-                    <td><input type="submit" value="Update Section" name="command"/></td>
-                    <td><input type="submit" value="Delete Section" name="command"/></td>
+                    <td><input type="submit" value="Update Section" name="command" /></td>
+                    <td><input type="submit" value="Delete Section" name="command" /></td>
                 </tr>
             </table>
         }
@@ -138,60 +134,77 @@
 
     <div id="addGroup" class="hidden">
         <h2>Add Workout Group</h2>
-        @using(Html.BeginForm("addGroup", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
         {
             @Html.Hidden("addGroupParentId")
             <table>
                 <tr>
-                    <td>Repeats: <input type="text" name="repeats"/><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
-                    <td>Group Location After: <input type="text" list="grouplocations" size="3"  name="position"/>
+                    <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
+                    <td>
+                        Group Location After: <input type="text" list="grouplocations" size="3" name="position" />
                         <h2>@Html.ValidationMessage("addGroupLocation")</h2>
                     </td>
                 </tr>
             </table>
 
             <input type="submit" value="Add Group" />
-            <datalist id="grouplocations">
-            </datalist>
+            <datalist id="grouplocations"></datalist>
         }
     </div>
+    
+    <div id="editGroup" class="hidden">
+    <h2>Edit Workout Group</h2>
+    @using (Html.BeginForm("editGroup", "Workout", FormMethod.Post))
+    {
+        @Html.Hidden("editGroupParentId")
+        <table>
+            <tr>
+                <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("editGroupRepeat")</h2></td>
+                <td>
+                    Group Location After: <input type="text" list="grouplocations" size="3" name="position" />
+                    <h2>@Html.ValidationMessage("editGroupLocation")</h2>
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Update Group" />
+        <datalist id="grouplocations"></datalist>
+    }
+</div>
 
     <div id="addSet" class="hidden">
         <h2>Add Workout Set</h2>
-        @using(Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
         {
-             @Html.Hidden("addSetParentId")
-            <table>
-                <tr>
-                    <th width="50">Repeats</th>
-                    <th width="50">Distance</th>
-                    <th width="50">Stroke</th>
-                    <th width="50">Type</th>
-                    <th width="50">Duration</th>
-                    <th width="50">Description</th>
-                    <th width="50">Total Distance</th>
-                    <th width="50">Energy Group</th>
-                    <th width="50">Energy Amount</th>
-                    <th width="50">Set Location After</th>
-                </tr>
-                <tr>
-                    <td><input type="text"  size="5" name="repeat"/></td>
-                    <td><input type="text"  size="5" name="distance"/></td>
-                    <td><input type="text" list="strokes" size="10" name="stroke"/></td>
-                    <td><input type="text" list="type" size="10" name="type"/></td>
-                    <td><input type="text" size="10" name="duration"/></td>
-                    <td><input type="text" size="15" name="description"/></td>
-                    <td><input type="text" size="10" name="totalDistance"/></td>
-                    <td><input type="text" size="10" name="energyGroup"/></td>
-                    <td><input type="text" size="5" name="energyAmount"/></td>
-                    <td><input type="text" size="5" name="position" list="setlocations"/></td>
-                    
-                </tr>
+            @Html.Hidden("addSetParentId")
 
-                
+            <div style="display:inline-block;">
+                Repeats: <input type="text" size="5" name="repeat" />
+                &nbsp;&nbsp;&nbsp;
+                Distance: <input type="text" size="5" name="distance" />
+                &nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" />
+                &nbsp;&nbsp;&nbsp;
+                Type: <input type="text" list="type" size="10" name="type" />
+                &nbsp;&nbsp;&nbsp;
+                Duration: <input type="text" size="10" name="duration" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />
+                Description: <input type="text" size="15" name="description" />
+                &nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />
+                Energy Group: <input list="energy_groups" type="text" size="10" name="energyGroup" />
+                &nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />Set Location After: <input type="text" size="5" name="position" list="setlocations" />
 
-            </table>
-    <input type="submit" value="Add Set" style="margin:10px"/>
+            </div>
+            <br />
+
+            <input type="submit" value="Add Set" style="margin:10px" />
 
         }
         <datalist id="strokes">
@@ -207,14 +220,77 @@
             <option value="Pace">
             <option value="Rest">
         </datalist>
-        <datalist id="setlocations">
-
+        <datalist id="energy_groups">
+            <option value="E1">
+            <option value="E2">
+            <option value="E3">
+            <option value="S1">
+            <option value="S2">
+            <option value="S3">
+            <option value="REC">
         </datalist>
     </div>
+    <div id="editSet" class="hidden">
+        <h2>Edit Workout Set</h2>
+        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        {
+            @Html.Hidden("editSetOrderId")
 
+            <div style="display:inline-block;">
+                Repeats: <input type="text" size="5" name="repeat" />
+                &nbsp;&nbsp;&nbsp;
+                Distance: <input type="text" size="5" name="distance" />
+                &nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" />
+                &nbsp;&nbsp;&nbsp;
+                Type: <input type="text" list="type" size="10" name="type" />
+                &nbsp;&nbsp;&nbsp;
+                Duration: <input type="text" size="10" name="duration" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />
+                Description: <input type="text" size="15" name="description" />
+                &nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />
+                Energy Group: <input list="energy_groups" type="text" size="10" name="energyGroup" />
+                &nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount" />
+                &nbsp;&nbsp;&nbsp;
+                <br /><br />Set Location After: <input type="text" size="5" name="position" list="setlocations" />
 
+            </div>
+            <br />
 
+            <input type="submit" value="Save" style="margin:10px" />
+            <input type="submit" value="Delete" style="margin:10px" />
+
+        }
+        <datalist id="strokes">
+            <option value="Free">
+            <option value="Fly">
+            <option value="Back">
+            <option value="Rest">
+            <option value="Medley">
+        </datalist>
+
+        <datalist id="type">
+            <option value="None">
+            <option value="Pace">
+            <option value="Rest">
+        </datalist>
+        <datalist id="energy_groups">
+            <option value="E1">
+            <option value="E2">
+            <option value="E3">
+            <option value="S1">
+            <option value="S2">
+            <option value="S3">
+            <option value="REC">
+        </datalist>
+    </div>
 </div>
+
 
 <script type="text/javascript">
 
@@ -283,9 +359,9 @@
 
         var div = $(this).data("div");
 
-        $(".activeDiv").removeClass("activeDiv").addClass("hidden");
-        $("#" + div).removeClass("hidden").addClass("activeDiv");
-
+        $(".activeTabs").removeClass("activeTabs").addClass("hidden");
+        $("#" + div + "Tabs").removeClass("hidden").addClass("activeTabs");
+        $(".activeTab").removeClass("activeTab").addClass("hidden");
     });
 
     $(".tab").click(function () {
@@ -294,17 +370,18 @@
         $(this).addClass("tab-selected").removeClass("tab");
 
         var tab = $(this).data("tab");
+        var parentId = $(this).data("parentid");
+        var orderId = $(this).data("orderid");
 
         $(".activeTab").removeClass("activeTab").addClass("hidden");
         $("#" + tab).removeClass("hidden").addClass("activeTab");
 
+        $("#" + tab + "ParentId").val(parentId);
+        $("#" + tab + "OrderId").val(parentId);
+        $("#" + tab + "orderId").val(parentId);
+
     });
-
-    function editGroupBtnClicked(groupId,parentId)
-    {
-
-    }
-
+    
     function editSetBtnClicked(groupId)
     {
         //need to change id to group id  and add hidden text when ui is done

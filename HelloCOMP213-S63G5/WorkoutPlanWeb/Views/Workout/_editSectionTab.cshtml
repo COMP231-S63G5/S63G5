@@ -1,0 +1,19 @@
+﻿<div id="editSection" class="hidden">
+    <h2>Edit Section</h2>
+    @using (Html.BeginForm("editSection", "Workout", FormMethod.Post))
+    {
+        @Html.Hidden("orderId")
+        <h2>@Html.ValidationMessage("editSection")</h2>
+        <table>
+            <tr>
+                <td><h4>Section Name:</h4></td>
+                <td><input type="text" name="sectionName" /></td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Update Section" name="command" /></td>
+                <td><input type="submit" value="Delete Section" name="command" /></td>
+            </tr>
+        </table>
+    }
+</div>

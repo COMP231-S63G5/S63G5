@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<WorkoutPlanObjects.WorkoutSetObject>
 
-<table class="group" width="90%">
 
     @foreach (var group_item in Model)
     { 
@@ -8,20 +7,32 @@
             if(group_item.SetType.ToString().Equals("Group"))
             {
                 <tr>
-                <td>
-                    @Html.DisplayFor(j => group_item.OrderID)
-                </td>
-                <td style="width:80%" >
-                    @Html.DisplayFor(j => group_item.Description)
-                </td>
-                    <td width="100px" align="right">
-                        <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID)" />
+                    <td>
+                        @Html.DisplayFor(j => group_item.OrderID). &nbsp;
                     </td>
-                </tr>
+                    <td style="width:80%" >                        
+                        @for (int i = 0; i < ViewBag.indent; i++)
+                        {
+                            @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
+                        }
+                        @Html.DisplayFor(j => group_item.Repeats) X {
+                    </td>
+                    <td width="100px" align="right">
+                        <input type="button" value="Edit Group" class="editBtn" data-div="group" data-orderid="@group_item.OrderID" data-parentid="@group_item.ParentID" onclick="editGroupBtnClicked(@group_item.OrderID,@group_item.ParentID)" />
+                    </td>
+                </tr>               
+                ViewBag.indent++;
+                @Html.Partial("_WorkoutGroup", group_item.SubSetList)
+                ViewBag.indent--;
                 <tr>
-                <td colspan="3">                    
-                    @Html.Partial("_WorkoutGroup", group_item.SubSetList)
-                </td>
+                    <td></td>
+                    <td>                        
+                    @for (int i = 0; i < ViewBag.indent; i++)
+                        {
+                            @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
+                        }
+                    }</td>
+                    <td></td>
                 </tr>
             }
             else
@@ -29,5 +40,4 @@
                  @Html.Partial("_WorkoutSet", group_item)
             }
     }
-</table>
 
