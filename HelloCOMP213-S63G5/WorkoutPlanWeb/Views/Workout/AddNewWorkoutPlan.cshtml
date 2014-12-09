@@ -10,6 +10,10 @@
 <div id="plan_conents" class="plan_content box">
 
     <input type="button" class="editBtn" value="Edit Plan" data-div="plan_div" />
+    @using(Html.BeginForm("savePlan","Workout",FormMethod.Post)){
+         <input type="submit" value="Save Plan" />
+    }
+    
     <center>
         <h2>@Html.ValidationMessage("errorMessage")</h2>
         <h2 id="planDateTag"></h2>
@@ -124,7 +128,7 @@
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
-                    <td><input type="text" name="sectionName" /></td>
+                    <td><input type="text" name="sectionName" list="sectionvalues"/></td>
                 </tr>
 
                 <tr>
@@ -132,6 +136,12 @@
                     <td><input type="submit" value="Delete Section" name="command"/></td>
                 </tr>
             </table>
+
+    <datalist id="sectionvalues">
+        <option>Warm up</option>
+        <option>Main</option>
+        <option>Warm down</option>
+    </datalist>
         }
     </div>
 
@@ -182,7 +192,7 @@
                     <td><input type="text" size="10" name="duration"/></td>
                     <td><input type="text" size="15" name="description"/></td>
                     <td><input type="text" size="10" name="totalDistance"/></td>
-                    <td><input type="text" size="10" name="energyGroup"/></td>
+                    <td><input type="text" size="10" name="energyGroup" list="energy"/></td>
                     <td><input type="text" size="5" name="energyAmount"/></td>
                     <td><input type="text" size="5" name="position" list="setlocations"/></td>
                     
@@ -202,6 +212,15 @@
             <option value="Medley">
         </datalist>
 
+        <datalist id="energy">
+            <option value="E1">
+            <option value="E2">
+            <option value="E3">
+            <option value="S1">
+            <option value="S2">
+            <option value="S3">
+        </datalist>
+
         <datalist id="type">
             <option value="None">
             <option value="Pace">
@@ -216,68 +235,258 @@
 
 </div>
 
-<script type="text/javascript">
 
-    // Function will run on page load
-    function onPageLoad() {
+<div id="group_div" class="edit_box box hidden">
+    <table width="100%" align="center" class="tab-container">
+        <tr>
+            <td>
+                <input type="button" class="tab" value="Edit Group" data-tab="editGroup" />
+                <input type="button" class="tab" value="Add Group" data-tab="addGroup2" />
+                <input type="button" class="tab" value="Add Set" data-tab="addSet2" />
+            </td>
+        </tr>
 
-        setPlanDate();      //set initial plan date with current date
-    }
+    </table>
+    <div id="editGroup" class="hidden">
+        <h2>Edit Group</h2>
+        @using (Html.BeginForm("editGroup", "Workout", FormMethod.Post))
+        {
+            @Html.Hidden("groupOrderId")
+            <h2>@Html.ValidationMessage("editGroupRepeat")</h2>
+            <table>
+                <tr>
+                    <td><h4>Repeats: </h4></td>
+                    <td><input type="text" name="repeats" id="editGroupRepeats"/></td>
+                </tr>
 
-    // Function will dynamically update planDateTag header tags with week and day number
-    function setPlanDate() {
-        /*
-        * ASSUMPTIONS:
-        *
-        *   1. Week begins on the Monday and ends Sunday. Ie Mon = Day1, Sun = Day7
-        *   2. Season begins 1st Monday of September
-        *
-        */
+                <tr>
+                    <td><input type="submit" value="Update Group" name="command" /></td>
+                    <td><input type="submit" value="Delete Group" name="command" /></td>
+                </tr>
+            </table>
+        }
+    </div>
 
-        var tempDate = new Date(document.getElementById("date").value);
-        tempDate.setDate(tempDate.getDate() + 1);
 
-        var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
-        var seasonStartDate = getSeasonStartDate(workoutDate);
+    <div id="addGroup2" class="hidden">
+        <h2>Add Workout Group</h2>
+        @using (Html.BeginForm("addGroup", "Workout", FormMethod.Post))
+        {
+            @Html.Hidden("addGroupParentId")
+            <table>
+                <tr>
+                    <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
+                    <td>
+                        Group Location After: <input type="text" list="grouplocations2" size="3" name="position" />
+                        <h2>@Html.ValidationMessage("addGroupLocation")</h2>
+                    </td>
+                </tr>
+            </table>
 
-        if (workoutDate < seasonStartDate) {
-            seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
+            <input type="submit" value="Add Group" />
+            <datalist id="grouplocations2"></datalist>
+        }
+    </div>
+
+    <div id="addSet2" class="hidden">
+        <h2>Add Workout Set</h2>
+        @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
+        {
+            @Html.Hidden("addSetParentId")
+            <table>
+                <tr>
+                    <th width="50">Repeats</th>
+                    <th width="50">Distance</th>
+                    <th width="50">Stroke</th>
+                    <th width="50">Type</th>
+                    <th width="50">Duration</th>
+                    <th width="50">Description</th>
+                    <th width="50">Total Distance</th>
+                    <th width="50">Energy Group</th>
+                    <th width="50">Energy Amount</th>
+                    <th width="50">Set Location After</th>
+                </tr>
+                <tr>
+                    <td><input type="text" size="5" name="repeat" /></td>
+                    <td><input type="text" size="5" name="distance" /></td>
+                    <td><input type="text" list="strokes" size="10" name="stroke2" /></td>
+                    <td><input type="text" list="type" size="10" name="type2" /></td>
+                    <td><input type="text" size="10" name="duration" /></td>
+                    <td><input type="text" size="15" name="description" /></td>
+                    <td><input type="text" size="10" name="totalDistance" /></td>
+                    <td><input type="text" size="10" name="energyGroup" list="energy2"/></td>
+                    <td><input type="text" size="5" name="energyAmount" /></td>
+                    <td><input type="text" size="5" name="position" list="setlocations2" /></td>
+
+                </tr>
+
+
+
+            </table>
+            <input type="submit" value="Add Set" style="margin:10px" />
+
+        }
+        <datalist id="strokes2">
+            <option value="Free">
+            <option value="Fly">
+            <option value="Back">
+            <option value="Rest">
+            <option value="Medley">
+        </datalist>
+        <datalist id="energy2">
+            <option value="E1">
+            <option value="E2">
+            <option value="E3">
+            <option value="S1">
+            <option value="S2">
+            <option value="S3">
+</datalist>
+
+
+        <datalist id="type2">
+            <option value="None">
+            <option value="Pace">
+            <option value="Rest">
+        </datalist>
+        <datalist id="setlocations2"></datalist>
+    </div>
+
+
+</div>
+
+<div id="set_div" class="edit_box box hidden">
+    <table width="100%" align="center" class="tab-container">
+        <tr>
+            <td>
+                <input type="button" class="tab" value="Edit Set" data-tab="editSet" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="editSet" class="hidden">
+        <h2>Add Workout Set</h2>
+        @using (Html.BeginForm("editSet", "Workout", FormMethod.Post))
+        {
+            @Html.Hidden("editSetOrderId")
+            <table>
+                <tr>
+                    <th width="50">Repeats</th>
+                    <th width="50">Distance</th>
+                    <th width="50">Stroke</th>
+                    <th width="50">Type</th>
+                    <th width="50">Duration</th>
+                    <th width="50">Description</th>
+                    <th width="50">Total Distance</th>
+                    <th width="50">Energy Group</th>
+                    <th width="50">Energy Amount</th>
+                </tr>
+                <tr>
+                    <td><input type="text" size="5" name="repeat" id="editSetRepeat"/></td>
+                    <td><input type="text" size="5" name="distance" id="editSetDistance"/></td>
+                    <td><input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes"/></td>
+                    <td><input type="text" list="type" size="10" name="type" id="editSetType"/></td>
+                    <td><input type="text" size="10" name="duration" id="editSetDuration"/></td>
+                    <td><input type="text" size="15" name="description" id="editSetDescription"/></td>
+                    <td><input type="text" size="10" name="totalDistance" id="editSetTotalDuration" /></td>
+                    <td><input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" /></td>
+                    <td><input type="text" size="5" name="energyAmount" id="editSetEnergyAmount"/></td>
+
+                </tr>
+
+
+
+            </table>
+            <input type="submit" value="Update Set" style="margin:10px" name="command" />
+            <input type="submit" value="Delete Set" style="margin:10px" name="command"/>
+
+        }
+        <datalist id="strokes">
+            <option value="Free">
+            <option value="Fly">
+            <option value="Back">
+            <option value="Rest">
+            <option value="Medley">
+        </datalist>
+
+        <datalist id="energy">
+            <option value="E1">
+            <option value="E2">
+            <option value="E3">
+            <option value="S1">
+            <option value="S2">
+            <option value="S3">
+        </datalist>
+
+        <datalist id="type">
+            <option value="None">
+            <option value="Pace">
+            <option value="Rest">
+        </datalist>
+    </div>
+</div>
+
+    <script type="text/javascript">
+
+        // Function will run on page load
+        function onPageLoad() {
+
+            setPlanDate();      //set initial plan date with current date
         }
 
-        var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
-        var totalWeeks = (totalDays - (totalDays % 7)) / 7;
+        // Function will dynamically update planDateTag header tags with week and day number
+        function setPlanDate() {
+            /*
+            * ASSUMPTIONS:
+            *
+            *   1. Week begins on the Monday and ends Sunday. Ie Mon = Day1, Sun = Day7
+            *   2. Season begins 1st Monday of September
+            *
+            */
 
-        var weekNumber = totalWeeks + 1;
-        var dayNumber = (totalDays % 7) + 1;
+            var tempDate = new Date(document.getElementById("date").value);
+            tempDate.setDate(tempDate.getDate() + 1);
 
-        document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
+            var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
+            var seasonStartDate = getSeasonStartDate(workoutDate);
 
-        document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "/" + tempDate.getDate() + "/" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+            if (workoutDate < seasonStartDate) {
+                seasonStartDate = getSeasonStartDate(new Date(workoutDate.getFullYear() - 1, workoutDate.getMonth(), workoutDate.getDate()));
+            }
 
-        console.log(document.getElementsByName("WorkoutPlanDate")[0].value);
-    }
+            var totalDays = Math.round(((((workoutDate - seasonStartDate.getTime()) / 1000) / 60) / 60) / 24); //Rounds up after dividing to get number of days from milliseconds
+            var totalWeeks = (totalDays - (totalDays % 7)) / 7;
 
-    //Helper function, gets the date of the first Monday of September
-    function getSeasonStartDate(workoutDate) {
+            var weekNumber = totalWeeks + 1;
+            var dayNumber = (totalDays % 7) + 1;
 
-        // Getting any date in the first week of september with a Monday
-        var septDay = new Date(workoutDate.getFullYear(), 08, 01);
+            document.getElementById("planDateTag").innerHTML = "Week " + weekNumber + ",  Day " + dayNumber;
 
-        if (septDay.getDay() > 1) {
-            septDay.setDate(septDay.getDate() + 7);
+            document.getElementsByName("WorkoutPlanDate")[0].value = tempDate.getMonth() + 1 + "/" + tempDate.getDate() + "/" + tempDate.getFullYear();// +" tempDate.toString();//.toDateString();
+
+            console.log(document.getElementsByName("WorkoutPlanDate")[0].value);
         }
 
-        return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
+        //Helper function, gets the date of the first Monday of September
+        function getSeasonStartDate(workoutDate) {
 
-    }
+            // Getting any date in the first week of september with a Monday
+            var septDay = new Date(workoutDate.getFullYear(), 08, 01);
 
-    // set planDateTag onLoad
-    window.onload = onPageLoad();
+            if (septDay.getDay() > 1) {
+                septDay.setDate(septDay.getDate() + 7);
+            }
 
-</script>
+            return new Date(septDay.getFullYear(), septDay.getMonth(), septDay.getDate() - septDay.getDay() + 1);
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script>
+        }
+
+        // set planDateTag onLoad
+        window.onload = onPageLoad();
+
+    </script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
 
     $(".editBtn").click(function () {
 
@@ -300,25 +509,74 @@
 
     });
 
-    function editGroupBtnClicked(groupId,parentId)
-    {
 
-    }
-
-    function editSetBtnClicked(groupId)
-    {
-        //need to change id to group id  and add hidden text when ui is done
-        document.getElementById("parentId")[0].value = groupId;
-    }
-
-    function editSectionBtnClicked(groupId) {
-        document.getElementById("orderId").value = groupId;
-        document.getElementById("addSetParentId").value = groupId;
-        document.getElementById("addGroupParentId").value = groupId;
-
-        
-
+    function editGroupBtnClicked(groupId, parentId, repeat) {
+        document.getElementById("groupOrderId").value = groupId;
+        document.getElementById("addSetParentId2").value = parentId;
+        document.getElementById("addGroupParentId2").value = parentId;
+        document.getElementById("editGroupRepeats").value = repeat;
         var requrl = '@Url.Action("getSubSetPosition", "Workout")';
+            $.ajax({
+                type: "POST",
+                url: requrl,
+                data: "{orderId:'" + parentId + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $('#grouplocations2').empty();
+                    $('#setlocations2').empty();
+                    $.each(data, function (index, id) {
+                        $('#grouplocations2').append('<option>' + id + '</option>');
+                        $('#setlocations2').append('<option>' + id + '</option>');
+
+                        //    }
+                    });
+                },
+            });
+        }
+
+        function editSetBtnClicked(groupId, repeats, energyGroupAmount, distance) {
+            
+
+            //need to change id to group id  and add hidden text when ui is done
+            //"editSetBtnClicked(Model.OrderID,Model.Repeats,Model.Stroke,Model.Pace,Model.Rest,Model.Description,Model.EnergyGroupName,Model.EnergyGroupAmount,Model.Duration)" />
+            /* <td><input type="text" size="5" name="repeat" id="editSetRepeat"/></td>
+                    <td><input type="text" size="5" name="distance" id="editSetDistance"/></td>
+                    <td><input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes"/></td>
+                    <td><input type="text" list="type" size="10" name="type" id="editSetType"/></td>
+                    <td><input type="text" size="10" name="duration" id="editSetDuration"/></td>
+                    <td><input type="text" size="15" name="description" id="editSetDescription"/></td>
+                    <td><input type="text" size="10" name="totalDistance" id="editSetTotalDuration" /></td>
+                    <td><input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" /></td>
+                    <td><input type="text" size="5" name="energyAmount" id="editSetEnergyAmount"/></td>*/
+            document.getElementById("editSetOrderId").value = groupId;
+            document.getElementById("editSetRepeat").value = repeats;
+            document.getElementById("editSetDistance").value = distance;
+            //document.getElementById("editSetStrokes").value = stroke;
+            //document.getElementById("editSetDuration").value = duration;
+            //document.getElementById("editSetDescription").value = description;
+            //document.getElementById("editSetEnergyGroup").value = energyGroupName;
+            document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
+
+            document.getElementById("editSetTotalDuration").value = repeats * duration;
+
+            /*if (pace =="") {
+                document.getElementById("editSetType").value = rest;
+            } else if (rest==""){
+                document.getElementById("editSetType").value = pace;
+            }*/
+
+
+        }
+
+        function editSectionBtnClicked(groupId) {
+            document.getElementById("orderId").value = groupId;
+            document.getElementById("addSetParentId").value = groupId;
+            document.getElementById("addGroupParentId").value = groupId;
+
+
+
+            var requrl = '@Url.Action("getSubSetPosition", "Workout")';
         $.ajax({
             type: "POST",
             url: requrl,
@@ -332,13 +590,12 @@
                     $('#grouplocations').append('<option>' + id + '</option>');
                     $('#setlocations').append('<option>' + id + '</option>');
 
-                //    }
+                    //    }
                 });
             },
         });
     }
-</script>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    </script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
