@@ -42,7 +42,8 @@
        <table width="300px">
            <tr>
                <td>
-                   Total Distance: <b> @Model.TotalDistance m</b>
+                   
+                   Total Distance: <b id="planTotalDistance" > @Model.TotalDistance </b>&nbsp;meters
                </td>
                <td>E1: 00%</td>
            </tr>
@@ -215,22 +216,22 @@
             @Html.Hidden("addSetParentId")
 
             <p>
-                Repeats: <input type="number" size="5" name="repeat" min="1" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;
-                Distance: <input type="number" size="5" name="distance" min="0" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
-                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
+                Repeats: <input type="number" size="5" name="repeat" min="1" id="addSetRepeat" oninput="calculate2()" /> &nbsp;&nbsp;&nbsp;
+                Distance: <input type="number" size="5" name="distance" min="0" id="addSetDistance" oninput="calculate2()" />&nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="addSetStrokes" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
-                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
+                Type: <input type="text" list="type" size="10" name="type" id="addSetType" />&nbsp;&nbsp;&nbsp;
                 Type Duration: <input type="text" name="typeDuration" />
             </p>
             <p>
-                Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" min="0" name="totalDistance" id="editSetTotalDistance" />&nbsp;&nbsp;&nbsp;
-                Total Duration: <input type="text" size="10" name="duration" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+                Description: <input type="text" size="15" name="description" id="addSetDescription" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" min="0" name="totalDistance" id="addSetTotalDistance" />&nbsp;&nbsp;&nbsp;
+                Total Duration: <input type="text" size="10" name="duration" id="addSetTotalDuration" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
-                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
-                Energy Amount: <input type="text" size="5" name="energyAmount"  id="editSetEnergyAmount" />&nbsp;&nbsp;&nbsp;
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="addSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount"  id="addSetEnergyAmount" />&nbsp;&nbsp;&nbsp;
                 Set Location After: <input type="text" size="5" min="0" name="position" list="setlocations" />
             </p>
 
@@ -292,8 +293,8 @@
             @Html.Hidden("editSetOrderId")
 
             <p>
-                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;                
-                Distance: <input type="text" size="5" name="distance" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
+                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" oninput="calculate()" /> &nbsp;&nbsp;&nbsp;                
+                Distance: <input type="text" size="5" name="distance" id="editSetDistance" oninput="calculate()"/>&nbsp;&nbsp;&nbsp;
                 Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
                 
             </p>
@@ -304,7 +305,7 @@
             <p>                
                 Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
                 Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" />&nbsp;&nbsp;&nbsp;
-                Set Total Duration: <input type="text" size="10" name="duration" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+                
             </p>
             <p>
                 Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
@@ -477,15 +478,15 @@
                     <td><input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" /></td>
                     <td><input type="text" size="5" name="energyAmount" id="editSetEnergyAmount"/></td>*/
             document.getElementById("editSetOrderId").value = groupId;
-            document.getElementById("editSetRepeat").value = repeats;
-            document.getElementById("editSetDistance").value = distance;
+            //document.getElementById("editSetRepeat").value = repeats;
+            //document.getElementById("editSetDistance").value = distance;
             //document.getElementById("editSetStrokes").value = stroke;
             //document.getElementById("editSetDuration").value = duration;
             //document.getElementById("editSetDescription").value = description;
             //document.getElementById("editSetEnergyGroup").value = energyGroupName;
            // document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
 
-            document.getElementById("editSetTotalDuration").value = repeats * duration;
+            //document.getElementById("editSetTotalDuration").value = repeats * duration;
 
             /*if (pace =="") {
                 document.getElementById("editSetType").value = rest;
@@ -521,7 +522,31 @@
                 });
             },
         });
-    }
+        }
+
+
+
+    </script>
+    <script>
+        function calculate() {
+            
+            var ans = document.getElementById("editSetRepeat").value * document.getElementById("editSetDistance").value;
+            if (ans >= 0) {
+                document.getElementById("editSetEnergyAmount").value = ans;
+                document.getElementById("editSetTotalDistance").value = ans;
+                document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
+            }
+        }
+
+        function calculate2() {
+            
+            var ans = document.getElementById("addSetRepeat").value * document.getElementById("addSetDistance").value;
+            if (ans >=0) {
+                document.getElementById("addSetEnergyAmount").value = ans;
+                document.getElementById("addSetTotalDistance").value = ans;
+                document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
+            }
+        }
     </script>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

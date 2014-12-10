@@ -350,7 +350,7 @@ namespace WorkoutPlanWeb.Controllers
             return View("AddNewWorkoutPlan", wp);
         }
 
-        public ActionResult editSet(string repeat, string distance, string stroke, string type, string typeDuration,string duration, string description, string totalDistance, string energyGroup, string energyAmount, string editSetOrderId)
+        public ActionResult editSet(string repeat, string distance, string stroke, string type, string typeDuration, string description, string totalDistance, string energyGroup, string energyAmount, string editSetOrderId)
         {     
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(editSetOrderId)];
@@ -372,7 +372,7 @@ namespace WorkoutPlanWeb.Controllers
                 ws.Rest = null;
                 ws.Pace = null;
             }
-            ws.Duration = duration;
+            //ws.Duration = ws.Repeats ;
             ws.Description = description;
             ws.EnergyGroupName = energyGroup;
             ws.EnergyGroupAmount = int.Parse(energyAmount);
