@@ -11,9 +11,23 @@
             @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
         }
         @Html.DisplayFor(j => Model.Repeats) X @Html.DisplayFor(j => Model.Distance) &nbsp;&nbsp;&nbsp;
-
+        
         @Html.DisplayFor(j => Model.Stroke)
         &nbsp;on&nbsp;
+        @if (Model.Pace.IsEmpty() && (Model.Rest.IsEmpty()))
+        {
+            @Html.Display("")
+        }
+        else if (Model.Pace.IsEmpty())
+	    {
+		    @Html.DisplayFor(j=>Model.Rest)
+	    }
+        else
+        {
+            @Html.DisplayFor(j => Model.Pace) 
+        }
+
+        &nbsp; &nbsp; &nbsp; 
         @Html.DisplayFor(j => Model.Pace) &nbsp;&nbsp;&nbsp;
         (@Html.DisplayFor(j => Model.Description) )
         &nbsp;&nbsp;&nbsp;
@@ -24,6 +38,6 @@
         @Html.DisplayFor(j => Model.Duration)
     </td>
     <td width="100px" align="right">
-        <input type="button" value="Edit Set" class="editBtn" data-div="set" data-orderid="@Model.OrderID" data-parentid="@Model.ParentID" onclick="editSetBtnClicked(@Model.OrderID)" />
+        <input type="button" value="Edit Set" class="editBtn" data-div="set_div" data-orderid="@Model.OrderID" data-parentid="@Model.ParentID" onclick="editSetBtnClicked(@Model.OrderID)" />
     </td>
 </tr>

@@ -37,6 +37,47 @@
         @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
     </div>
 
+    <div style="position:fixed;right:0;top:40%;background-color:white;border-radius:10px 10px">
+        <h2 style="text-align:center">Summary</h2>
+       <table width="300px">
+           <tr>
+               <td>
+                   Total Distance: <b> @Model.TotalDistance m</b>
+               </td>
+               <td>E1: 00%</td>
+           </tr>
+           <tr>
+               <td>
+                   Total Duration: <b>@Model.TotalDuration </b>
+               </td>
+               <td>E2: 00%</td>
+
+           </tr>
+           <tr>
+               <td></td>
+               <td>E3: 00%</td>
+
+           </tr>
+           <tr>
+               <td></td>
+               <td>S1: 00%</td>
+
+           </tr>
+           <tr>
+               <td></td>
+               <td>S2: 00%</td>
+           </tr>
+           <tr>
+               <td></td>
+               <td>S3: 00%</td>
+           </tr>
+           <tr>
+               <td style="text-align:right">Total:</td>
+               <td>100%</td>
+           </tr>
+       </table>
+    </div>
+
 </div>
 
 <div id="" class=" edit_box box">
@@ -172,21 +213,25 @@
         @using (Html.BeginForm("addSet", "Workout", FormMethod.Post))
         {
             @Html.Hidden("addSetParentId")
-            
+
             <p>
-                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;                
-                Distance: <input type="text" size="5" name="distance" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
+                Repeats: <input type="number" size="5" name="repeat" min="1" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;
+                Distance: <input type="number" size="5" name="distance" min="0" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
                 Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
-                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
-                Duration: <input type="text" size="10" name="duration" id="editSetDuration" />&nbsp;&nbsp;&nbsp;
             </p>
-            <p>                
+            <p>
+                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
+                Type Duration: <input type="text" name="typeDuration" />
+            </p>
+            <p>
                 Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" min="0" name="totalDistance" id="editSetTotalDistance" />&nbsp;&nbsp;&nbsp;
+                Total Duration: <input type="text" size="10" name="duration" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
                 Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
-                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" />
+                Energy Amount: <input type="text" size="5" name="energyAmount"  id="editSetEnergyAmount" />&nbsp;&nbsp;&nbsp;
+                Set Location After: <input type="text" size="5" min="0" name="position" list="setlocations" />
             </p>
 
             <br />
@@ -250,12 +295,16 @@
                 Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" /> &nbsp;&nbsp;&nbsp;                
                 Distance: <input type="text" size="5" name="distance" id="editSetDistance" />&nbsp;&nbsp;&nbsp;
                 Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
+                
+            </p>
+             <p>
                 Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
-                Duration: <input type="text" size="10" name="duration" id="editSetDuration" />&nbsp;&nbsp;&nbsp;
+                Type Duration: <input type="text" name="typeDuration" />
             </p>
             <p>                
                 Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" />&nbsp;&nbsp;&nbsp;
+                Set Total Duration: <input type="text" size="10" name="duration" id="editSetTotalDuration" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
                 Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
@@ -390,8 +439,8 @@
 
     function editGroupBtnClicked(groupId, parentId, repeat) {
         document.getElementById("groupOrderId").value = groupId;
-        document.getElementById("addSetParentId2").value = parentId;
-        document.getElementById("addGroupParentId2").value = parentId;
+        document.getElementById("addSetParentId").value = parentId;
+        document.getElementById("addGroupParentId").value = parentId;
         document.getElementById("editGroupRepeats").value = repeat;
         var requrl = '@Url.Action("getSubSetPosition", "Workout")';
             $.ajax({
@@ -401,11 +450,11 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-                    $('#grouplocations2').empty();
-                    $('#setlocations2').empty();
+                    $('#grouplocations').empty();
+                    $('#setlocations').empty();
                     $.each(data, function (index, id) {
-                        $('#grouplocations2').append('<option>' + id + '</option>');
-                        $('#setlocations2').append('<option>' + id + '</option>');
+                        $('#grouplocations').append('<option>' + id + '</option>');
+                        $('#setlocations').append('<option>' + id + '</option>');
 
                         //    }
                     });
@@ -430,11 +479,11 @@
             document.getElementById("editSetOrderId").value = groupId;
             document.getElementById("editSetRepeat").value = repeats;
             document.getElementById("editSetDistance").value = distance;
-            document.getElementById("editSetStrokes").value = stroke;
-            document.getElementById("editSetDuration").value = duration;
-            document.getElementById("editSetDescription").value = description;
-            document.getElementById("editSetEnergyGroup").value = energyGroupName;
-            document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
+            //document.getElementById("editSetStrokes").value = stroke;
+            //document.getElementById("editSetDuration").value = duration;
+            //document.getElementById("editSetDescription").value = description;
+            //document.getElementById("editSetEnergyGroup").value = energyGroupName;
+           // document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
 
             document.getElementById("editSetTotalDuration").value = repeats * duration;
 
