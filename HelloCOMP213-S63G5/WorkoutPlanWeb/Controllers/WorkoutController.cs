@@ -386,12 +386,6 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult savePlan()
         {
             //WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            WorkoutPlanObject wp = new WorkoutPlanObject(DateTime.Now);
-            //wp.PlanName = "Test";
-            WorkoutDBObject.SwimWorkoutDBContextNew db = new WorkoutDBObject.SwimWorkoutDBContextNew();
-            //db.insertWorkoutPlan(wp.PlanDate, wp.TotalDistance, wp.TotalDuration, wp.PlanName);
-            //To-Do : save the plan , check if plan saved .
-            List<int> a = db.getWorkOutPlanIds();
             return RedirectToAction("Index", "Home");
 
         }
