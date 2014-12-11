@@ -263,17 +263,17 @@ namespace WorkoutPlanWeb.Controllers
             if (type == "Rest")
             {
                 ws.Rest = typeDuration;
-                ws.Pace = null;
+                ws.Pace = "";
             }
             else if (type == "Pace")
             {
                 ws.Pace = typeDuration;
-                ws.Rest = null;
+                ws.Rest = "";
             }
             else
             {
-                ws.Rest = null;
-                ws.Pace = null;
+                ws.Rest = "";
+                ws.Pace = "";
             }
             wp.addWorkoutSet(ws, int.Parse(addSetParentId), int.Parse(position));
             Session["wp"] = wp;

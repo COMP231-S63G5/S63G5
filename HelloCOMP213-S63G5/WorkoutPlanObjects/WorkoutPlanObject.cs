@@ -54,7 +54,15 @@ namespace WorkoutPlanObjects
                         set = (WorkoutSetObject)SubSetHashTable[i];
                         if (set.SetType == EnumWorkoutSetType.Set)
                         {
-                            string[] t = set.Pace.Split(':');
+                            string time;
+
+                            if (set.Pace != null)
+                                time = set.Pace;
+                            else if (set.Rest != null)
+                                time = set.Rest;
+                            else
+                                time = "0:0";
+                            string[] t = time.Split(':');
                             m = Int32.Parse(t[0]);
                             s = Int32.Parse(t[1]);
                             min = min + m * set.TotalRepeats;

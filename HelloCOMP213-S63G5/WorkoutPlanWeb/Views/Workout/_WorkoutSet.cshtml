@@ -13,27 +13,37 @@
         @Html.DisplayFor(j => Model.Repeats) X @Html.DisplayFor(j => Model.Distance) &nbsp;&nbsp;&nbsp;
         
         @Html.DisplayFor(j => Model.Stroke)
-        &nbsp;on&nbsp;
-        @if (Model.Pace.IsEmpty() && (Model.Rest.IsEmpty()))
+        
+        @if (!@Model.Rest.IsEmpty())
         {
-            @Html.Display("")
+            if (@Model.Rest.Length > 0)
+            { 
+                @Html.Raw("&nbsp; on &nbsp;")
+		        @Html.DisplayFor(j=>Model.Rest) 
+                @Html.Raw(" rest")
+	        }
         }
-        else if (Model.Pace.IsEmpty())
-	    {
-		    @Html.DisplayFor(j=>Model.Rest)
-	    }
-        else
+        @if (!@Model.Pace.IsEmpty() )
         {
-            @Html.DisplayFor(j => Model.Pace) 
+            if (@Model.Pace.Length > 0)
+            { 
+                @Html.Raw("&nbsp; on &nbsp;")
+                @Html.DisplayFor(j => Model.Pace) 
+            }
         }
 
-        &nbsp; &nbsp; &nbsp; 
-        @Html.DisplayFor(j => Model.Pace) &nbsp;&nbsp;&nbsp;
-        (@Html.DisplayFor(j => Model.Description) )
-        &nbsp;&nbsp;&nbsp;
-        @Html.DisplayFor(j => Model.TotalDistance)
-        &nbsp;
+        @if(@Model.Description.Length > 0)
+        {            
+            @Html.Raw("&nbsp; &nbsp; &nbsp;") 
+            @Html.Raw("(")
+            @Html.DisplayFor(j => Model.Description) 
+            @Html.Raw(")")
+            
+        }
+        &nbsp;&nbsp;&nbsp;        
         @Html.DisplayFor(j => Model.EnergyGroupName)
+        &nbsp;
+        @Html.DisplayFor(j => Model.TotalDistance)
         &nbsp;
         <!--Html.DisplayFor(j => Model.Duration)-->
     </td>

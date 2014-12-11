@@ -555,6 +555,19 @@
         else
             totalDistance.css({ background: "#fff" });
 
+
+        if (type.val().length == 0) {
+            valid = false;
+            type.css({ background: "red" });
+        }
+        else {
+            type.css({ background: "#fff" });
+
+            if (type.val() == "None")
+                duration.val("0:00");
+        }
+
+
         if (duration.val().indexOf(':') == -1) {
             if (!checkNumber(duration.val())) {
                 valid = false;
@@ -600,14 +613,6 @@
         }
         else {
             strokes.css({ background: "#fff" });
-        }
-
-        if (type.val().length == 0) {
-            valid = false;
-            type.css({ background: "red" });
-        }
-        else {
-            type.css({ background: "#fff" });
         }
 
         if (energyGroup.val().length == 0) {
