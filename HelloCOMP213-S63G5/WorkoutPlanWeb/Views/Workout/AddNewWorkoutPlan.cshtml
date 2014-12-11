@@ -108,7 +108,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Insert Position: <input type="text" id="selectPosition" name="selectPosition" list="sectionPositions" size="3" class="addSectionField" /> 
+                        Insert Position: <input type="text" id="addSectionPosition" name="selectPosition" list="sectionPositions" size="3" class="addSectionField" /> 
                         <h2>@Html.ValidationMessage("addSectionPosition")</h2>
                     </td>
                 </tr>
@@ -333,7 +333,7 @@
         // Function will run on page load
         function onPageLoad() {
 
-           // setPlanDate();      //set initial plan date with current date
+           setPlanDate();      //set initial plan date with current date
         }
 
         // Function will dynamically update planDateTag header tags with week and day number
@@ -346,7 +346,8 @@
             *
             */
 
-            var tempDate = new Date(document.getElementById("date").value);
+            var tempDate = new Date("@Model.PlanDate.ToString("yyyy-MM-dd")");
+
             tempDate.setDate(tempDate.getDate() + 1);
 
             var workoutDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());

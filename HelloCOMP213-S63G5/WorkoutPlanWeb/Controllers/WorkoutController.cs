@@ -276,14 +276,8 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult addSet(string repeat, string distance, string stroke,string typeDuration, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string addSetParentId)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            if (repeat == "" || distance=="" || stroke=="" || type=="" || duration ==""||energyGroup==""||energyAmount==""||position=="" || typeDuration=="")
-            {
-                ModelState.AddModelError("errorMessage", "Fields cannot be empty");
-            }
-            else
-            {             
-            //TO-Do: Server side validation
-            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, typeDuration, description, energyGroup, int.Parse(energyAmount));
+           
+            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, typeDuration, description, energyGroup, int.Parse(totalDistance));
             if (type == "Rest")
             {
                 ws.Rest = typeDuration;
@@ -303,7 +297,6 @@ namespace WorkoutPlanWeb.Controllers
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
 
-            }
             return View("AddNewWorkoutPlan", wp);
         }
 
@@ -381,7 +374,7 @@ namespace WorkoutPlanWeb.Controllers
                 //ws.Duration = ws.Repeats ;
                 ws.Description = description;
                 ws.EnergyGroupName = energyGroup;
-                ws.TotalDistance = int.Parse(energyAmount);
+                ws.TotalDistance = int.Parse(totalDistance);
             }
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
