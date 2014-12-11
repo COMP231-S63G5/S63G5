@@ -41,7 +41,7 @@ namespace WorkoutDBObject
                     if (reader.Read())
                     {   // read from tbl_workoutplan
                         planName = reader.GetString(0);
-                        planDate = reader.GetDateTime(2);
+                        planDate = reader.GetDateTime(1);
                     }
                     if (reader.NextResult())
                     {   // read from tbl_set
@@ -50,16 +50,16 @@ namespace WorkoutDBObject
                             temp_set = new WorkoutSetObject(
                                 reader.GetInt32(0),     // tblid
                                 reader.GetString(1),    // set type
-                                reader.GetInt16(2),     // repeat
-                                reader.GetInt16(3),    // distance
+                                reader.GetInt32(2),     // repeat
+                                reader.GetInt32(3),    // distance
                                 reader.GetString(4),    // stroke
                                 reader.GetString(5),    // pace
                                 reader.GetString(6),    // rest
                                 reader.GetString(7),    // description
                                 reader.GetString(8),    // energyname
-                                reader.GetInt16(9),     // total distance
-                                reader.GetInt16(10),    // order id
-                                reader.GetInt16(11));    // parent id
+                                reader.GetInt32(9),     // total distance
+                                reader.GetInt32(10),    // order id
+                                reader.GetInt32(11));    // parent id
                             setList.Add(temp_set);
                         }
                     }
@@ -105,10 +105,11 @@ namespace WorkoutDBObject
                         temp_set.tblID = int.Parse(SqlHelper.ExecuteScalar(trans, "insertWorkoutSet", 
                             temp_set.SetType.ToString(),
                             planid,
+                            temp_set.Repeats,
                             temp_set.Stroke,
                             temp_set.Pace,
                             temp_set.Rest,
-                            temp_set.Duration,
+                            "", // leave duration empty
                             temp_set.Distance,
                             temp_set.Description,
                             temp_set.EnergyGroupName,
@@ -149,7 +150,7 @@ namespace WorkoutDBObject
                 try
                 {
                     SqlHelper.ExecuteNonQuery(trans, "updateWorkOutPlan", plan.tblID,plan.PlanDate,plan.PlanName,plan.TotalDistance,plan.TotalDuration);
-                    SqlHelper.ExecuteNonQuery(trans, CommandType.Text, "delete * from tbl_set where planID=" + plan.tblID);
+                    SqlHelper.ExecuteNonQuery(trans, CommandType.Text, "delete from tbl_set where planID=" + plan.tblID);
 
                     WorkoutSetObject temp_set;
                     for (int i = 1; i <= plan.SubSetHashTable.Count; i++)
@@ -158,10 +159,11 @@ namespace WorkoutDBObject
                         temp_set.tblID = int.Parse(SqlHelper.ExecuteScalar(trans, "insertWorkoutSet",
                             temp_set.SetType.ToString(),
                             plan.tblID,
+                            temp_set.Repeats,
                             temp_set.Stroke,
                             temp_set.Pace,
                             temp_set.Rest,
-                            temp_set.Duration,
+                            "",     // leave Duration empty
                             temp_set.Distance,
                             temp_set.Description,
                             temp_set.EnergyGroupName,

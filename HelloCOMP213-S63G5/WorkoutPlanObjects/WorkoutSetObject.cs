@@ -12,21 +12,21 @@ namespace WorkoutPlanObjects
         /// <summary>
         /// table id
         /// </summary>
-        public int tblID;
-        public string Description;
-        public int Distance;
-        public string Duration;
-        public string EnergyGroupName;
-        public int TotalDistance;
-        public int OrderID;
-        public string Pace;
-        public int ParentID;
-        public string Rest;
+        public int tblID=0;
+        public string Description="";
+        public int Distance=0;
+        public string Duration="";
+        public string EnergyGroupName="";
+        public int TotalDistance=0;
+        public int OrderID=0;
+        public string Pace="";
+        public int ParentID=0;
+        public string Rest="";
         public EnumWorkoutSetType SetType;
-        public string Stroke;
+        public string Stroke="";
         public List<WorkoutSetObject> SubSetList;
         internal WorkoutPlanObject workoutPlan;   // root node
-        internal int TotalRepeats;
+        internal int TotalRepeats=1;
 
         private int _repeats;
         public int Repeats
