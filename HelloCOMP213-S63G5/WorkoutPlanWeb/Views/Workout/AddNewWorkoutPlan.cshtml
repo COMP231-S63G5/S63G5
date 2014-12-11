@@ -37,9 +37,11 @@
         @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
     </div>
 
-    <div style="position:fixed;right:0;top:40%;background-color:white;border-radius:10px 10px">
-        <h2 style="text-align:center">Summary</h2>
-       <table width="300px">
+    <div class="summary-box">
+        <br />
+        <h3 style="text-align:center">Total Distance:<br />@Model.TotalDistance meters</h3>
+        <h3 style="text-align:center">Total Duration:<br />@Model.TotalDuration minutes</h3>
+       <table width="250px">
            <tr>
                <td>
                    
@@ -410,6 +412,20 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+
+        $(window).load(function () {
+            summaryBoxPosition();
+        });
+
+        $(window).resize(function () {
+            summaryBoxPosition();
+        });
+
+        function summaryBoxPosition(){
+
+            var left_val = ($(window).width() / 2) + 550;
+            $(".summary-box").css({ left: left_val })
+        }
 
     $(".editBtn").click(function () {
 

@@ -264,3 +264,14 @@ tr.highlightRow{
     background-color:orange;
     color:#333;
 }
+
+.summary-box {
+    position:fixed;
+    left:0px;
+    top:40%;
+    background-color:orange;
+    border-radius:200px 200px;
+    box-shadow:5px 5px 10px #333;
+    width:250px;
+    height:250px;
+}
