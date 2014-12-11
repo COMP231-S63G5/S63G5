@@ -273,23 +273,25 @@ namespace WorkoutPlanWeb.Controllers
             return View("AddNewWorkoutPlan", wp);
         }
 
-        public ActionResult addSet(string repeat, string distance, string stroke, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string addSetParentId)
+        public ActionResult addSet(string repeat, string distance, string stroke,string typeDuration, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string addSetParentId)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            if (repeat == "" || distance=="" || stroke=="" || type=="" || duration ==""||energyGroup==""||energyAmount==""||position=="")
+            if (repeat == "" || distance=="" || stroke=="" || type=="" || duration ==""||energyGroup==""||energyAmount==""||position=="" || typeDuration=="")
             {
                 ModelState.AddModelError("errorMessage", "Fields cannot be empty");
             }
             else
             {             
             //TO-Do: Server side validation
-            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, type, description, energyGroup, int.Parse(energyAmount));
+            WorkoutSetObject ws = new WorkoutSetObject(int.Parse(repeat), int.Parse(distance), stroke, typeDuration, description, energyGroup, int.Parse(energyAmount));
             if (type == "Rest")
             {
+                ws.Rest = typeDuration;
                 ws.Pace = null;
             }
             else if (type == "Pace")
             {
+                ws.Pace = typeDuration;
                 ws.Rest = null;
             }
             else
@@ -348,7 +350,7 @@ namespace WorkoutPlanWeb.Controllers
             return View("AddNewWorkoutPlan", wp);
         }
 
-        public ActionResult editSet(string repeat, string distance, string stroke, string type, string duration, string description, string totalDistance, string energyGroup, string energyAmount, string position, string editSetOrderId)
+        public ActionResult editSet(string repeat, string distance, string stroke, string type, string typeDuration, string description, string totalDistance, string energyGroup, string energyAmount, string editSetOrderId)
         {     
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(editSetOrderId)];
@@ -357,12 +359,12 @@ namespace WorkoutPlanWeb.Controllers
             ws.Stroke = stroke;
             if (type=="Pace")
             {
-                ws.Pace = duration;
+                ws.Pace = typeDuration;
                 ws.Rest = null; // Only pace or rest can be in use
             }
             else if (type == "Rest")
 	        {
-                ws.Rest = duration;
+                ws.Rest = typeDuration;
                 ws.Pace = null;
 	        }
             else //some workoutsets do not require rest or pace
@@ -370,7 +372,7 @@ namespace WorkoutPlanWeb.Controllers
                 ws.Rest = null;
                 ws.Pace = null;
             }
-            ws.Duration = duration;
+            //ws.Duration = ws.Repeats ;
             ws.Description = description;
             ws.EnergyGroupName = energyGroup;
             ws.EnergyGroupAmount = int.Parse(energyAmount);
@@ -383,10 +385,7 @@ namespace WorkoutPlanWeb.Controllers
 
         public ActionResult savePlan()
         {
-            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            
-            //To-Do : save the plan , check if plan saved .
-
+            //WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             return RedirectToAction("Index", "Home");
 
         }

@@ -15,8 +15,8 @@ namespace WorkoutDBObject
         private SqlConnection conn;
         private SqlCommand cmd;
         private SqlDataReader reader;
-        public string connString = "Data Source=Hiren; Initial Catalog=SwimWorkoutsDB; Integrated Security=True; User Id=coach; Password=swimdb;";
-        //string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
+        //public string connString = "Data Source=KVN/SQLSQLEXPRESS; Initial Catalog=DB; Integrated Security=True; User Id=coach; Password=swimdb;";
+        public string connString = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
 
         //This method returns Unique Strokes existing in Set table
         public List<string> getStrokes() {
@@ -86,7 +86,7 @@ namespace WorkoutDBObject
 
 
 
-        public string insertWorkoutPlan(String date,int totalDistance,string totalDuration,string planName)
+        public string insertWorkoutPlan(DateTime date,int totalDistance,string totalDuration,string planName)
         {
             try
             {
