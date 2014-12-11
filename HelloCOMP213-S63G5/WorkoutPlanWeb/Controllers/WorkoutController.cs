@@ -357,12 +357,12 @@ namespace WorkoutPlanWeb.Controllers
             ws.Stroke = stroke;
             if (type=="Pace")
             {
-                ws.Pace = type;
+                ws.Pace = duration;
                 ws.Rest = null; // Only pace or rest can be in use
             }
             else if (type == "Rest")
 	        {
-                ws.Rest = type;
+                ws.Rest = duration;
                 ws.Pace = null;
 	        }
             else //some workoutsets do not require rest or pace
