@@ -72,6 +72,7 @@ namespace WorkoutPlanObjects
         {
             PlanName = name;
             PlanDate = date;
+            tblID = 0;
             SubSetHashTable = new Hashtable();
             SubSetList = new List<WorkoutSetObject>();
         }
@@ -133,7 +134,20 @@ namespace WorkoutPlanObjects
                 workoutSet.OrderID = 1;
                 workoutSet.ParentID = 0;
                 SubSetList.Add(workoutSet); // add section to tree
-                SubSetHashTable.Add(1, workoutSet); // add to table, easy searching
+                if (SubSetHashTable.Count >0)
+                {
+                    WorkoutSetObject temp_set = (WorkoutSetObject)SubSetHashTable[position];
+                    SubSetHashTable.Add(SubSetHashTable.Count + 1, null); 
+                    for (int i = SubSetHashTable.Count -1; i > position; i--)
+                    {
+                        temp_set = (WorkoutSetObject)SubSetHashTable[i];    // get 2nd set
+                        temp_set.OrderID++; // increase orderid
+                        temp_set.ParentID++;    // increase parentid
+
+                        SubSetHashTable[i + 1] = temp_set;  // move 5th to 6th in hashtable
+                    }
+                }
+                SubSetHashTable[1]= workoutSet; // add to table, easy searching
                 workoutSet.workoutPlan = this;
             }
             else if (position > 0)
