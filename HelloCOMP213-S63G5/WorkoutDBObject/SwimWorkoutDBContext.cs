@@ -6,207 +6,14 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
+
 using WorkoutPlanObjects;
 using System.Collections;
 
-using Microsoft.ApplicationBlocks.Data;
 
 namespace WorkoutDBObject
 {
-    static public class SwimWorkoutDBContext
-    {
-        //private SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
-        private static String connStr = ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString;
-
-        #region Get Workout Plan by ID
-        /// <summary>
-        /// query workout plan, and plan set
-        /// </summary>
-        /// <param name="planid">plan table id</param>
-        /// <returns>a plan object</returns>
-        public static WorkoutPlanObject getWorkoutPlan(int planid)
-        {
-            string planName = "";
-            DateTime planDate = new DateTime();
-            List<WorkoutSetObject> setList = new List<WorkoutSetObject>();
-
-            SqlConnection conn = new SqlConnection(connStr);
-
-            using (SqlTransaction trans = conn.BeginTransaction())
-            {
-                try
-                {
-                    WorkoutSetObject temp_set;
-                    SqlDataReader reader = SqlHelper.ExecuteReader(trans, "getworkoutplan", planid);
-
-                    if (reader.Read())
-                    {   // read from tbl_workoutplan
-                        planName = reader.GetString(0);
-                        planDate = reader.GetDateTime(2);
-                    }
-                    if (reader.NextResult())
-                    {   // read from tbl_set
-                        while (reader.Read())
-                        {
-                            temp_set = new WorkoutSetObject(
-                                reader.GetInt32(0),     // tblid
-                                reader.GetString(1),    // set type
-                                reader.GetInt16(2),     // repeat
-                                reader.GetInt16(3),    // distance
-                                reader.GetString(4),    // stroke
-                                reader.GetString(5),    // pace
-                                reader.GetString(6),    // rest
-                                reader.GetString(7),    // description
-                                reader.GetString(8),    // energyname
-                                reader.GetInt16(9),     // total distance
-                                reader.GetInt16(10),    // order id
-                                reader.GetInt16(11));    // parent id
-                            setList.Add(temp_set);
-                        }
-                    }
-                    trans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                { 
-                    conn = null;
-                }
-            }
-            WorkoutPlanObject plan = new WorkoutPlanObject(planid,planName,planDate,setList);
-            return plan;
-        }
-        #endregion
-
-        #region Insert Workout Plan
-        /// <summary>
-        /// insert plan and set
-        /// </summary>
-        /// <param name="plan">workout plan object</param>
-        /// <returns>table plan id</returns>
-        public static long insertWorkoutPlan(WorkoutPlanObject plan)
-        {
-            long planid = 0;
-            SqlConnection conn = new SqlConnection(connStr);
-
-            using (SqlTransaction trans = conn.BeginTransaction())
-            {
-                try
-                {   // insert and retrieve plan id
-                    WorkoutSetObject temp_set;
-                    planid = long.Parse(SqlHelper.ExecuteScalar(trans, "addWorkOutPlan", plan.PlanDate, plan.PlanName, plan.TotalDistance, plan.TotalDuration).ToString());
-                    plan.tblID = planid;
-
-                    for (int i = 1; i <= plan.SubSetHashTable.Count;i++ )
-                    {
-                        temp_set = (WorkoutSetObject) plan.SubSetHashTable[i];
-                        temp_set.tblID = int.Parse(SqlHelper.ExecuteScalar(trans, "insertWorkoutSet", 
-                            temp_set.SetType.ToString(),
-                            planid,
-                            temp_set.Stroke,
-                            temp_set.Pace,
-                            temp_set.Rest,
-                            temp_set.Duration,
-                            temp_set.Distance,
-                            temp_set.Description,
-                            temp_set.EnergyGroupName,
-                            temp_set.TotalDistance,
-                            temp_set.OrderID,
-                            temp_set.ParentID
-                            ).ToString());
-                    }
-                    trans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                }
-                finally
-                {
-                    conn = null;
-                }
-            }
-            return planid;
-        }
-        #endregion
-
-        #region Update Workout Plan
-        /// <summary>
-        /// update workout plan and its sets
-        /// </summary>
-        /// <param name="plan">workout plan object</param>
-        /// <returns> 0 means fail</returns>
-        public static int updateWorkoutPlan(WorkoutPlanObject plan)
-        {
-            int result = 0;
-            SqlConnection conn = new SqlConnection(connStr);
-
-            using (SqlTransaction trans = conn.BeginTransaction())
-            {
-                try
-                {
-                    SqlHelper.ExecuteNonQuery(trans, "updateWorkOutPlan", plan.tblID,plan.PlanDate,plan.PlanName,plan.TotalDistance,plan.TotalDuration);
-                    SqlHelper.ExecuteNonQuery(trans, CommandType.Text, "delete * from tbl_set where planID=" + plan.tblID);
-
-                    WorkoutSetObject temp_set;
-                    for (int i = 1; i <= plan.SubSetHashTable.Count; i++)
-                    {
-                        temp_set = (WorkoutSetObject)plan.SubSetHashTable[i];
-                        temp_set.tblID = int.Parse(SqlHelper.ExecuteScalar(trans, "insertWorkoutSet",
-                            temp_set.SetType.ToString(),
-                            plan.tblID,
-                            temp_set.Stroke,
-                            temp_set.Pace,
-                            temp_set.Rest,
-                            temp_set.Duration,
-                            temp_set.Distance,
-                            temp_set.Description,
-                            temp_set.EnergyGroupName,
-                            temp_set.TotalDistance,
-                            temp_set.OrderID,
-                            temp_set.ParentID
-                            ).ToString());
-                    }
-                    trans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                }
-            }
-
-            return result;
-        }
-        #endregion
-
-        #region deleteWorkoutPlan
-        public static int deleteWorkoutPlan(WorkoutPlanObject plan)
-        {
-            int result = 0;
-            SqlConnection conn = new SqlConnection(connStr);
-            using (SqlTransaction trans = conn.BeginTransaction())
-            {
-                try
-                {
-                    result = SqlHelper.ExecuteNonQuery(trans, "deleteworkoutplan", plan.tblID);
-                    trans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                }
-            }
-            return result;
-        }
-        #endregion
-    }
-
-
-    #region Comments
-    /*    public class SwimWorkoutDBContext
+    public class SwimWorkoutDBContext
     {
         private SqlConnection conn;
         private SqlCommand cmd;
@@ -215,7 +22,9 @@ namespace WorkoutDBObject
 
         public SwimWorkoutDBContext()
         {
+
            // conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SwimDBConnectionString"].ConnectionString);
+
         }
 
         // Gets list of strokes
@@ -538,7 +347,4 @@ namespace WorkoutDBObject
 
 
     }
-    */
-    #endregion
-
 }

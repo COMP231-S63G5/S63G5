@@ -8,30 +8,8 @@ using WorkoutPlanObjects;
 
 namespace WorkoutPlanAPI
 {
-    public static class WorkOutPlan_BLL
+    public class WorkOutPlan_BLL
     {
-        public static long insertWorkoutPlan(WorkoutPlanObject plan)
-        {
-            return WorkoutDBObject.SwimWorkoutDBContext.insertWorkoutPlan(plan);
-        }
-        public static WorkoutPlanObject getWorkoutPlan(int planid)
-        {
-            return WorkoutDBObject.SwimWorkoutDBContext.getWorkoutPlan(planid);
-        }
-        public static int updateWorkoutPlan(WorkoutPlanObject plan)
-        {
-            return WorkoutDBObject.SwimWorkoutDBContext.updateWorkoutPlan(plan);
-        }
-        public static int deleteWorkoutPlan(WorkoutPlanObject plan)
-        {
-            return WorkoutDBObject.SwimWorkoutDBContext.deleteWorkoutPlan(plan);
-        }
-    }
-}
-
-#region comment
-/*    
-        
         //This method Would call ListOfWorkOutPlanIDs method to get list of 
         //existing workoutPlan ids from Business Layer.
         public List<int> getWorkOutPlanIDsList()
@@ -99,5 +77,5 @@ namespace WorkoutPlanAPI
             return swimDB.deleteWorkOutPlan(planId);
 
         }
-*/
-#endregion
+    }
+}
