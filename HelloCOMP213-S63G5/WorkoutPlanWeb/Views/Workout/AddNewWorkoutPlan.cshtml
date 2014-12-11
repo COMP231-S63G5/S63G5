@@ -41,42 +41,21 @@
         <br />
         <h3 style="text-align:center">Total Distance:<br />@Model.TotalDistance meters</h3>
         <h3 style="text-align:center">Total Duration:<br />@Model.TotalDuration minutes</h3>
-       <table width="250px">
+       <table style="width:80%; text-align:center;margin-left:auto;margin-right:auto;">
            <tr>
-               <td>
-                   
-                   Total Distance: <b id="planTotalDistance" > @Model.TotalDistance </b>&nbsp;meters
-               </td>
                <td>E1: 00%</td>
-           </tr>
-           <tr>
-               <td>
-                   Total Duration: <b>@Model.TotalDuration </b>
-               </td>
-               <td>E2: 00%</td>
-
-           </tr>
-           <tr>
-               <td></td>
-               <td>E3: 00%</td>
-
-           </tr>
-           <tr>
-               <td></td>
                <td>S1: 00%</td>
-
            </tr>
            <tr>
-               <td></td>
+               <td>E2: 00%</td>
                <td>S2: 00%</td>
            </tr>
            <tr>
-               <td></td>
+               <td>E3: 00%</td>
                <td>S3: 00%</td>
            </tr>
            <tr>
-               <td style="text-align:right">Total:</td>
-               <td>100%</td>
+               <td colspan="2">Total: 100%</td>
            </tr>
        </table>
     </div>
@@ -295,29 +274,29 @@
             @Html.Hidden("editSetOrderId")
 
             <p>
-                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" oninput="calculate()" /> &nbsp;&nbsp;&nbsp;                
-                Distance: <input type="text" size="5" name="distance" id="editSetDistance" oninput="calculate()"/>&nbsp;&nbsp;&nbsp;
-                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" />&nbsp;&nbsp;&nbsp;
+                Repeats: <input type="text" size="5" name="repeat" id="editSetRepeat" oninput="calculate()" class="editSetField" /> &nbsp;&nbsp;&nbsp;                
+                Distance: <input type="text" size="5" name="distance" id="editSetDistance" oninput="calculate()" class="editSetField" />&nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="editSetStrokes" class="editSetField" />&nbsp;&nbsp;&nbsp;
                 
             </p>
              <p>
-                Type: <input type="text" list="type" size="10" name="type" id="editSetType" />&nbsp;&nbsp;&nbsp;
-                Type Duration: <input type="text" name="typeDuration" />
+                Type: <input type="text" list="type" size="10" name="type" id="editSetType" class="editSetField" />&nbsp;&nbsp;&nbsp;
+                Type Duration: <input type="text" name="typeDuration" id="editSetDuration" class="editSetField" />
             </p>
             <p>                
-                Description: <input type="text" size="15" name="description" id="editSetDescription" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" />&nbsp;&nbsp;&nbsp;
+                Description: <input type="text" size="15" name="description" id="editSetDescription" class="editSetField" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" class="editSetField" />&nbsp;&nbsp;&nbsp;
                 
             </p>
             <p>
-                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
-                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" />
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" class="editSetField" />&nbsp;&nbsp;&nbsp;
+                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" class="editSetField" />
             </p>
 
             <br />
             <br />
             
-            <input type="submit" value="Update Set" style="margin:10px" name="command" />
+            <input type="submit" value="Update Set" style="margin:10px" name="command" disabled/>
             <input type="submit" value="Delete Set" style="margin:10px" name="command" />
 
         }
@@ -430,6 +409,49 @@
     $(".editBtn").click(function () {
 
         var div = $(this).data("div");
+        
+        if (div == "set_div") {
+            var orderid = $(this).data("orderid");
+            var repeats = $(this).data("repeats");
+            var distance = $(this).data("distance");
+            var stroke = $(this).data("stroke");
+            var pace = $(this).data("pace");
+            var rest = $(this).data("rest");
+            var description = $(this).data("description");
+            var energyGroup = $(this).data("energygroup");
+            var energyAmount = $(this).data("energyamount");
+
+            $("#editSetOrderId").val(orderid);
+            $("#editSetRepeat").val(repeats);
+            $("#editSetDistance").val(distance);
+            $("#editSetStrokes").val(stroke);
+            $("#editSetDescription").val(description);
+            $("#editSetEnergyGroup").val(energyGroup);
+            $("#editSetEnergyAmount").val(energyAmount);
+
+            if(pace != -1)
+            {
+                $("#editSetType").val("Pace");
+                $("#editSetDuration").val(pace);
+            }
+            else if (rest != -1) {
+                $("#editSetType").val("Rest");
+                $("#editSetDuration").val(rest);
+            }
+            else {
+                $("#editSetType").val("None");
+            }
+        }
+        else if (div == "group_div")
+        {
+            var orderid = $(this).data("orderid");
+            var repeats = $(this).data("repeats");
+
+            $("#editSetOrderId").val(groupOrderId);
+            $("#editGroupRepeats").val(repeats);
+            
+        }
+
 
         $(".activeDiv").removeClass("activeDiv").addClass("hidden");
         $("#" + div).removeClass("hidden").addClass("activeDiv");
@@ -453,6 +475,71 @@
 
     });
 
+    $(".editSetField").change(function () {
+        setValidation("edit");
+    })
+
+    function setValidation(setType) {
+
+        var valid = true;
+        
+        var repeats = $("#"+setType+"SetRepeat");
+        var distance = $("#"+setType+"SetDistance");
+        var strokes = $("#"+setType+"SetStrokes");
+        var description = $("#"+setType+"SetDescription");
+        var energyGroup = $("#"+setType+"SetEnergyGroup");
+        var energyAmount = $("#" + setType + "SetEnergyAmount");
+        var totalDistance = $("#" + setType + "SetTotalDistance");
+        var duration = $("#" + setType + "SetDuration");
+
+        if (!checkNumber(repeats.val())) {
+            valid = false;
+            repeats.css({ background: "red" });
+        }
+        else
+            repeats.css({ background: "#fff" });
+
+        if (!checkNumber(distance.val())) {
+            valid = false;
+            distance.css({ background: "red" });
+        }
+        else
+            distance.css({ background: "#fff" });
+        
+        if (!checkNumber(totalDistance.val())) {
+            valid = false;
+            totalDistance.css({ background: "red" });
+        }
+        else
+            totalDistance.css({ background: "#fff" });
+
+        if (!checkNumber(energyAmount.val())) {
+            valid = false;
+            energyAmount.css({ background: "red" });
+        }
+        else
+            energyAmount.css({ background: "#fff" });
+
+
+    }
+
+    function checkNumber(number) {
+
+        var valid = true;
+        
+        if (!$.isNumeric(number))   //check if number
+            valid = false
+        else {
+            if (Math.floor(number) != number)   //check if integer
+                valid = false;
+            else {
+                if (number < 0) //check if positive
+                    valid = false;
+            }
+        }
+        
+        return valid;
+    }
 
     function editGroupBtnClicked(groupId, parentId, repeat) {
         document.getElementById("groupOrderId").value = groupId;
@@ -500,7 +587,7 @@
             //document.getElementById("editSetDuration").value = duration;
             //document.getElementById("editSetDescription").value = description;
             //document.getElementById("editSetEnergyGroup").value = energyGroupName;
-           // document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
+            //document.getElementById("editSetEnergyAmount").value = energyGroupAmount;
 
             //document.getElementById("editSetTotalDuration").value = repeats * duration;
 

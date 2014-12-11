@@ -274,4 +274,9 @@ tr.highlightRow{
     box-shadow:5px 5px 10px #333;
     width:250px;
     height:250px;
+    opacity:0.8;
+}
+
+.summary-box:hover{
+    opacity:1;
 }
