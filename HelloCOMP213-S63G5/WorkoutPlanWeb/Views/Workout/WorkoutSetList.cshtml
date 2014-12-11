@@ -6,7 +6,7 @@
 
     <table class="plan_table">
         <!-- TO-DO: format the tables and sets accordingly to its type   -->
-        @foreach (var plan_item in Model)
+        @foreach (var plan_item in Model.OrderBy(i=>i.OrderID).ToList())
         {
             <tr>
                  <td>

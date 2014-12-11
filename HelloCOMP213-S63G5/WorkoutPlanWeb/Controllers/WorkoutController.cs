@@ -350,7 +350,7 @@ namespace WorkoutPlanWeb.Controllers
             return View("AddNewWorkoutPlan", wp);
         }
 
-        public ActionResult editSet(string repeat, string distance, string stroke, string type, string typeDuration, string description, string totalDistance, string energyGroup, string energyAmount, string editSetOrderId)
+        public ActionResult editSet(string repeat, string distance, string stroke, string type, string typeDuration, string description, string totalDistance, string energyGroup, string energyAmount, string editSetOrderId,string command)
         {     
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(editSetOrderId)];
@@ -395,8 +395,10 @@ namespace WorkoutPlanWeb.Controllers
 
         public ActionResult deletePlan(string tblID)
         {
-
-            //TO-DO: Delete the plan using the tblID of the plan
+            if (int.Parse(tblID) != 0)
+            {
+                //TO-DO: Delete the plan using the tblID of the plan
+            }
 
             return RedirectToAction("Index", "Home");
         }
