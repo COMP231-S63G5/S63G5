@@ -68,6 +68,27 @@ namespace WorkoutPlanObjects
             }
         }
 
+        public string EnergyPercentage(string energyType)
+        {
+            int energyTotal = 0;
+            WorkoutSetObject set;
+            for (int i = 1; i <= SubSetHashTable.Count; i++)
+            {
+                set = (WorkoutSetObject)SubSetHashTable[i];
+                if (set.SetType == EnumWorkoutSetType.Set)
+                {
+                    if (set.EnergyGroupName.Equals(energyType))
+                    {
+                        energyTotal += set.Distance * set.TotalRepeats;
+                    }
+                }
+            }
+
+            double percent = (double)energyTotal / (double)TotalDistance;
+            percent *= 100;
+
+            return  Math.Round(percent) + "%"; 
+        }
         public WorkoutPlanObject(string name, DateTime date)
         {
             PlanName = name;

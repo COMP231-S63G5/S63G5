@@ -43,16 +43,19 @@
         <h3 style="text-align:center">Total Duration:<br />@Model.TotalDuration minutes</h3>
        <table style="width:80%; text-align:center;margin-left:auto;margin-right:auto;">
            <tr>
-               <td>E1: 00%</td>
-               <td>S1: 00%</td>
+               <td>E1: @Model.EnergyPercentage("E1")</td>
+               <td>S1: @Model.EnergyPercentage("S1")</td>
            </tr>
            <tr>
-               <td>E2: 00%</td>
-               <td>S2: 00%</td>
+               <td>E2: @Model.EnergyPercentage("E2")</td>
+               <td>S2: @Model.EnergyPercentage("S2")</td>
            </tr>
            <tr>
-               <td>E3: 00%</td>
-               <td>S3: 00%</td>
+               <td>E3: @Model.EnergyPercentage("E3")</td>
+               <td>S3: @Model.EnergyPercentage("S3")</td>
+           </tr>
+           <tr>
+               <td>REC: @Model.EnergyPercentage("REC")</td>
            </tr>
            <tr>
                <td colspan="2">Total: 100%</td>
@@ -208,7 +211,7 @@
             </p>
             <p>
                 Description: <input type="text" size="15" name="description" id="addSetDescription" class="addSetField" />&nbsp;&nbsp;&nbsp;
-                <!--Do we need this?-->Total Duration: <input type="text" size="10" name="duration" id="addSetTotalDuration" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                <!--Do we need this?Total Duration: <input type="text" size="10" name="duration" id="addSetTotalDuration" class="addSetField" />&nbsp;&nbsp;&nbsp;-->
             </p>
             <p>
                 Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="addSetEnergyGroup" class="addSetField" />&nbsp;&nbsp;&nbsp;
@@ -237,6 +240,7 @@
             <option value="S1">
             <option value="S2">
             <option value="S3">
+            <option value="REC">
         </datalist>
 
         <datalist id="type">
@@ -314,6 +318,7 @@
             <option value="S1">
             <option value="S2">
             <option value="S3">
+            <option value="REC">
         </datalist>
 
         <datalist id="type">
