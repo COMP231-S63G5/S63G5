@@ -142,7 +142,7 @@ namespace WorkoutPlanObjects
                     {
                         temp_set = (WorkoutSetObject)SubSetHashTable[i];    // get 2nd set
                         temp_set.OrderID++; // increase orderid
-                        temp_set.ParentID++;    // increase parentids
+                        temp_set.ParentID++;    // increase parentid
 
                         SubSetHashTable[i + 1] = temp_set;  // move 5th to 6th in hashtable
                     }
