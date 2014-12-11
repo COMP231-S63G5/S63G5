@@ -56,9 +56,9 @@ namespace WorkoutPlanObjects
                         {
                             string time;
 
-                            if (set.Pace != null)
+                            if (set.Pace != null && set.Pace.Length > 0)
                                 time = set.Pace;
-                            else if (set.Rest != null)
+                            else if (set.Rest != null && set.Rest.Length >0)
                                 time = set.Rest;
                             else
                                 time = "0:0";

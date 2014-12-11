@@ -724,8 +724,8 @@
 
     function editGroupBtnClicked(groupId, parentId, repeat) {
         document.getElementById("groupOrderId").value = groupId;
-        document.getElementById("addSetParentId").value = parentId;
-        document.getElementById("addGroupParentId").value = parentId;
+        document.getElementById("addSetParentId").value = groupId;
+        document.getElementById("addGroupParentId").value = groupId;
         document.getElementById("editGroupRepeats").value = repeat;
         var requrl = '@Url.Action("getSubSetPosition", "Workout")';
             $.ajax({
