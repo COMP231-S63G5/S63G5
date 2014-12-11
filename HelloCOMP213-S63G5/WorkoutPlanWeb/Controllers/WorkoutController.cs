@@ -354,29 +354,35 @@ namespace WorkoutPlanWeb.Controllers
         {     
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(editSetOrderId)];
-            ws.Repeats = int.Parse(repeat);
-            ws.Distance = int.Parse(distance);
-            ws.Stroke = stroke;
-            if (type=="Pace")
+            if (command == "Delete Set")
             {
-                ws.Pace = typeDuration;
-                ws.Rest = null; // Only pace or rest can be in use
+                wp.remove(int.Parse(editSetOrderId));
             }
-            else if (type == "Rest")
-	        {
-                ws.Rest = typeDuration;
-                ws.Pace = null;
-	        }
-            else //some workoutsets do not require rest or pace
+            else
             {
-                ws.Rest = null;
-                ws.Pace = null;
+                ws.Repeats = int.Parse(repeat);
+                ws.Distance = int.Parse(distance);
+                ws.Stroke = stroke;
+                if (type == "Pace")
+                {
+                    ws.Pace = typeDuration;
+                    ws.Rest = null; // Only pace or rest can be in use
+                }
+                else if (type == "Rest")
+                {
+                    ws.Rest = typeDuration;
+                    ws.Pace = null;
+                }
+                else //some workoutsets do not require rest or pace
+                {
+                    ws.Rest = null;
+                    ws.Pace = null;
+                }
+                //ws.Duration = ws.Repeats ;
+                ws.Description = description;
+                ws.EnergyGroupName = energyGroup;
+                ws.EnergyGroupAmount = int.Parse(energyAmount);
             }
-            //ws.Duration = ws.Repeats ;
-            ws.Description = description;
-            ws.EnergyGroupName = energyGroup;
-            ws.EnergyGroupAmount = int.Parse(energyAmount);
-          
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
             return RedirectToAction("AddNewWorkoutPlan", "Workout");
