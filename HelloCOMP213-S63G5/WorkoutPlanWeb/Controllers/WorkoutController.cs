@@ -341,17 +341,17 @@ namespace WorkoutPlanWeb.Controllers
                 if (type == "Pace")
                 {
                     ws.Pace = typeDuration;
-                    ws.Rest = null; // Only pace or rest can be in use
+                    ws.Rest = ""; // Only pace or rest can be in use
                 }
                 else if (type == "Rest")
                 {
                     ws.Rest = typeDuration;
-                    ws.Pace = null;
+                    ws.Pace = "";
                 }
                 else //some workoutsets do not require rest or pace
                 {
-                    ws.Rest = null;
-                    ws.Pace = null;
+                    ws.Rest = "";
+                    ws.Pace = "";
                 }
                 //ws.Duration = ws.Repeats ;
                 ws.Description = description;
