@@ -44,7 +44,14 @@
                             @Html.DisplayFor(j => section_item.Repeats) X {
                         </td>
                         <td align="right">
-                            <input type="button" value="Edit Group" class="editBtn" data-div="group_div" onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID,@section_item.Repeats)" />
+                            <input type="button"
+                                   value="Edit Group"
+                                   class="editBtn"
+                                   data-div="group_div"
+                                   data-orderid="@section_item.OrderID"
+                                   data-parentid="@section_item.ParentID"
+                                   data-repeats="@section_item.Repeats" 
+                                   onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID,@section_item.Repeats)" />
                         </td>
                     </tr>
                     Session["indent"] = (int)Session["indent"] + 1;        
