@@ -335,10 +335,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkoutDBObject\WorkoutDBObject.csproj">
-      <Project>{4d96f059-9538-4b87-a4ca-70ebbee986a2}</Project>
-      <Name>WorkoutDBObject</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WorkoutPlanAPI\WorkoutPlanAPI.csproj">
       <Project>{b4cd976a-ae1a-40d3-ba38-cb27e63341c4}</Project>
       <Name>WorkoutPlanAPI</Name>
