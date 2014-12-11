@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="PrintToPDF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strokes_BLL.cs" />
     <Compile Include="WorkOutPlan_BLL.cs" />
   </ItemGroup>
   <ItemGroup>

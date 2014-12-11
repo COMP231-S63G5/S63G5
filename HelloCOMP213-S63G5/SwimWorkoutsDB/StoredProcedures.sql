@@ -23,17 +23,17 @@ GO
 --IF OBJECT_ID ( 'insertWorkoutPlan', 'P' ) IS NOT NULL 
 --    DROP PROCEDURE insertWorkoutPlan;
 GO
-CREATE PROCEDURE addWorkOutPlan    @plandate date,
+CREATE PROCEDURE [dbo].[addWorkOutPlan]    @planDate date,
+								   @planName nvarchar(50),
 								   @ttl_distance int, 
-								   @ttl_duration varchar(10),
-								   @plan_name varchar(50)
-AS
+								   @ttl_duration nvarchar(10)
+AS 
     SET NOCOUNT ON;
     INSERT INTO [dbo].[tbl_WorkoutPlan]
-           ([planDate],[totalDistance],[totalDuration],[planName])
+           ([planDate],[planName],[totalDistance],[totalDuration])
 	OUTPUT INSERTED.planID
     VALUES
-           (@plandate,@ttl_distance,@ttl_duration,@plan_name );
+           (@planDate,@planName,@ttl_distance,@ttl_duration )
 GO
 -- =============================================
 -- Author:		<Hiren Patel>
@@ -112,14 +112,19 @@ GO
 -- Description: <This  stored procedure gets workOut plan info from all tables>
 -- ==================================================================
 GO
-CREATE PROCEDURE getworkoutplan 
+CREATE PROCEDURE [dbo].[getworkoutplan] 
     @workoutplanID int
 AS 
     SET NOCOUNT ON;
+
+	select planName, planDate from tbl_WorkoutPlan where planID = @workoutplanID
+
+	select setID,setType,repeats,distance,stroke,pace,rest,description,energyName,totalDistance,orderID,parentID from tbl_Set where planID = @workoutplanID ORDER BY orderID ASC;
+
+/*
     SELECT  tbl_WorkoutPlan.planID,
-			tbl_WorkoutPlan.totalDistance as totalPlanDistance,
+			tbl_WorkoutPlan.totalDistance,
 			tbl_WorkoutPlan.totalDuration,
-			tbl_WorkoutPlan.planName,
 			tbl_Set.setID,
 			tbl_Set.setType,
 			tbl_Set.repeats,
@@ -138,6 +143,7 @@ AS
 			inner join tbl_WorkoutPlan ON tbl_WorkoutPlan.planID=tbl_set.planID
 	WHERE tbl_WorkoutPlan.planID=@workoutplanID
 	ORDER BY orderID ASC;
+*/
 GO
 
 
@@ -160,3 +166,19 @@ AS
 	WHERE tbl_WorkoutPlan.planID=@workoutplanID;
 
 GO
+
+
+-- ==================================================================
+-- Author: <Johnny>
+-- ==================================================================
+CREATE PROCEDURE [dbo].[updateWorkOutPlan]    
+								   @planID int,
+								   @planDate date,
+								   @planName nvarchar(50),
+								   @ttl_distance int, 
+								   @ttl_duration nvarchar(10)
+AS 
+    SET NOCOUNT ON;
+    UPDATE [dbo].[tbl_WorkoutPlan]
+	SET planDate=@planDate, planName=@planName, totalDistance = @ttl_distance, totalDuration=@ttl_duration
+    WHERE planID=@planID
