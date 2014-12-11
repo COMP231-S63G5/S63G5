@@ -34,7 +34,7 @@
  
     <h4 id="planDateTag"></h4>
     <div id="setsDiv">
-        @Html.Partial("WorkoutSetList", Session["WorkoutSetList"])
+        @Html.Partial("WorkoutSetList", Session["WorkoutSetList"], new ViewDataDictionary { { "edit", true } })
     </div>
 
     <div class="summary-box">

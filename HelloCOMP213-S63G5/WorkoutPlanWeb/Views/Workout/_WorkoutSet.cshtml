@@ -38,20 +38,25 @@
         <!--Html.DisplayFor(j => Model.Duration)-->
     </td>
     <td width="100px" align="right">
-        <input type="button"
-               value="Edit Set"
-               class="editBtn"
-               data-div="set_div"
-               data-orderid="@Model.OrderID"
-               data-parentid="@Model.ParentID"
-               data-repeats="@Model.Repeats"
-               data-distance="@Model.Distance"
-               data-stroke="@Model.Stroke"
-               @if (@Model.Pace.IsEmpty()) {  @Html.Raw("data-pace=\"-1\"")    } else { @Html.Raw("data-pace=\"" + @Model.Pace + "\"")  }
-               @if (@Model.Rest.IsEmpty()){  @Html.Raw("data-rest=\"-1\"")    } else { @Html.Raw("data-rest=\""+@Model.Rest+"\"")  }
-               data-description="@Model.Description"
-               data-energygroup="@Model.EnergyGroupName"
-               data-energyamount="@Model.TotalDistance"
-               onclick="editSetBtnClicked(@Model.OrderID)" />
+
+        @if((bool)ViewData["edit"])
+        {
+            <input type="button"
+                   value="Edit Set"
+                   class="editBtn"
+                   data-div="set_div"
+                   data-orderid="@Model.OrderID"
+                   data-parentid="@Model.ParentID"
+                   data-repeats="@Model.Repeats"
+                   data-distance="@Model.Distance"
+                   data-stroke="@Model.Stroke"
+                   @if (@Model.Pace.IsEmpty()) {  @Html.Raw("data-pace=\"-1\"")    } else { @Html.Raw("data-pace=\"" + @Model.Pace + "\"")  }
+                   @if (@Model.Rest.IsEmpty()){  @Html.Raw("data-rest=\"-1\"")    } else { @Html.Raw("data-rest=\""+@Model.Rest+"\"")  }
+                   data-description="@Model.Description"
+                   data-energygroup="@Model.EnergyGroupName"
+                   data-energyamount="@Model.TotalDistance"
+                   onclick="editSetBtnClicked(@Model.OrderID)" /> 
+        }
+
     </td>
 </tr>

@@ -16,7 +16,10 @@
                      @Html.DisplayFor(item=>plan_item.Description)  {
                  </td>
                  <td align="right">
-                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID','@plan_item.Description')" />
+                @if((bool)ViewData["edit"])
+                    {
+                        <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID','@plan_item.Description')" />
+                    }
                  </td>
              </tr>
             Session["indent"] = 0;
@@ -27,7 +30,7 @@
 
                 if (section_item.SetType.ToString().Equals("Set"))
                 {
-                    @Html.Partial("_WorkoutSet", section_item)
+                    @Html.Partial("_WorkoutSet", section_item, new ViewDataDictionary { { "edit", (bool)ViewData["edit"] } })
 
                 }
                 else
@@ -37,26 +40,30 @@
                             @Html.DisplayFor(j => section_item.OrderID). &nbsp;
                         </td>
                         <td style="width:80%">
-                            @for (int i = 0; i < (int)Session["indent"]; i++ )
+                            @for (int i = 0; i < (int)Session["indent"]; i++)
                             {
                                 @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;")
                             }
                             @Html.DisplayFor(j => section_item.Repeats) X {
                         </td>
                         <td align="right">
-                            <input type="button"
-                                   value="Edit Group"
-                                   class="editBtn"
-                                   data-div="group_div"
-                                   data-orderid="@section_item.OrderID"
-                                   data-parentid="@section_item.ParentID"
-                                   data-repeats="@section_item.Repeats" 
-                                   onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID,@section_item.Repeats)" />
+
+                            @if((bool)ViewData["edit"])
+                            {
+                                <input type="button"
+                                       value="Edit Group"
+                                       class="editBtn"
+                                       data-div="group_div"
+                                       data-orderid="@section_item.OrderID"
+                                       data-parentid="@section_item.ParentID"
+                                       data-repeats="@section_item.Repeats" 
+                                       onclick="editGroupBtnClicked(@section_item.OrderID,@section_item.ParentID,@section_item.Repeats)" />
+                            }
                         </td>
                     </tr>
-                    Session["indent"] = (int)Session["indent"] + 1;        
-                        @Html.Partial("_WorkoutGroup", section_item.SubSetList)
-                    Session["indent"] = (int)Session["indent"] - 1;
+                            Session["indent"] = (int)Session["indent"] + 1;        
+                        @Html.Partial("_WorkoutGroup", section_item.SubSetList, new ViewDataDictionary { { "edit", (bool)ViewData["edit"] } })
+                            Session["indent"] = (int)Session["indent"] - 1;
 
                     <tr>
                         <td></td>

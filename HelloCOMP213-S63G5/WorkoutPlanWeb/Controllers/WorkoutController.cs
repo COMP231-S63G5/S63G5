@@ -12,35 +12,17 @@ namespace WorkoutPlanWeb.Controllers
 
     public class WorkoutController : Controller
     {
-        
 
-        //[HttpGet]
-        //public ActionResult ViewWorkOutPlan(int id) {
 
-        //    WorkOutPlan_BLL workoutbll = new WorkOutPlan_BLL();
+        [HttpGet]
+        public ActionResult ViewWorkOutPlan(int id)
+        {
 
-        //    WorkoutPlan wp = workoutbll.getWorkPlanDetails(id);
-        //    return View(wp);
-        //}
-        ///*
-        //[HttpGet]
-        //public ActionResult AddNewPlan()
-        //{
-        //    Strokes_BLL strokes = new Strokes_BLL();
-        //    ViewBag.strokes = strokes.getStrokes();
-        //    WorkoutPlan workoutPlan = new WorkoutPlan();
-        //    workoutPlan.WorkoutSet = new List<WorkoutSet>();
-        //    return View(workoutPlan);
-        //}
-        
-        //[HttpPost]
-        //public ActionResult AddNewPlan(WorkoutPlan workoutPlan)
-        //{
-        //    //TO-DO: Need to save the workoutplan to db.
+            WorkoutPlanObject wp = WorkOutPlan_BLL.getWorkoutPlan(id);
 
-        //    return RedirectToAction("Index","Home"); //TO-DO: Need to redirect to view workout plan page. Currently redirecting to the Home page after submit.
-        //}
-        //*/
+            return View(wp);
+        }
+
         [HttpGet]
         public ActionResult AddNewWorkoutPlan()
         {
