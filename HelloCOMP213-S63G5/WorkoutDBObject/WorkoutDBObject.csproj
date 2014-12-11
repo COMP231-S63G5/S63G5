@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLHelper.cs" />
     <Compile Include="SwimWorkoutDBContext.cs" />
     <Compile Include="SwimWorkoutDBContextNew.cs" />
   </ItemGroup>

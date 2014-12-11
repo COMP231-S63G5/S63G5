@@ -13,10 +13,7 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            
-            WorkOutPlan_BLL StrokesBllObj = new WorkOutPlan_BLL();
-            ViewBag.listOfWorkOutPlanIDs = StrokesBllObj.getWorkOutPlanIDsList();
+            ViewBag.listOfWorkOutPlanIDs = WorkoutPlanAPI.WorkOutPlan_BLL.getWorkOutPlanIDsList();
        
             return View();
         }

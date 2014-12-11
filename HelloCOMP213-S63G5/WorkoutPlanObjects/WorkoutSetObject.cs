@@ -17,7 +17,7 @@ namespace WorkoutPlanObjects
         public int Distance;
         public string Duration;
         public string EnergyGroupName;
-        public int EnergyGroupAmount;
+        public int TotalDistance;
         public int OrderID;
         public string Pace;
         public int ParentID;
@@ -98,13 +98,13 @@ namespace WorkoutPlanObjects
             Pace = pace;
             Description = description;
             EnergyGroupName = energyname;
-            EnergyGroupAmount = energyamount;
+            TotalDistance = energyamount;
             TotalRepeats = 1;
             _repeats = 1;
             Repeats = repeats;
         }
 
-        public WorkoutSetObject(int tblid, string setType, int repeats, int distance, string stroke, string pace, string rest, string duration, string description, string energyname, int energyamount, int orderid, int parentid)
+        public WorkoutSetObject(int tblid, string setType, int repeats, int distance, string stroke, string pace, string rest, string description, string energyname, int totaldistance, int orderid, int parentid)
         {
             try
             {
@@ -130,10 +130,10 @@ namespace WorkoutPlanObjects
                 Stroke = stroke;
                 Pace = pace;
                 Rest = rest;
-                Duration = duration;
+                //Duration = duration;
                 Description = description;
                 EnergyGroupName = energyname;
-                EnergyGroupAmount = energyamount;
+                TotalDistance = totaldistance;
                 OrderID = orderid;
                 ParentID = parentid;
             }
@@ -158,7 +158,7 @@ namespace WorkoutPlanObjects
             }
             else
             {   // SetType is Set
-                return string.Format("{0,2}      {1,4} X {2,-4} {3,-6} on {4,5} ({5})   {6:5} {7}\n", OrderID, Repeats, Distance, Stroke, Pace, Description, EnergyGroupName, EnergyGroupAmount);
+                return string.Format("{0,2}      {1,4} X {2,-4} {3,-6} on {4,5} ({5})   {6:5} {7}\n", OrderID, Repeats, Distance, Stroke, Pace, Description, EnergyGroupName, TotalDistance);
             }
         }
 

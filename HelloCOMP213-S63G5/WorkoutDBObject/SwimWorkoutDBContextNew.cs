@@ -10,7 +10,7 @@ using WorkoutPlanObjects;
 
 namespace WorkoutDBObject
 {
-    public class SwimWorkoutDBContextNew
+/*    public class SwimWorkoutDBContextNew
     {
         private SqlConnection conn;
         private SqlCommand cmd;
@@ -163,7 +163,6 @@ namespace WorkoutDBObject
                         reader["stroke"].ToString(),
                         reader["pace"].ToString(),
                         reader["rest"].ToString(),
-                        reader["duration"].ToString(),
                         reader["description"].ToString(),
                         reader["energyName"].ToString(),
                         Convert.ToInt32(reader["totalDistance"]),
@@ -215,7 +214,6 @@ namespace WorkoutDBObject
                         reader["stroke"].ToString(),
                         reader["pace"].ToString(),
                         reader["rest"].ToString(),
-                        reader["duration"].ToString(),
                         reader["description"].ToString(),
                         reader["energyName"].ToString(),
                         Convert.ToInt32(reader["totalDistance"]),
@@ -259,4 +257,5 @@ namespace WorkoutDBObject
 
         }
     }
+ */
 }

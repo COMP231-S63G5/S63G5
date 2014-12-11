@@ -85,18 +85,18 @@ namespace WorkoutPlanWeb.Controllers
                 //Console.ReadLine();
 
                 List<WorkoutSetObject> setDB = new List<WorkoutSetObject>(){
-                    new WorkoutSetObject(14,"Section",1,0,"","","","","Warm up","",0,1,0),
-                    new WorkoutSetObject(15,"Set",4,50,"Free","1:00","","4:00","description 1","E1",200,2,1),
-                    new WorkoutSetObject(16,"Section",1,0,"","","","","Main","",0,3,0),
-                    new WorkoutSetObject(17,"Set",1,100,"Back","1:30","1:30","description 2","E2","100",0,4,3),
-                    new WorkoutSetObject(18,"Group",4,0,"","","","","","",0,5,3),
-                    new WorkoutSetObject(19,"Group",2,0,"","","","","","",0,6,5),
-                    new WorkoutSetObject(20,"Set",1,50,"Fly","1:00","","8:00","description 3","E3",400,7,6),
-                    new WorkoutSetObject(21,"Section",1,0,"","","","","Warm down","",0,8,0),
-                    new WorkoutSetObject(22,"Set",4,100,"Free","2:00","","8:00","description 4","S1",400,9,8),
-                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,10,8),
-                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,11,10),
-                    new WorkoutSetObject(23,"Group",1,0,"","","","","","",0,12,10)
+                    new WorkoutSetObject(14,"Section",1,0,"","","","Warm up","",0,1,0),
+                    new WorkoutSetObject(15,"Set",4,50,"Free","1:00","4:00","description 1","E1",200,2,1),
+                    new WorkoutSetObject(16,"Section",1,0,"","","","Main","",0,3,0),
+                    new WorkoutSetObject(17,"Set",1,100,"Back","1:30","description 2","E2","100",0,4,3),
+                    new WorkoutSetObject(18,"Group",4,0,"","","","","",0,5,3),
+                    new WorkoutSetObject(19,"Group",2,0,"","","","","",0,6,5),
+                    new WorkoutSetObject(20,"Set",1,50,"Fly","1:00","8:00","description 3","E3",400,7,6),
+                    new WorkoutSetObject(21,"Section",1,0,"","","","Warm down","",0,8,0),
+                    new WorkoutSetObject(22,"Set",4,100,"Free","2:00","8:00","description 4","S1",400,9,8),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","",0,10,8),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","",0,11,10),
+                    new WorkoutSetObject(23,"Group",1,0,"","","","","",0,12,10)
                 };
 
                 WorkoutPlanObject plan2 = new WorkoutPlanObject(1, "Swim plan DB", DateTime.Now, setDB);
@@ -381,7 +381,7 @@ namespace WorkoutPlanWeb.Controllers
                 //ws.Duration = ws.Repeats ;
                 ws.Description = description;
                 ws.EnergyGroupName = energyGroup;
-                ws.EnergyGroupAmount = int.Parse(energyAmount);
+                ws.TotalDistance = int.Parse(energyAmount);
             }
             Session["wp"] = wp;
             Session["WorkoutSetList"] = wp.SubSetList;
@@ -391,7 +391,8 @@ namespace WorkoutPlanWeb.Controllers
 
         public ActionResult savePlan()
         {
-            //WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+            WorkOutPlan_BLL.insertWorkoutPlan(wp);//where idb should work fine the connection
             return RedirectToAction("Index", "Home");
 
         }
