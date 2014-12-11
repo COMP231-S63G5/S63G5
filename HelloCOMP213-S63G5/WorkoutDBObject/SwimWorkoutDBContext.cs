@@ -105,10 +105,11 @@ namespace WorkoutDBObject
                         temp_set.tblID = int.Parse(SqlHelper.ExecuteScalar(trans, "insertWorkoutSet", 
                             temp_set.SetType.ToString(),
                             planid,
+                            temp_set.Repeats,
                             temp_set.Stroke,
                             temp_set.Pace,
                             temp_set.Rest,
-                            temp_set.Duration,
+                            "", // leave duration empty
                             temp_set.Distance,
                             temp_set.Description,
                             temp_set.EnergyGroupName,
