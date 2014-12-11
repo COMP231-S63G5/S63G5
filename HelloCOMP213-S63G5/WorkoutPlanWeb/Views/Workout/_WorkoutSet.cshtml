@@ -51,7 +51,7 @@
                @if (@Model.Rest.IsEmpty()){  @Html.Raw("data-rest=\"-1\"")    } else { @Html.Raw("data-rest=\""+@Model.Rest+"\"")  }
                data-description="@Model.Description"
                data-energygroup="@Model.EnergyGroupName"
-               data-energyamount="@Model.EnergyGroupAmount"
+               data-energyamount="@Model.TotalDistance"
                onclick="editSetBtnClicked(@Model.OrderID)" />
     </td>
 </tr>

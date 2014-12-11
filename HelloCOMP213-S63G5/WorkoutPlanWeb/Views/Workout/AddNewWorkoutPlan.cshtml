@@ -103,12 +103,12 @@
             <table>
                 <tr>
                     <td>
-                       Section Name: <input type="text" id="sectionName" name="sectionName" list="sectionNames"/> <h2>@Html.ValidationMessage("addSectionName")</h2>
+                       Section Name: <input type="text" id="addSectionName" name="sectionName" list="sectionNames" class="addSectionField" /> <h2>@Html.ValidationMessage("addSectionName")</h2>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Insert Position: <input type="text" id="selectPosition" name="selectPosition" list="sectionPositions" size="3" /> 
+                        Insert Position: <input type="text" id="selectPosition" name="selectPosition" list="sectionPositions" size="3" class="addSectionField" /> 
                         <h2>@Html.ValidationMessage("addSectionPosition")</h2>
                     </td>
                 </tr>
@@ -131,7 +131,8 @@
                 <option>Main</option>
                 <option>Warm down</option>
             </datalist>
-            <input type="submit" value="Add Section" />
+            <input type="submit" value="Add Section" id="addSectionSubmitBtn" disabled />
+            <br /><br />
         }
     </div>
 
@@ -153,11 +154,11 @@
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
-                    <td><input type="text" name="sectionName" list="sectionvalues" /></td>
+                    <td><input type="text" name="sectionName" list="sectionvalues" id="editSectionName" class="editSectionField" /></td>
                 </tr>
 
                 <tr>
-                    <td><input type="submit" value="Update Section" name="command" /></td>
+                    <td><input type="submit" value="Update Section" name="command" id="editSectionSubmitBtn" disabled /></td>
                     <td><input type="submit" value="Delete Section" name="command" /></td>
                 </tr>
             </table>
@@ -177,15 +178,15 @@
             @Html.Hidden("addGroupParentId")
             <table>
                 <tr>
-                    <td>Repeats: <input type="text" name="repeats" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
+                    <td>Repeats: <input type="text" name="repeats" id="addGroupRepeat" class="addGroupField" /><h2>@Html.ValidationMessage("addGroupRepeat")</h2></td>
                     <td>
-                        Group Location After: <input type="text" list="grouplocations" size="3" name="position" />
+                        Group Location After: <input type="text" list="grouplocations" size="3" name="position" id="addGroupPosition" class="addGroupField" />
                         <h2>@Html.ValidationMessage("addGroupLocation")</h2>
                     </td>
                 </tr>
             </table>
 
-            <input type="submit" value="Add Group" />
+            <input type="submit" value="Add Group" id="addGroupSubmitBtn" disabled />
             <datalist id="grouplocations"></datalist>
         }
     </div>
@@ -197,28 +198,28 @@
             @Html.Hidden("addSetParentId")
 
             <p>
-                Repeats: <input type="number" size="5" name="repeat" min="1" id="addSetRepeat" oninput="calculate2()" /> &nbsp;&nbsp;&nbsp;
-                Distance: <input type="number" size="5" name="distance" min="0" id="addSetDistance" oninput="calculate2()" />&nbsp;&nbsp;&nbsp;
-                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="addSetStrokes" />&nbsp;&nbsp;&nbsp;
+                Repeats: <input type="number" size="5" name="repeat" min="1" id="addSetRepeat" oninput="calculate2()" class="addSetField" /> &nbsp;&nbsp;&nbsp;
+                Distance: <input type="number" size="5" name="distance" min="0" id="addSetDistance" oninput="calculate2()" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                Stroke: <input type="text" list="strokes" size="10" name="stroke" id="addSetStrokes" class="addSetField" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
-                Type: <input type="text" list="type" size="10" name="type" id="addSetType" />&nbsp;&nbsp;&nbsp;
-                Type Duration: <input type="text" name="typeDuration" />
+                Type: <input type="text" list="type" size="10" name="type" id="addSetType" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                Type Duration: <input type="text" name="typeDuration" id="addSetDuration" class="addSetField" />
             </p>
             <p>
-                Description: <input type="text" size="15" name="description" id="addSetDescription" />&nbsp;&nbsp;&nbsp;
-                <!--Do we need this?-->Total Duration: <input type="text" size="10" name="duration" id="addSetTotalDuration" />&nbsp;&nbsp;&nbsp;
+                Description: <input type="text" size="15" name="description" id="addSetDescription" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                <!--Do we need this?-->Total Duration: <input type="text" size="10" name="duration" id="addSetTotalDuration" class="addSetField" />&nbsp;&nbsp;&nbsp;
             </p>
             <p>
-                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="addSetEnergyGroup" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" min="0" name="totalDistance" id="addSetTotalDistance" />&nbsp;&nbsp;&nbsp;
-                Set Location After: <input type="text" size="5" min="0" name="position" list="setlocations" />
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="addSetEnergyGroup" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                Total Distance: <input type="text" size="10" min="0" name="totalDistance" id="addSetTotalDistance" class="addSetField" />&nbsp;&nbsp;&nbsp;
+                Set Location After: <input type="text" size="5" min="0" name="position" id="addSetPosition" list="setlocations" class="addSetField" />
             </p>
 
             <br />
             <br />
-            
-            <input type="submit" value="Add Set" style="margin:10px" />
+
+            <input type="submit" value="Add Set" style="margin:10px" id="addSetSubmitBtn" disabled/>
 
         }
         <datalist id="strokes">
@@ -255,11 +256,11 @@
             <table>
                 <tr>
                     <td><h4>Repeats: </h4></td>
-                    <td><input type="text" name="repeats" id="editGroupRepeats" /></td>
+                    <td><input type="text" name="repeats" id="editGroupRepeat" class="editGroupField"/></td>
                 </tr>
 
                 <tr>
-                    <td><input type="submit" value="Update Group" name="command" /></td>
+                    <td><input type="submit" value="Update Group" name="command" id="editGroupSubmitBtn" disabled /></td>
                     <td><input type="submit" value="Delete Group" name="command" /></td>
                 </tr>
             </table>
@@ -284,18 +285,17 @@
             </p>
             <p>                
                 Description: <input type="text" size="15" name="description" id="editSetDescription" class="editSetField" />&nbsp;&nbsp;&nbsp;
-                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" class="editSetField" />&nbsp;&nbsp;&nbsp;
                 
             </p>
             <p>
-                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" class="editSetField" />&nbsp;&nbsp;&nbsp;
-                Energy Amount: <input type="text" size="5" name="energyAmount" id="editSetEnergyAmount" class="editSetField" />
+                Energy Group: <input type="text" size="10" name="energyGroup" list="energy" id="editSetEnergyGroup" class="editSetField" />&nbsp;&nbsp;&nbsp;                
+                Total Distance: <input type="text" size="10" name="totalDistance" id="editSetTotalDistance" class="editSetField" />&nbsp;&nbsp;&nbsp;
             </p>
 
             <br />
             <br />
-            
-            <input type="submit" value="Update Set" style="margin:10px" name="command" disabled/>
+
+            <input type="submit" value="Update Set" style="margin:10px" name="command" id="editSetSubmitBtn" disabled />
             <input type="submit" value="Delete Set" style="margin:10px" name="command" />
 
         }
@@ -333,7 +333,7 @@
         // Function will run on page load
         function onPageLoad() {
 
-            setPlanDate();      //set initial plan date with current date
+           // setPlanDate();      //set initial plan date with current date
         }
 
         // Function will dynamically update planDateTag header tags with week and day number
@@ -440,6 +440,8 @@
             else {
                 $("#editSetType").val("None");
             }
+
+            setValidation("edit");
         }
         else if (div == "group_div")
         {
@@ -476,7 +478,28 @@
 
     $(".editSetField").change(function () {
         setValidation("edit");
-    })
+    });
+
+    $(".addSetField").change(function () {
+        setValidation("add");
+    });
+
+    $(".editGroupField").change(function () {
+        groupValidation("edit");
+    });
+
+    $(".addGroupField").change(function () {
+        groupValidation("add");
+    });
+
+    $(".addSectionField").change(function () {
+        sectionValidation("add");
+    });
+
+    $(".editSectionField").change(function () {
+        sectionValidation("edit");
+    });
+
 
     function setValidation(setType) {
 
@@ -487,9 +510,23 @@
         var strokes = $("#"+setType+"SetStrokes");
         var description = $("#"+setType+"SetDescription");
         var energyGroup = $("#"+setType+"SetEnergyGroup");
-        var energyAmount = $("#" + setType + "SetEnergyAmount");
         var totalDistance = $("#" + setType + "SetTotalDistance");
+        var type = $("#" + setType + "SetType");
         var duration = $("#" + setType + "SetDuration");
+        var updateBtn = $("#" + setType + "SetSubmitBtn");
+
+        if (setType == "add") {
+
+            var position = $("#" + setType + "SetPosition");
+
+            if (!checkNumber(position.val())) {
+                valid = false;
+                position.css({ background: "red" });
+            }
+            else {
+                position.css({ background: "#fff" });
+            }
+        }
 
         if (!checkNumber(repeats.val())) {
             valid = false;
@@ -512,14 +549,148 @@
         else
             totalDistance.css({ background: "#fff" });
 
-        if (!checkNumber(energyAmount.val())) {
+        if (duration.val().indexOf(':') == -1) {
+            if (!checkNumber(duration.val())) {
+                valid = false;
+                duration.css({ background: "red" });
+            }
+            else
+            {
+                duration.css({ background: "#fff" });
+                duration.val(duration.val() + ":00");
+            }
+        }
+        else if (duration.val().match(/:/g).length > 1) {
             valid = false;
-            energyAmount.css({ background: "red" });
+            duration.css({ background: "red" });
+        }
+        else {
+            var arr = duration.val().split(':');
+            if (!checkNumber(arr[0]) || !checkNumber(arr[1])) {
+                valid = false;
+                duration.css({ background: "red" });
+            }
+            else {
+
+                if (arr[1] > 59)
+                {
+                    arr[0] = parseInt(arr[0]) + Math.floor(arr[1] / 60);
+                    arr[1] = arr[1] % 60;
+
+                    if (arr[1] < 10)
+                        duration.val(arr[0] + ":0" + arr[1]);
+                    else
+                        duration.val(arr[0] + ":" + arr[1]);
+                }
+
+                duration.css({ background: "#fff" });
+            }
+        }
+
+        if (strokes.val().length == 0 )
+        {
+            valid = false;
+            strokes.css({ background: "red" });
+        }
+        else {
+            strokes.css({ background: "#fff" });
+        }
+
+        if (type.val().length == 0) {
+            valid = false;
+            type.css({ background: "red" });
+        }
+        else {
+            type.css({ background: "#fff" });
+        }
+
+        if (energyGroup.val().length == 0) {
+            valid = false;
+            energyGroup.css({ background: "red" });
+        }
+        else {
+            energyGroup.css({ background: "#fff" });
+        }
+
+        if (valid)
+        {
+            updateBtn.removeAttr("disabled");
+        }
+        else {
+            updateBtn.attr("disabled", "disabled");
+        }
+    }
+
+    function groupValidation(groupType) {
+
+        var valid = true;
+
+        var repeats = $("#" + groupType + "GroupRepeat");
+        var updateBtn = $("#" + groupType + "GroupSubmitBtn");
+
+
+        if (groupType == "add") {
+
+            var position = $("#" + groupType + "GroupPosition");
+
+            if (!checkNumber(position.val())) {
+                valid = false;
+                position.css({ background: "red" });
+            }
+            else {
+                position.css({ background: "#fff" });
+            }
+        }
+
+        if (!checkNumber(repeats.val())) {
+            valid = false;
+            repeats.css({ background: "red" });
         }
         else
-            energyAmount.css({ background: "#fff" });
+            repeats.css({ background: "#fff" });
+
+        if (valid) {
+            updateBtn.removeAttr("disabled");
+        }
+        else {
+            updateBtn.attr("disabled", "disabled");
+        }
+    }
+
+    function sectionValidation(sectionType) {
+
+        var valid = true;
+
+        var name = $("#" + sectionType + "SectionName");
+        var updateBtn = $("#" + sectionType + "SectionSubmitBtn");
 
 
+        if (sectionType == "add") {
+
+            var position = $("#" + sectionType + "SectionPosition");
+
+            if (!checkNumber(position.val())) {
+                valid = false;
+                position.css({ background: "red" });
+            }
+            else {
+                position.css({ background: "#fff" });
+            }
+        }
+
+        if (name.val().length == 0) {
+            valid = false;
+            name.css({ background: "red" });
+        }
+        else
+            name.css({ background: "#fff" });
+
+        if (valid) {
+            updateBtn.removeAttr("disabled");
+        }
+        else {
+            updateBtn.attr("disabled", "disabled");
+        }
     }
 
     function checkNumber(number) {
@@ -634,7 +805,7 @@
             
             var ans = document.getElementById("editSetRepeat").value * document.getElementById("editSetDistance").value;
             if (ans >= 0) {
-                document.getElementById("editSetEnergyAmount").value = ans;
+            //    document.getElementById("editSetEnergyAmount").value = ans;
                 document.getElementById("editSetTotalDistance").value = ans;
                 document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
             }
@@ -644,9 +815,9 @@
             
             var ans = document.getElementById("addSetRepeat").value * document.getElementById("addSetDistance").value;
             if (ans >=0) {
-                document.getElementById("addSetEnergyAmount").value = ans;
+              //  document.getElementById("addSetEnergyAmount").value = ans;
                 document.getElementById("addSetTotalDistance").value = ans;
-                document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
+             //   document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
             }
         }
     </script>
