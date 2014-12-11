@@ -158,24 +158,26 @@ namespace WorkoutPlanWeb.Controllers
         public ActionResult editSection(string sectionName, string command, string orderId)
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
-            if (sectionName == "")
-            {
-                ModelState.AddModelError("errorMessage", "Section name cannot be empty");
-                ModelState.AddModelError("editSection", "Section name cannot be empty");
-            }
-            else
-            {
+            
                 WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(orderId)];
                 if (command == "Update Section")
                 {
-                    ws.Description = sectionName;
-                    Session["wp"] = wp;
-                    Session["WorkoutSetList"] = wp.SubSetList;
-                }
+                    if (sectionName == "")
+                    {
+                        ModelState.AddModelError("errorMessage", "Section name cannot be empty");
+                        ModelState.AddModelError("editSection", "Section name cannot be empty");
+                    }
+                    else
+                    {
+                        ws.Description = sectionName;
+                        Session["wp"] = wp;
+                        Session["WorkoutSetList"] = wp.SubSetList;
+                    }
 
+                }
                 else if (command == "Delete Section")
                 {
-                    if (ws.SubSetList.Count >0) //a count of more than 0 indicates the section is not empty. 
+                    if (ws.SubSetList.Count > 0) //a count of more than 0 indicates the section is not empty. 
                     {
                         ModelState.AddModelError("errorMessage", "Section must be empty before it can be deleted ");
                         ModelState.AddModelError("editSection", "Section must be empty before it can be deleted ");
@@ -187,7 +189,7 @@ namespace WorkoutPlanWeb.Controllers
                         Session["WorkoutSetList"] = wp.SubSetList;
                     }
                 }
-            }
+            
             return View("AddNewWorkoutPlan", wp);
         }
 
@@ -286,42 +288,44 @@ namespace WorkoutPlanWeb.Controllers
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             int rep;
-            if (repeats == "")
+
+            WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(groupOrderId)];
+            if (command == "Update Group")
             {
-                ModelState.AddModelError("errorMessage", "Repeats cannot be empty");
-                ModelState.AddModelError("editGroupRepeat", "Repeats cannot be empty");  
-            }
-            else if (int.TryParse(repeats, out rep) == false)
-            {
-                ModelState.AddModelError("errorMessage", "Repeats must be a number");
-                ModelState.AddModelError("editGroupRepeat", "Repeats must be a number");
-            }
-            else
-            {
-                WorkoutSetObject ws = (WorkoutSetObject)wp.SubSetHashTable[int.Parse(groupOrderId)];
-                if (command == "Update Group")
+                if (repeats == "")
                 {
-                 
+                    ModelState.AddModelError("errorMessage", "Repeats cannot be empty");
+                    ModelState.AddModelError("editGroupRepeat", "Repeats cannot be empty");
+                }
+                else if (int.TryParse(repeats, out rep) == false)
+                {
+                    ModelState.AddModelError("errorMessage", "Repeats must be a number");
+                    ModelState.AddModelError("editGroupRepeat", "Repeats must be a number");
+                }
+                else
+                {
                     ws.Repeats = rep;
                     Session["wp"] = wp;
                     Session["WorkoutSetList"] = wp.SubSetList;
                 }
-                else if (command == "Delete Group")
-                {
-                    if (ws.SubSetList.Count > 0) //a count of more than 0 indicates the group is not empty. 
-                    {
-                        ModelState.AddModelError("errorMessage", "Section must be empty before it can be deleted ");
-                        ModelState.AddModelError("editGroupRepeat", "Section must be empty before it can be deleted ");
-                    }
-                    else
-                    {
-                        wp.remove(int.Parse(groupOrderId));
-                        Session["wp"] = wp;
-                        Session["WorkoutSetList"] = wp.SubSetList;
-                    }
-                }
 
             }
+            else if (command == "Delete Group")
+            {
+                if (ws.SubSetList.Count > 0) //a count of more than 0 indicates the group is not empty. 
+                {
+                    ModelState.AddModelError("errorMessage", "Section must be empty before it can be deleted ");
+                    ModelState.AddModelError("editGroupRepeat", "Section must be empty before it can be deleted ");
+                }
+                else
+                {
+                    wp.remove(int.Parse(groupOrderId));
+                    Session["wp"] = wp;
+                    Session["WorkoutSetList"] = wp.SubSetList;
+                }
+            }
+
+            
             return View("AddNewWorkoutPlan", wp);
         }
 
@@ -374,7 +378,7 @@ namespace WorkoutPlanWeb.Controllers
 
 
 
-
+        
         public ActionResult deletePlan(string tblID)
         {
             if (int.Parse(tblID) != 0)
