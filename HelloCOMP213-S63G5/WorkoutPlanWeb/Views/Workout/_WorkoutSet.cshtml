@@ -5,10 +5,10 @@
     <td>
         @Html.DisplayFor(j=>Model.OrderID). &nbsp;
     </td>
-    <td align="left">       
-        @for (int i = 0; i < ViewBag.indent; i++)
+    <td align="left">
+        @for (int i = 0; i < (int)Session["indent"]; i++)
         {
-            @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;");
+            @Html.Raw("&nbsp;&nbsp;&nbsp;&nbsp;")
         }
         @Html.DisplayFor(j => Model.Repeats) X @Html.DisplayFor(j => Model.Distance) &nbsp;&nbsp;&nbsp;
 
@@ -24,6 +24,6 @@
         @Html.DisplayFor(j => Model.Duration)
     </td>
     <td width="100px" align="right">
-        <input type="button" value="Edit Set" class="editBtn" data-div="set" data-orderid="@Model.OrderID" data-parentid="@Model.ParentID" onclick="editSetBtnClicked(@Model.OrderID)" />
+        <input type="button" value="Edit Set" class="editBtn" data-div="set_div" onclick="editSetBtnClicked(@Model.OrderID,@Model.Repeats,@Model.EnergyGroupAmount,@Model.Distance)" />
     </td>
 </tr>
