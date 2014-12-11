@@ -35,7 +35,7 @@ namespace WorkoutPlanWeb.Controllers
             {
                 WorkoutPlanObject plan = new WorkoutPlanObject("Swim plan UI", DateTime.Now);
 
-                WorkoutSetObject set1 = new WorkoutSetObject("Warm up");
+               /* WorkoutSetObject set1 = new WorkoutSetObject("Warm up");
                 plan.addWorkoutSection(set1, 0);
 
                 WorkoutSetObject set2 = new WorkoutSetObject(4, 50, "free", "1:00", "description 1", "E1", 200);
@@ -81,8 +81,8 @@ namespace WorkoutPlanWeb.Controllers
                     new WorkoutSetObject(23,"Group",1,0,"","","","","",0,12,10)
                 };
 
-                WorkoutPlanObject plan2 = new WorkoutPlanObject(1, "Swim plan DB", DateTime.Now, setDB);
-                Session["wp"] = plan2;
+                WorkoutPlanObject plan2 = new WorkoutPlanObject(1, "Swim plan DB", DateTime.Now, setDB);*/
+                Session["wp"] = plan;
 
             }
             WorkoutPlanObject wp1 = Session["wp"] as WorkoutPlanObject;
@@ -372,6 +372,7 @@ namespace WorkoutPlanWeb.Controllers
         {
             WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
             WorkOutPlan_BLL.insertWorkoutPlan(wp);//where idb should work fine the connection
+            Session["wp"] = null;
             return RedirectToAction("Index", "Home");
 
         }
@@ -383,9 +384,12 @@ namespace WorkoutPlanWeb.Controllers
         {
             if (int.Parse(tblID) != 0)
             {
+                WorkoutPlanObject wp = Session["wp"] as WorkoutPlanObject;
+                WorkOutPlan_BLL.deleteWorkoutPlan(wp);
                 //TO-DO: Delete the plan using the tblID of the plan
             }
 
+            Session["wp"] = null;
             return RedirectToAction("Index", "Home");
         }
 
