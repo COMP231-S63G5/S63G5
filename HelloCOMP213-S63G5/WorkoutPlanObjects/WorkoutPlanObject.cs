@@ -159,6 +159,7 @@ namespace WorkoutPlanObjects
                 //}
                 //else
                 //{
+                position = temp_set.LastChildSetOrderID;
                 if (position == SubSetHashTable.Count)
                 {   // append section after last section
                     workoutSet.OrderID = position + 1;
@@ -193,6 +194,10 @@ namespace WorkoutPlanObjects
         public void addWorkoutSet(WorkoutSetObject workoutSet, int parentid, int position)
         {
             WorkoutSetObject parent_set = (WorkoutSetObject)SubSetHashTable[parentid];
+            
+            WorkoutSetObject t_set = (WorkoutSetObject)SubSetHashTable[position];
+            position = t_set.LastChildSetOrderID;
+
             if (parent_set.SetType == EnumWorkoutSetType.Set)
             {
                 throw new Exception("Cannot add set/group to a set.");

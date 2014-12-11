@@ -175,7 +175,14 @@ namespace WorkoutPlanObjects
                 }
                 else
                 {
-                    return SubSetList.Max(s => s.LastChildSetOrderID);
+                    if (SubSetList.Count == 0)
+                    {
+                        return OrderID;
+                    }
+                    else
+                    {
+                        return SubSetList.Max(s => s.LastChildSetOrderID);
+                    }
                 }
             }
         }
