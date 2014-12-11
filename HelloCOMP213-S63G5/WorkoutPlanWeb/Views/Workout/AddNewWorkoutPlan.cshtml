@@ -407,7 +407,7 @@
 
         function summaryBoxPosition(){
 
-            var left_val = ($(window).width() / 2) + 550;
+            var left_val = ($(window).width() / 2) + 450;
             $(".summary-box").css({ left: left_val })
         }
 
@@ -455,7 +455,7 @@
             var repeats = $(this).data("repeats");
 
             $("#editSetOrderId").val(groupOrderId);
-            $("#editGroupRepeats").val(repeats);
+            $("#editGroupRepeat").val(repeats);
             
         }
 
@@ -726,7 +726,7 @@
         document.getElementById("groupOrderId").value = groupId;
         document.getElementById("addSetParentId").value = groupId;
         document.getElementById("addGroupParentId").value = groupId;
-        document.getElementById("editGroupRepeats").value = repeat;
+        //document.getElementById("editGroupRepeat").value = repeat;
         var requrl = '@Url.Action("getSubSetPosition", "Workout")';
             $.ajax({
                 type: "POST",
@@ -828,7 +828,7 @@
             if (ans >=0) {
               //  document.getElementById("addSetEnergyAmount").value = ans;
                 document.getElementById("addSetTotalDistance").value = ans;
-                document.getElementById("planTotalDistance").innerHTML = @Model.TotalDistance + ans;
+                //document.getElementById("planTotalDistance").innerHTML = Model.TotalDistance + ans;
             }
         }
     </script>
