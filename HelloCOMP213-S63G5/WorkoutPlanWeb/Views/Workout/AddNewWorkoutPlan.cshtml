@@ -172,7 +172,7 @@
             <table>
                 <tr>
                     <td><h4>Section Name:</h4></td>
-                    <td><input type="text" name="sectionName" list="sectionvalues" /></td>
+                    <td><input type="text" name="sectionName" list="sectionvalues" id="editSectionName" /></td>
                 </tr>
 
                 <tr>
@@ -496,10 +496,11 @@
 
         }
 
-        function editSectionBtnClicked(groupId) {
+        function editSectionBtnClicked(groupId,sectionName) {
             document.getElementById("orderId").value = groupId;
             document.getElementById("addSetParentId").value = groupId;
             document.getElementById("addGroupParentId").value = groupId;
+            document.getElementById("editSectionName").value = sectionName;
 
 
 
