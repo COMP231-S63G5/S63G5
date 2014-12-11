@@ -16,7 +16,7 @@
                      @Html.DisplayFor(item=>plan_item.Description)  {
                  </td>
                  <td align="right">
-                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID')" />
+                     <input type="button" value="Edit Section" class="editBtn" data-div="section_div" onclick="editSectionBtnClicked('@plan_item.OrderID','@plan_item.Description')" />
                  </td>
              </tr>
             Session["indent"] = 0;
